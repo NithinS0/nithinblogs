@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import emailjs from 'emailjs-com';
 import { useInView } from 'react-intersection-observer';
 import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from 'lucide-react';
 
@@ -26,17 +27,25 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
+    const templateParams = {
+      name: formData.name,
+      email: formData.email,
+      message: formData.message
+    };
+
     try {
-      // Simulate form submission (replace with actual email service integration)
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Here you would integrate with EmailJS, Formspree, or your backend API
-      console.log('Form submitted:', formData);
-      
+      await emailjs.send(
+        service_dx2vr6h,     // <-- Replace with your EmailJS service ID
+        template_t5lcnlk,    // <-- Replace with your EmailJS template ID
+        templateParams,
+        Ewuy0HVwPmqJ8Y2o9      // <-- Replace with your EmailJS public key
+      );
+
       setSubmitStatus('success');
       setFormData({ name: '', email: '', message: '' });
     } catch (error) {
+      console.error('EmailJS Error:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -69,7 +78,7 @@ const Contact = () => {
     <section id="contact" className="py-20 bg-gray-900">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div ref={ref} className={`transition-all duration-1000 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          
+
           {/* Section Header */}
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-bold mb-4">
@@ -84,7 +93,7 @@ const Contact = () => {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12">
-            
+
             {/* Contact Information */}
             <div className="space-y-8">
               <div>
@@ -221,6 +230,7 @@ const Contact = () => {
                 )}
               </form>
             </div>
+
           </div>
         </div>
       </div>
