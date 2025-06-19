@@ -32,17 +32,19 @@ Welcome to **NithinBlogs**, a sleek and responsive personal portfolio and blog s
 ![image](https://github.com/user-attachments/assets/e0b1c594-b6c9-46c9-a5ac-783b8cd025e8)
 
 ## 📂 Project Structure
+
+```bash
 nithinblogs/
 ├── public/
 ├── src/
-│ ├── components/
-│ ├── pages/
-│ ├── styles/
-│ └── utils/
+│   ├── components/
+│   ├── pages/
+│   ├── styles/
+│   └── utils/
 ├── .gitignore
 ├── README.md
 └── package.json
-
+```
 ---
 
 ## 🧑‍🎓 Author
@@ -67,7 +69,7 @@ npm install
 
 # Start the development server
 npm run dev
-
+```
 ## 🌐 Live Demo
 https://nithinblogs.netlify.app
 
