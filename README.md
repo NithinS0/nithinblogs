@@ -49,9 +49,9 @@ nithinblogs/
 
 ## 🧑‍🎓 Author
 
-- **Nithin S** – [@NithinS0](https://github.com/NithinS0)
-- Portfolio: [nithinblogs](https://github.com/NithinS0/nithinblogs)
-- LinkedIn / Twitter / Email (add as needed)
+- **Nithin S** – [@NithinS0](https://github.com/NithinS0)  
+- Portfolio: [nithinblogs](https://github.com/NithinS0/nithinblogs)  
+- LinkedIn: [linkedin.com/in/nithin01](https://linkedin.com/in/nithin01)  
 
 ---
 
