@@ -36,7 +36,7 @@ const MouseInteractiveElements = () => {
     }));
     setFloatingElements(elements);
 
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: ReturnType<typeof setTimeout>;
 
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });

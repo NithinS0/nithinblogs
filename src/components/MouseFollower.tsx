@@ -10,7 +10,7 @@ const MouseFollower = () => {
   const [isMoving, setIsMoving] = useState(false);
 
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: ReturnType<typeof setTimeout>;
 
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
@@ -79,7 +79,7 @@ const MouseFollower = () => {
       })}
 
       {/* Connection lines to nearby elements */}
-      <svg className="absolute inset-0 w-full h-full">
+      <svg className="absolute inset-0 w-full h-full" aria-hidden="true">
         {isMoving && (
           <>
             <line
