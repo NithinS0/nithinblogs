@@ -1,6 +1,6 @@
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
-import { ExternalLink, Github, Lock, Stethoscope, BarChart3, Eye, Database } from 'lucide-react';
+import { Github, Lock, Stethoscope, BarChart3, Eye, Database } from 'lucide-react';
 
 const Projects = () => {
   const { ref, inView } = useInView({
