@@ -98,7 +98,7 @@ const Resume = () => {
           {/* Download Button */}
           <div className="text-center mb-16">
             <a
-              href="https://drive.google.com/file/d/1LTHQUok2OufUah1qWDzDVkf8y-8VFZlj/view?usp=sharing"
+              href="https://drive.google.com/file/d/1OIxHFcB3wsg_3qRoeoLsBWMmthQvXZVx/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 
