@@ -1,245 +1,197 @@
-import React from 'react';
+import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import {
+  Mail, Phone, MapPin, Send, Linkedin, Github,
+  CheckCircle2, AlertCircle, Loader2, User, MessageSquare, AtSign,
+} from 'lucide-react';
+
+interface FormState {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+type SubmitStatus = { type: 'idle' | 'loading' | 'success' | 'error'; message: string };
 
 const Contact = () => {
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.2
-  });
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.05 });
+
+  const [form, setForm] = useState<FormState>({ name: '', email: '', subject: '', message: '' });
+  const [status, setStatus] = useState<SubmitStatus>({ type: 'idle', message: '' });
+  const [focused, setFocused] = useState<string | null>(null);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!form.name || !form.email || !form.message) {
+      setStatus({ type: 'error', message: 'Please fill in all required fields.' });
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      setStatus({ type: 'error', message: 'Please enter a valid email address.' });
+      return;
+    }
+    setStatus({ type: 'loading', message: '' });
+    await new Promise((r) => setTimeout(r, 800));
+    const body = `Name: ${form.name}\nEmail: ${form.email}\nSubject: ${form.subject || 'Portfolio Inquiry'}\n\n${form.message}`;
+    window.open(
+      `mailto:nithin200511@gmail.com?subject=${encodeURIComponent(form.subject || `Portfolio Inquiry from ${form.name}`)}&body=${encodeURIComponent(body)}`,
+      '_blank'
+    );
+    setStatus({ type: 'success', message: "Email client opened! If not, reach me at nithin200511@gmail.com" });
+    setForm({ name: '', email: '', subject: '', message: '' });
+    setTimeout(() => setStatus({ type: 'idle', message: '' }), 8000);
+  };
+
+  const inputCls = (name: string) =>
+    `w-full bg-white/5 rounded-xl sm:rounded-2xl px-4 py-3.5 text-white placeholder-gray-600 transition-all duration-300 outline-none text-sm font-medium ${
+      focused === name
+        ? 'bg-blue-500/10 shadow-[0_0_25px_-5px_rgba(59,130,246,0.3)] ring-1 ring-blue-500/50'
+        : 'hover:bg-white/10'
+    }`;
 
   const contactInfo = [
-    {
-      icon: Mail,
-      label: 'Email',
-      value: 'nithin200511@gmail.com',
-      href: 'mailto:nithin200511@gmail.com'
-    },
-    {
-      icon: Phone,
-      label: 'Phone',
-      value: '+91 9042645273',
-      href: 'tel:+919042645273'
-    },
-    {
-      icon: MapPin,
-      label: 'Location',
-      value: 'Chennai, Tamil Nadu, India',
-      href: null
-    }
+    { icon: Mail, label: 'Email', value: 'nithin200511@gmail.com', href: 'mailto:nithin200511@gmail.com', color: 'from-blue-500 to-indigo-500' },
+    { icon: Phone, label: 'Phone', value: '+91 9042645273', href: 'tel:+919042645273', color: 'from-purple-500 to-pink-500' },
+    { icon: MapPin, label: 'Location', value: 'Chennai, India', href: null, color: 'from-emerald-500 to-teal-500' },
   ];
 
   return (
-    <section id="contact" className="py-20 bg-gray-900 relative overflow-hidden">
-      {/* Enhanced Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Communication-themed Floating Shapes */}
-        <div className="absolute top-16 left-16 w-20 h-20 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-sm animate-pulse shadow-lg shadow-blue-500/10"></div>
-        <div className="absolute top-32 right-24 w-24 h-24 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-lg rotate-45 blur-xl animate-bounce shadow-lg shadow-purple-500/10"></div>
-        <div className="absolute bottom-40 left-1/3 w-16 h-16 bg-gradient-to-r from-green-500/20 to-blue-500/20 rounded-full animate-ping shadow-lg shadow-green-500/10"></div>
-        <div className="absolute top-1/2 right-16 w-18 h-18 bg-gradient-to-r from-pink-500/20 to-purple-500/20 rounded-lg rotate-12 animate-pulse shadow-lg shadow-pink-500/10" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute bottom-24 right-1/4 w-14 h-14 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full blur-lg animate-bounce shadow-lg shadow-cyan-500/10" style={{ animationDelay: '2s' }}></div>
-        
-        {/* Floating Message Bubbles */}
-        <div className="absolute inset-0">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute animate-ping"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${i * 0.5}s`,
-                animationDuration: `${3 + Math.random() * 2}s`
-              }}
-            >
-              <div className={`w-3 h-3 rounded-full shadow-lg ${
-                i % 4 === 0 ? 'bg-blue-400/40 shadow-blue-400/20' :
-                i % 4 === 1 ? 'bg-purple-400/40 shadow-purple-400/20' :
-                i % 4 === 2 ? 'bg-green-400/40 shadow-green-400/20' : 'bg-pink-400/40 shadow-pink-400/20'
-              }`}></div>
-            </div>
-          ))}
-        </div>
+    <section id="contact" className="py-20 md:py-28 bg-[#0a0f1e] relative overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_100%,rgba(59,130,246,0.05),transparent)] pointer-events-none" />
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-        {/* Communication Network Lines */}
-        <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-400/20 to-transparent animate-pulse shadow-sm shadow-blue-400/10"></div>
-          <div className="absolute top-2/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-400/20 to-transparent animate-pulse shadow-sm shadow-purple-400/10" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute top-3/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-green-400/20 to-transparent animate-pulse shadow-sm shadow-green-400/10" style={{ animationDelay: '2s' }}></div>
-          
-          {/* Vertical connection lines */}
-          <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-400/15 to-transparent animate-pulse shadow-sm shadow-blue-400/5" style={{ animationDelay: '0.5s' }}></div>
-          <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-purple-400/15 to-transparent animate-pulse shadow-sm shadow-purple-400/5" style={{ animationDelay: '1.5s' }}></div>
-        </div>
-
-        {/* Large Gradient Orbs */}
-        <div className="absolute -top-40 -left-40 w-80 h-80 bg-gradient-to-r from-blue-500/12 to-purple-500/12 rounded-full blur-3xl animate-pulse shadow-2xl shadow-blue-500/5"></div>
-        <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-gradient-to-r from-purple-500/12 to-pink-500/12 rounded-full blur-3xl animate-pulse shadow-2xl shadow-purple-500/5" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-1/3 left-1/4 w-72 h-72 bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-full blur-3xl animate-pulse shadow-2xl shadow-green-500/5" style={{ animationDelay: '1s' }}></div>
-        
-        {/* Floating Communication Icons */}
-        <div className="absolute inset-0 text-gray-400/20 text-4xl font-mono">
-          <div className="absolute top-24 left-24 animate-pulse drop-shadow-lg" style={{ animationDelay: '0s' }}>@</div>
-          <div className="absolute top-40 right-40 animate-pulse drop-shadow-lg" style={{ animationDelay: '1s' }}>✉</div>
-          <div className="absolute bottom-48 left-48 animate-pulse drop-shadow-lg" style={{ animationDelay: '2s' }}>📞</div>
-          <div className="absolute bottom-32 right-32 animate-pulse drop-shadow-lg" style={{ animationDelay: '3s' }}>📍</div>
-          <div className="absolute top-1/2 left-16 animate-pulse drop-shadow-lg" style={{ animationDelay: '1.5s' }}>💬</div>
-          <div className="absolute top-1/3 right-16 animate-pulse drop-shadow-lg" style={{ animationDelay: '2.5s' }}>🌐</div>
-        </div>
-
-        {/* Message Bubble Trails */}
-        <div className="absolute inset-0">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-2 h-2 rounded-full animate-ping"
-              style={{
-                left: `${15 + i * 15}%`,
-                top: `${20 + (i % 3) * 25}%`,
-                animationDelay: `${i * 0.7}s`,
-                animationDuration: '3s'
-              }}
-            >
-              <div className={`w-full h-full rounded-full shadow-lg ${
-                i % 3 === 0 ? 'bg-blue-400/50 shadow-blue-400/20' :
-                i % 3 === 1 ? 'bg-purple-400/50 shadow-purple-400/20' : 'bg-green-400/50 shadow-green-400/20'
-              }`}></div>
-            </div>
-          ))}
-        </div>
-
-        {/* Animated Signal Waves */}
-        <div className="absolute inset-0">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute border border-blue-400/10 rounded-full animate-ping"
-              style={{
-                left: '50%',
-                top: '50%',
-                width: `${(i + 1) * 100}px`,
-                height: `${(i + 1) * 100}px`,
-                marginLeft: `${-(i + 1) * 50}px`,
-                marginTop: `${-(i + 1) * 50}px`,
-                animationDelay: `${i * 0.5}s`,
-                animationDuration: '4s'
-              }}
-            ></div>
-          ))}
-        </div>
-
-        {/* Contact Form Elements */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-1/4 left-1/4 w-32 h-4 bg-blue-400/30 rounded animate-pulse" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute top-1/3 right-1/4 w-24 h-4 bg-purple-400/30 rounded animate-pulse" style={{ animationDelay: '2s' }}></div>
-          <div className="absolute bottom-1/3 left-1/3 w-40 h-6 bg-green-400/30 rounded animate-pulse" style={{ animationDelay: '3s' }}></div>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div ref={ref} className={`relative z-10 transition-all duration-1000 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-
-          {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-4 relative">
-              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient-x bg-size-300 relative drop-shadow-lg">
-                Get In Touch
-              </span>
-              {/* Enhanced Animated underline */}
-              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
-                <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse shadow-lg shadow-blue-400/30"></div>
-              </div>
-              {/* Enhanced Glowing effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/25 via-purple-400/25 to-pink-400/25 blur-xl animate-pulse opacity-60"></div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div
+          ref={ref}
+          className={`transition-all duration-1000 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+        >
+          {/* Header */}
+          <div className="text-center mb-12 md:mb-20">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black text-white tracking-tight mb-4">
+              Let's <span className="bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">Connect</span>
             </h2>
-            <p className="text-gray-400 mt-6 text-lg max-w-2xl mx-auto relative">
-              <span className="relative z-10 drop-shadow-sm">
-                Let's discuss opportunities, collaborations, or just connect!
-              </span>
-              {/* Enhanced Subtle text glow */}
-              <div className="absolute inset-0 bg-gray-400/15 blur-sm animate-pulse opacity-60"></div>
+            <div className="w-16 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full mx-auto mb-5" />
+            <p className="text-gray-400 text-base sm:text-lg max-w-xl mx-auto leading-relaxed px-4">
+              Have a project or want to collaborate? Drop me a message — I respond within 24 hours.
             </p>
           </div>
 
-          {/* Contact Information Only */}
-          <div className="max-w-2xl mx-auto">
-            <div className="space-y-8">
-              <div>
-                <h3 className="text-2xl font-bold text-white mb-6 text-center relative">
-                  <span className="relative z-10 drop-shadow-sm">Let's Connect</span>
-                  {/* Text glow effect */}
-                  <div className="absolute inset-0 text-blue-400/20 blur-sm animate-pulse">Let's Connect</div>
-                </h3>
-                <p className="text-gray-400 text-lg mb-8 text-center relative">
-                  <span className="relative z-10 drop-shadow-sm">
-                    I'm always interested in discussing new opportunities, innovative projects, 
-                    and collaborations in AI and machine learning. Feel free to reach out!
-                  </span>
-                </p>
+          {/* Grid — stacked on mobile, 2-col on desktop (2:3 ratio) */}
+          <div className="grid lg:grid-cols-5 gap-8 lg:gap-12 items-start">
+
+            {/* LEFT — Contact info */}
+            <div className="lg:col-span-2 space-y-4">
+              {contactInfo.map((info, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center gap-4 p-4 sm:p-5 rounded-xl sm:rounded-2xl bg-white/5 hover:bg-white/10 transition-all group"
+                >
+                  <div className={`flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br ${info.color} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
+                    <info.icon size={18} className="sm:w-5 sm:h-5 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-gray-500 text-xs font-bold uppercase tracking-widest mb-0.5">{info.label}</p>
+                    {info.href ? (
+                      <a href={info.href} className="text-white font-semibold text-sm hover:text-blue-400 transition-colors break-all">
+                        {info.value}
+                      </a>
+                    ) : (
+                      <p className="text-white font-semibold text-sm">{info.value}</p>
+                    )}
+                  </div>
+                </div>
+              ))}
+
+              {/* Socials */}
+              <div className="flex gap-3 pt-1">
+                <a href="https://linkedin.com/in/nithin01" target="_blank" rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl bg-[#0077b5]/15 text-[#00a0dc] font-bold text-xs sm:text-sm hover:bg-[#0077b5]/25 transition-all">
+                  <Linkedin size={16} /> LinkedIn
+                </a>
+                <a href="https://github.com/NithinS0" target="_blank" rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl bg-white/5 text-white font-bold text-xs sm:text-sm hover:bg-white/10 transition-all">
+                  <Github size={16} /> GitHub
+                </a>
               </div>
 
-              {/* Contact Details */}
-              <div className="space-y-6">
-                {contactInfo.map((info, index) => (
-                  <div
-                    key={index}
-                    className={`group flex items-center space-x-4 p-4 bg-gray-800/50 backdrop-blur-sm rounded-lg
-                             hover:bg-gray-800/80 transition-all duration-300 transform hover:scale-105
-                             ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}
-                             border border-gray-700/50 hover:border-blue-500/30 relative overflow-hidden shadow-sm`}
-                    style={{ transitionDelay: `${index * 200}ms` }}
-                  >
-                    {/* Enhanced background animation */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 via-purple-600/5 to-pink-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    
-                    {/* Floating particles inside card */}
-                    <div className="absolute inset-0 overflow-hidden">
-                      {Array.from({ length: 3 }).map((_, i) => (
-                        <div
-                          key={i}
-                          className="absolute w-1 h-1 bg-blue-400/30 rounded-full animate-ping opacity-0 group-hover:opacity-100 shadow-sm shadow-blue-400/20"
-                          style={{
-                            left: `${20 + i * 30}%`,
-                            top: `${20 + i * 20}%`,
-                            animationDelay: `${i * 0.5}s`,
-                            animationDuration: '2s'
-                          }}
-                        ></div>
-                      ))}
+              {/* Availability */}
+              <div className="flex items-center gap-3 p-4 rounded-xl bg-emerald-500/10">
+                <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.6)] flex-shrink-0" />
+                <p className="text-emerald-400 text-xs sm:text-sm font-bold">Available for internships &amp; freelance</p>
+              </div>
+            </div>
+
+            {/* RIGHT — Form */}
+            <div className="lg:col-span-3">
+              <div className="relative bg-[#0d1224]/80 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-2xl">
+                <div className="absolute -inset-px rounded-2xl sm:rounded-3xl bg-gradient-to-br from-blue-500/8 via-transparent to-purple-500/5 pointer-events-none" />
+
+                <div className="relative z-10">
+                  <h3 className="text-xl sm:text-2xl font-black text-white mb-1">Send a Message</h3>
+                  <p className="text-gray-500 text-xs sm:text-sm mb-6">I'll respond within 24 hours.</p>
+
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div className="relative">
+                        <User size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+                        <input type="text" name="name" placeholder="Your name *" value={form.name}
+                          onChange={handleChange} onFocus={() => setFocused('name')} onBlur={() => setFocused(null)}
+                          className={`${inputCls('name')} pl-10`} required />
+                      </div>
+                      <div className="relative">
+                        <AtSign size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+                        <input type="email" name="email" placeholder="Your email *" value={form.email}
+                          onChange={handleChange} onFocus={() => setFocused('email')} onBlur={() => setFocused(null)}
+                          className={`${inputCls('email')} pl-10`} required />
+                      </div>
                     </div>
 
-                    <div className="p-3 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-lg relative overflow-hidden group-hover:scale-110 transition-transform duration-300 shadow-sm">
-                      <info.icon size={24} className="text-blue-400 relative z-10 drop-shadow-sm" />
-                      {/* Icon glow effect */}
-                      <div className="absolute inset-0 bg-blue-400/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="relative">
+                      <MessageSquare size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600 pointer-events-none" />
+                      <input type="text" name="subject" placeholder="Subject (optional)" value={form.subject}
+                        onChange={handleChange} onFocus={() => setFocused('subject')} onBlur={() => setFocused(null)}
+                        className={`${inputCls('subject')} pl-10`} />
                     </div>
-                    <div className="relative z-10">
-                      <div className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors drop-shadow-sm">{info.label}</div>
-                      {info.href ? (
-                        <a 
-                          href={info.href}
-                          className="text-white hover:text-blue-400 transition-colors font-medium drop-shadow-sm"
-                        >
-                          {info.value}
-                        </a>
+
+                    <div className="relative">
+                      <textarea name="message" placeholder="Your message... *" value={form.message}
+                        onChange={handleChange} onFocus={() => setFocused('message')} onBlur={() => setFocused(null)}
+                        rows={5} required className={`${inputCls('message')} resize-none`} />
+                      <div className="absolute bottom-3 right-4 text-gray-700 text-xs">{form.message.length}/500</div>
+                    </div>
+
+                    {status.type !== 'idle' && status.type !== 'loading' && (
+                      <div className={`flex items-start gap-3 p-3.5 rounded-xl text-xs sm:text-sm font-medium ${
+                        status.type === 'success'
+                          ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-400'
+                          : 'bg-red-500/10 border border-red-500/20 text-red-400'
+                      }`}>
+                        {status.type === 'success' ? <CheckCircle2 size={16} className="flex-shrink-0 mt-0.5" /> : <AlertCircle size={16} className="flex-shrink-0 mt-0.5" />}
+                        <span>{status.message}</span>
+                      </div>
+                    )}
+
+                    <button type="submit" disabled={status.type === 'loading'}
+                      className="group w-full flex items-center justify-center gap-2.5 py-3.5 sm:py-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 disabled:from-gray-600 disabled:to-gray-600 text-white font-black rounded-xl sm:rounded-2xl transition-all shadow-lg shadow-blue-600/20 hover:shadow-blue-500/30 hover:-translate-y-0.5 disabled:cursor-not-allowed text-sm uppercase tracking-widest">
+                      {status.type === 'loading' ? (
+                        <><Loader2 size={17} className="animate-spin" /> Preparing...</>
+                      ) : status.type === 'success' ? (
+                        <><CheckCircle2 size={17} /> Sent!</>
                       ) : (
-                        <div className="text-white font-medium drop-shadow-sm">{info.value}</div>
+                        <><Send size={17} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" /> Send Message</>
                       )}
-                    </div>
+                    </button>
 
-                    {/* Enhanced Animated border effect */}
-                    <div className="absolute inset-0 rounded-lg border border-transparent group-hover:border-blue-500/30 transition-colors duration-300 shadow-sm"></div>
-                    
-                    {/* Enhanced Corner accents */}
-                    <div className="absolute top-2 left-2 w-4 h-4 border-l-2 border-t-2 border-blue-400/0 group-hover:border-blue-400/50 transition-colors duration-300 rounded-tl-lg shadow-sm"></div>
-                    <div className="absolute bottom-2 right-2 w-4 h-4 border-r-2 border-b-2 border-purple-400/0 group-hover:border-purple-400/50 transition-colors duration-300 rounded-br-lg shadow-sm"></div>
-                  </div>
-                ))}
+                    <p className="text-center text-gray-600 text-xs">Opens your email client pre-filled.</p>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>

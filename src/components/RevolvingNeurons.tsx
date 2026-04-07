@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Float } from '@react-three/drei';
 import * as THREE from 'three';
@@ -49,7 +49,7 @@ const RevolvingNeurons = () => {
             ref={(el) => {
               if (el) neuronRefs.current[index] = el;
             }}
-            position={neuron.position}
+            position={neuron.position as [number, number, number]}
           >
             {/* Main neuron sphere */}
             <sphereGeometry args={[neuron.size, 16, 16]} />
@@ -115,8 +115,8 @@ const RevolvingNeurons = () => {
       {/* Neural connections between nearby neurons */}
       {neurons.map((neuron, i) =>
         neurons.slice(i + 1).map((otherNeuron, j) => {
-          const start = new THREE.Vector3(...neuron.position);
-          const end = new THREE.Vector3(...otherNeuron.position);
+          const start = new THREE.Vector3(...(neuron.position as [number, number, number]));
+          const end = new THREE.Vector3(...(otherNeuron.position as [number, number, number]));
           const distance = start.distanceTo(end);
           
           if (distance < 3.5) {
@@ -127,7 +127,7 @@ const RevolvingNeurons = () => {
               <mesh
                 key={`connection-${i}-${j}`}
                 position={start.clone().add(direction.clone().multiplyScalar(0.5))}
-                lookAt={end}
+                onUpdate={(self) => self.lookAt(end)}
               >
                 <cylinderGeometry args={[0.002, 0.002, length, 4]} />
                 <meshStandardMaterial

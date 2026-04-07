@@ -1,160 +1,119 @@
-import React from 'react';
 import { useInView } from 'react-intersection-observer';
-import { Briefcase } from 'lucide-react';
+import { Briefcase, Calendar, MapPin, CheckCircle2, Building2 } from 'lucide-react';
 
 const Experience = () => {
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.2
-  });
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.05 });
 
   const experiences = [
     {
-      company: 'Renault Nissan Automotive India Private Limited',
-      position: 'Intern',
+      company: 'Tata Steel',
+      position: 'AI/ML Intern',
+      location: 'Hybrid',
+      period: 'Mar 2026 – Present',
+      description: 'Applying machine learning to forecast steel demand and visualize operational insights.',
+      achievements: [
+        'Built a construction prediction model for steel demand forecasting using regression and time-series analysis.',
+        'Developing real-time dashboards for KPI monitoring and actionable insights.',
+        'Collaborating with cross-functional teams to integrate predictive models into production.',
+        'Optimizing data pipelines for real-time telemetry processing.',
+      ],
+    },
+    {
+      company: 'Murugappa Group',
+      subCompany: 'Tubes Products of India, Avadi',
+      position: 'AI Architect Intern',
+      location: 'On-site',
+      period: 'Feb 2026 – Present',
+      description: 'AI-driven process monitoring and full-stack system architecture for industrial applications.',
+      achievements: [
+        'Spearheaded the "Murugappa Smart Inventory System" — a full-stack QR-enabled platform.',
+        'Implemented role-based access control and GPS-based movement logging.',
+        'Integrated Firebase for authentication and Supabase for database management.',
+        'Developed AI solution for WET process monitoring using Raspberry Pi 4.',
+      ],
+    },
+    {
+      company: 'Renault Nissan Automotive',
+      subCompany: 'India Private Limited',
+      position: 'RPA & Data Intern',
       location: 'On-site',
       period: 'Mar 2025 – Apr 2025',
-      description: 'Designed and implemented RPA workflows using UiPath to automate repetitive business processes, reducing manual effort.',
+      description: 'Designed RPA workflows and data visualization tools to automate business processes.',
       achievements: [
-        'Developed and optimized Excel Macros to streamline reporting and operational tasks.',
-        'Built interactive Power BI dashboards to visualize key business metrics and improve decision-making.',
-        'Created applications with Power Apps to support data handling and process efficiency.',
-        'Contributed to minimizing manual workload and enhancing overall productivity through automation and data-driven solutions.'
-      ]
-    }
+        'Developed and optimized Excel Macros to streamline reporting tasks.',
+        'Built interactive Power BI dashboards for key business metrics.',
+        'Created Power Apps to support data handling and process efficiency.',
+        'Minimized manual workflow through automation and data-driven solutions.',
+      ],
+    },
   ];
 
   return (
-    <section id="experience" className="py-20 bg-gray-800/30 relative overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Experience-themed Floating Shapes */}
-        <div className="absolute top-16 left-16 w-20 h-20 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-lg rotate-12 blur-sm animate-pulse"></div>
-        <div className="absolute top-32 right-24 w-24 h-24 bg-gradient-to-r from-cyan-500/20 to-teal-500/20 rounded-full blur-xl animate-bounce"></div>
-        <div className="absolute bottom-40 left-1/3 w-16 h-16 bg-gradient-to-r from-teal-500/20 to-blue-500/20 rounded-lg rotate-45 animate-ping"></div>
-        <div className="absolute top-1/2 right-16 w-18 h-18 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
-        
-        {/* Floating Experience Icons */}
-        <div className="absolute inset-0">
-          {Array.from({ length: 12 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute animate-ping"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${i * 0.4}s`,
-                animationDuration: `${3 + Math.random() * 2}s`
-              }}
-            >
-              <div className={`w-2 h-2 rounded-full ${
-                i % 3 === 0 ? 'bg-blue-400/40' :
-                i % 3 === 1 ? 'bg-cyan-400/40' : 'bg-teal-400/40'
-              }`}></div>
-            </div>
-          ))}
-        </div>
-
-        {/* Large Gradient Orbs */}
-        <div className="absolute -top-40 -left-40 w-80 h-80 bg-gradient-to-r from-blue-600/10 to-cyan-600/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-gradient-to-r from-cyan-600/10 to-teal-600/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
-        
-        {/* Animated Lines */}
-        <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-500/20 to-transparent animate-pulse"></div>
-          <div className="absolute top-3/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-500/20 to-transparent animate-pulse" style={{ animationDelay: '2s' }}></div>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div ref={ref} className={`transition-all duration-1000 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          
-          {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-4 relative">
-              <span className="bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 bg-clip-text text-transparent animate-gradient-x bg-size-300 relative">
-                Experience
-              </span>
-              {/* Animated underline */}
-              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
-                <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full animate-pulse"></div>
-              </div>
-              {/* Glowing effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-cyan-400/20 to-teal-400/20 blur-xl animate-pulse opacity-50"></div>
+    <section id="experience" className="py-20 md:py-28 bg-[#0a0f1e] relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div
+          ref={ref}
+          className={`transition-all duration-1000 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+        >
+          {/* Header */}
+          <div className="text-center mb-12 md:mb-20">
+            <h2 className="text-4xl sm:text-5xl font-extrabold text-white mb-4">
+              Career <span className="bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">Trajectory</span>
             </h2>
-            <p className="text-gray-400 mt-6 text-lg max-w-2xl mx-auto">
-              My professional journey and key accomplishments
-            </p>
+            <div className="w-20 h-1.5 bg-blue-600 mx-auto rounded-full" />
           </div>
 
-          {/* Experience Timeline */}
-          <div className="max-w-4xl mx-auto">
-            {experiences.map((exp, index) => (
-              <div 
-                key={index} 
-                className={`group relative pl-8 pb-12 border-l-2 border-gray-700 last:pb-0 ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}
-                style={{ transitionDelay: `${index * 200}ms` }}
+          {/* Timeline */}
+          <div className="relative space-y-8 sm:space-y-12 before:absolute before:inset-0 before:ml-4 sm:before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-white/10 before:to-transparent">
+            {experiences.map((exp, idx) => (
+              <div
+                key={idx}
+                className={`relative flex items-start md:items-center justify-start md:justify-normal md:odd:flex-row-reverse group transform transition-all duration-500 ${inView ? 'opacity-100' : 'opacity-0 translate-y-8'}`}
+                style={{ transitionDelay: `${idx * 200}ms` }}
               >
-                {/* Timeline Dot */}
-                <div className="absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 shadow-lg shadow-blue-500/30 group-hover:scale-125 transition-transform duration-300"></div>
-                
-                {/* Experience Card */}
-                <div className="bg-gray-900/60 backdrop-blur-sm rounded-xl p-6 border border-gray-700/50 hover:border-transparent hover:bg-gray-900/80 transition-all duration-500 transform hover:scale-[1.02] relative overflow-hidden">
-                  {/* Animated background gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 to-cyan-600/5 opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
-                  
-                  {/* Floating particles inside card */}
-                  <div className="absolute inset-0 overflow-hidden">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <div
-                        key={i}
-                        className="absolute w-1 h-1 bg-blue-400/30 rounded-full animate-ping opacity-0 group-hover:opacity-100"
-                        style={{
-                          left: `${10 + i * 20}%`,
-                          top: `${15 + i * 15}%`,
-                          animationDelay: `${i * 0.3}s`,
-                          animationDuration: '2.5s'
-                        }}
-                      ></div>
-                    ))}
-                  </div>
-                  
-                  <div className="relative z-10">
-                    <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2 mb-4">
-                      <div>
-                        <h3 className="text-2xl font-bold text-white group-hover:text-cyan-400 transition-colors">
-                          {exp.position}
-                        </h3>
-                        <p className="text-xl text-cyan-400 font-medium">{exp.company}</p>
+                {/* Timeline dot */}
+                <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-white/10 bg-[#0a0f1e] text-white shadow md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 relative z-20 transition-all duration-300 group-hover:scale-125 group-hover:bg-blue-600 group-hover:border-blue-500 mt-1 md:mt-0">
+                  <Briefcase size={14} className="sm:w-[18px] sm:h-[18px]" />
+                </div>
+
+                {/* Card */}
+                <div className="ml-5 sm:ml-8 md:ml-0 w-full md:w-[calc(50%-2.5rem)] p-5 sm:p-7 rounded-2xl sm:rounded-3xl bg-[#151b2d]/60 backdrop-blur-xl border border-white/5 hover:border-blue-500/30 transition-all duration-300 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]">
+                  {/* Card header */}
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-5">
+                    <div>
+                      <h3 className="text-lg sm:text-2xl font-black text-white group-hover:text-blue-400 transition-colors">{exp.position}</h3>
+                      <div className="flex items-center gap-2 text-blue-300 font-bold mt-1 text-sm sm:text-base">
+                        <Building2 size={15} />
+                        <span>{exp.company}</span>
                       </div>
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="px-3 py-1 bg-gray-800/80 text-gray-300 rounded-full text-sm font-medium">
-                          {exp.location}
-                        </span>
-                        <span className="px-3 py-1 bg-gradient-to-r from-blue-600/20 to-cyan-600/20 text-cyan-400 rounded-full text-sm font-medium border border-cyan-500/30">
-                          {exp.period}
-                        </span>
-                      </div>
+                      {exp.subCompany && (
+                        <p className="text-gray-500 text-xs mt-0.5">{exp.subCompany}</p>
+                      )}
                     </div>
-                    
-                    <p className="text-gray-300 mb-4 leading-relaxed">
-                      {exp.description}
-                    </p>
-                    
-                    <ul className="space-y-2">
-                      {exp.achievements.map((achievement, achIndex) => (
-                        <li key={achIndex} className="flex items-start">
-                          <Briefcase size={16} className="text-cyan-400 mt-1 mr-2 flex-shrink-0" />
-                          <span className="text-gray-400 group-hover:text-gray-300 transition-colors">
-                            {achievement}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
+                    <div className="flex flex-wrap items-start gap-2">
+                      <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-400 text-xs font-bold uppercase tracking-wide">
+                        <Calendar size={12} />
+                        {exp.period}
+                      </span>
+                      <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wide">
+                        <MapPin size={12} />
+                        {exp.location}
+                      </span>
+                    </div>
                   </div>
-                  
-                  {/* Animated border effect */}
-                  <div className="absolute inset-0 rounded-xl border border-transparent group-hover:border-cyan-500/30 transition-colors duration-300"></div>
+
+                  <p className="text-gray-400 mb-5 leading-relaxed text-sm sm:text-base italic border-l-4 border-white/10 pl-4">
+                    {exp.description}
+                  </p>
+
+                  <ul className="space-y-3">
+                    {exp.achievements.map((item, iIdx) => (
+                      <li key={iIdx} className="flex items-start gap-3 group/item">
+                        <CheckCircle2 size={16} className="mt-0.5 text-blue-500/50 group-hover/item:text-blue-500 transition-colors flex-shrink-0" />
+                        <span className="text-gray-400 group-hover/item:text-gray-200 transition-colors text-sm leading-relaxed">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             ))}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 interface MousePosition {
   x: number;
@@ -21,6 +21,7 @@ const MouseInteractiveElements = () => {
   const [isMoving, setIsMoving] = useState(false);
   const [floatingElements, setFloatingElements] = useState<FloatingElement[]>([]);
   const animationRef = useRef<number>();
+  const mouseRef = useRef({ x: 0, y: 0, isMoving: false });
 
   useEffect(() => {
     // Initialize floating elements
@@ -54,21 +55,23 @@ const MouseInteractiveElements = () => {
   }, []);
 
   useEffect(() => {
+    mouseRef.current = { x: mousePosition.x, y: mousePosition.y, isMoving };
+  }, [mousePosition, isMoving]);
+
+  useEffect(() => {
     const animate = () => {
       setFloatingElements(prevElements => 
         prevElements.map(element => {
-          // Calculate attraction to mouse when moving
-          if (isMoving) {
-            const dx = mousePosition.x - element.x;
-            const dy = mousePosition.y - element.y;
+          if (mouseRef.current.isMoving) {
+            const dx = mouseRef.current.x - element.x;
+            const dy = mouseRef.current.y - element.y;
             const distance = Math.sqrt(dx * dx + dy * dy);
             
             if (distance < 200) {
-              // Move towards mouse but maintain some distance
               const targetDistance = 80;
               const angle = Math.atan2(dy, dx);
-              const targetX = mousePosition.x - Math.cos(angle) * targetDistance;
-              const targetY = mousePosition.y - Math.sin(angle) * targetDistance;
+              const targetX = mouseRef.current.x - Math.cos(angle) * targetDistance;
+              const targetY = mouseRef.current.y - Math.sin(angle) * targetDistance;
               
               return {
                 ...element,
@@ -79,7 +82,6 @@ const MouseInteractiveElements = () => {
             }
           }
           
-          // Default floating behavior
           return {
             ...element,
             x: element.x + Math.cos(element.angle) * element.speed,
@@ -98,7 +100,7 @@ const MouseInteractiveElements = () => {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [mousePosition, isMoving]);
+  }, []);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-5 overflow-hidden">
@@ -232,32 +234,6 @@ const MouseInteractiveElements = () => {
           />
         ))}
         
-      
-      {/* Additional revolving neural spheres */}
-      {Array.from({ length: 6 }).map((_, i) => {
-        const angle = (i * Math.PI * 2) / 6 + (Date.now() * 0.0002);
-        const radius = 150 + Math.sin(Date.now() * 0.0008 + i) * 30;
-        const x = 50 + Math.cos(angle) * (radius / window.innerWidth * 40);
-        const y = 50 + Math.sin(angle) * (radius / window.innerHeight * 40);
-        
-        return (
-          <div
-            key={`neural-${i}`}
-            className="absolute rounded-full animate-pulse border-2"
-            style={{
-              left: `${x}%`,
-              top: `${y}%`,
-              width: '8px',
-              height: '8px',
-              borderColor: ['#3B82F6', '#8B5CF6', '#EC4899', '#10B981', '#F59E0B', '#EF4444'][i] + '40',
-              backgroundColor: ['#3B82F6', '#8B5CF6', '#EC4899', '#10B981', '#F59E0B', '#EF4444'][i] + '20',
-              animationDelay: `${i * 0.3}s`,
-              animationDuration: '3s',
-              boxShadow: `0 0 12px ${['#3B82F6', '#8B5CF6', '#EC4899', '#10B981', '#F59E0B', '#EF4444'][i]}30`
-            }}
-          />
-        );
-      })}
         {/* Revolving orbital indicators */}
         {Array.from({ length: 4 }).map((_, i) => {
           const angle = (i * Math.PI * 2) / 4 + (Date.now() * 0.0003);
@@ -276,32 +252,6 @@ const MouseInteractiveElements = () => {
                 animationDelay: `${i * 0.5}s`,
                 animationDuration: '2s',
                 boxShadow: `0 0 10px ${['#3B82F6', '#8B5CF6', '#EC4899', '#10B981'][i]}40`
-              }}
-            />
-          );
-        })}
-        
-        {/* Additional revolving neural spheres */}
-        {Array.from({ length: 6 }).map((_, i) => {
-          const angle = (i * Math.PI * 2) / 6 + (Date.now() * 0.0002);
-          const radius = 120 + Math.sin(Date.now() * 0.0008 + i) * 25;
-          const x = 50 + Math.cos(angle) * (radius / window.innerWidth * 40);
-          const y = 50 + Math.sin(angle) * (radius / window.innerHeight * 40);
-          
-          return (
-            <div
-              key={`neural-${i}`}
-              className="absolute rounded-full animate-pulse border-2"
-              style={{
-                left: `${x}%`,
-                top: `${y}%`,
-                width: '8px',
-                height: '8px',
-                borderColor: ['#3B82F6', '#8B5CF6', '#EC4899', '#10B981', '#F59E0B', '#EF4444'][i] + '40',
-                backgroundColor: ['#3B82F6', '#8B5CF6', '#EC4899', '#10B981', '#F59E0B', '#EF4444'][i] + '20',
-                animationDelay: `${i * 0.3}s`,
-                animationDuration: '3s',
-                boxShadow: `0 0 12px ${['#3B82F6', '#8B5CF6', '#EC4899', '#10B981', '#F59E0B', '#EF4444'][i]}30`
               }}
             />
           );

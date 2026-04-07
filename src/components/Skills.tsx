@@ -1,216 +1,134 @@
-import React from 'react';
 import { useInView } from 'react-intersection-observer';
-import { 
-  Code, 
-  Database, 
-  Brain, 
-  BarChart3, 
-  PackageOpen, 
-  Calculator, 
-  Table, 
-  Eye 
+import {
+  Database, Brain, Layers, Wrench, Layout, Terminal
 } from 'lucide-react';
 
 const Skills = () => {
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.2
-  });
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.05 });
 
-  const skills = [
+  const skillCategories = [
     {
-      name: 'Python',
-      icon: Code,
-      color: 'from-yellow-400 to-yellow-600',
-      description: 'Advanced programming with focus on AI/ML applications'
+      title: 'Programming',
+      icon: Terminal,
+      color: 'from-blue-500 to-indigo-500',
+      skills: [
+        { name: 'Python', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
+        { name: 'C++', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg' },
+        { name: 'C', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg' },
+      ],
     },
     {
-      name: 'Data Science',
-      icon: BarChart3,
-      color: 'from-green-400 to-green-600',
-      description: 'Statistical analysis, data visualization, and insights extraction'
-    },
-    {
-      name: 'Machine Learning',
-      icon: Brain,
-      color: 'from-purple-400 to-purple-600',
-      description: 'Supervised & unsupervised learning, model optimization'
-    },
-    {
-      name: 'Python Libraries',
-      icon: PackageOpen,
-      color: 'from-blue-400 to-blue-600',
-      description: 'TensorFlow, Keras, Scikit-learn, Matplotlib, Seaborn'
-    },
-    {
-      name: 'MongoDB',
+      title: 'Databases',
       icon: Database,
-      color: 'from-red-400 to-red-600',
-      description: 'NoSQL database design and optimization'
+      color: 'from-emerald-500 to-teal-500',
+      skills: [
+        { name: 'MySQL', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg' },
+        { name: 'MongoDB', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg' },
+      ],
     },
     {
-      name: 'NumPy',
-      icon: Calculator,
-      color: 'from-indigo-400 to-indigo-600',
-      description: 'Numerical computing and array processing'
+      title: 'AI / ML',
+      icon: Brain,
+      color: 'from-purple-500 to-pink-500',
+      skills: [
+        { name: 'TensorFlow', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg' },
+        { name: 'Keras', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/keras/keras-original.svg' },
+        { name: 'Scikit-learn', icon: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg' },
+        { name: 'NLP', icon: 'https://www.svgrepo.com/show/373924/nlp.svg' },
+        { name: 'OpenCV', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg' },
+      ],
     },
     {
-      name: 'Pandas',
-      icon: Table,
-      color: 'from-pink-400 to-pink-600',
-      description: 'Data manipulation and analysis workflows'
+      title: 'Frameworks / APIs',
+      icon: Layers,
+      color: 'from-orange-500 to-red-500',
+      skills: [
+        { name: 'Flask', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg' },
+        { name: 'FastAPI', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg' },
+        { name: 'REST APIs', icon: 'https://www.svgrepo.com/show/120283/api.svg' },
+      ],
     },
     {
-      name: 'Computer Vision',
-      icon: Eye,
-      color: 'from-cyan-400 to-cyan-600',
-      description: 'Image processing, CNN, object detection'
-    }
+      title: 'Tools & DevOps',
+      icon: Wrench,
+      color: 'from-blue-400 to-cyan-500',
+      skills: [
+        { name: 'Docker', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg' },
+        { name: 'Kubernetes', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/kubernetes/kubernetes-plain.svg' },
+        { name: 'AWS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg' },
+        { name: 'Pandas', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg' },
+        { name: 'Power BI', icon: 'https://www.svgrepo.com/show/354209/power-bi.svg' },
+      ],
+    },
+    {
+      title: 'Other',
+      icon: Layout,
+      color: 'from-yellow-500 to-orange-500',
+      skills: [
+        { name: 'Full Stack', icon: 'https://www.svgrepo.com/show/452130/web.svg' },
+        { name: 'Data Viz', icon: 'https://www.svgrepo.com/show/396263/data-visualization.svg' },
+      ],
+    },
   ];
 
   return (
-    <section id="skills" className="py-20 bg-gray-900 relative overflow-hidden">
-      {/* Enhanced Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* AI Neural Nodes */}
-        <div className="absolute top-20 left-20 w-3 h-3 bg-blue-400/40 rounded-full animate-pulse"></div>
-        <div className="absolute top-40 right-32 w-4 h-4 bg-purple-400/40 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute bottom-32 left-1/3 w-2 h-2 bg-pink-400/40 rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
-        
-        {/* Floating AI Particles */}
-        <div className="absolute inset-0">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute animate-ping"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${i * 0.5}s`,
-                animationDuration: `${4 + Math.random() * 2}s`
-              }}
-            >
-              <div className={`w-1 h-1 rounded-full ${
-                i % 3 === 0 ? 'bg-blue-400/30' :
-                i % 3 === 1 ? 'bg-purple-400/30' : 'bg-pink-400/30'
-              }`}></div>
-            </div>
-          ))}
-        </div>
+    <section id="skills" className="py-20 md:py-28 bg-[#0a0f1e] relative overflow-hidden">
+      {/* Grid bg */}
+      <div className="absolute inset-0 opacity-[0.025] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none" />
 
-        {/* Neural Network Lines */}
-        <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-400/15 to-transparent animate-pulse"></div>
-          <div className="absolute top-3/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-400/15 to-transparent animate-pulse" style={{ animationDelay: '2s' }}></div>
-        </div>
-      </div>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div ref={ref} className={`transition-all duration-1000 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          
-          {/* Enhanced Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-4 relative">
-              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient-x bg-size-300 relative">
-                My Skills
-              </span>
-              {/* Animated underline */}
-              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
-                <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse"></div>
-              </div>
-              {/* Glowing effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-pink-400/20 blur-xl animate-pulse opacity-50"></div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div
+          ref={ref}
+          className={`transition-all duration-1000 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+        >
+          {/* Header */}
+          <div className="text-center mb-12 md:mb-20">
+            <h2 className="text-4xl sm:text-5xl font-extrabold mb-4 tracking-tight text-white">
+              Technical <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">Expertise</span>
             </h2>
-            <p className="text-gray-400 mt-6 text-lg max-w-2xl mx-auto relative">
-              <span className="relative z-10">
-                Technologies and tools I use to bring ideas to life
-              </span>
-              {/* Subtle text glow */}
-              <div className="absolute inset-0 bg-gray-400/10 blur-sm animate-pulse opacity-50"></div>
+            <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded-full mb-5" />
+            <p className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed px-4">
+              A comprehensive toolkit of technologies I use to build intelligent software systems.
             </p>
           </div>
 
-          {/* Enhanced Skills Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {skills.map((skill, index) => (
+          {/* Grid — 1 col on mobile, 2 on tablet, 3 on desktop */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+            {skillCategories.map((category, idx) => (
               <div
-                key={index}
-                className={`group p-6 bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50
-                         hover:border-transparent hover:bg-gray-800/80 transition-all duration-500
-                         transform hover:scale-105 hover:shadow-xl cursor-pointer relative overflow-hidden
-                         ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-                style={{ transitionDelay: `${index * 100}ms` }}
+                key={idx}
+                className="group relative bg-[#151b2d]/60 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-5 sm:p-7 border border-white/5 hover:border-white/12 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.7)]"
               >
-                {/* Animated background gradient on hover */}
-                <div className={`absolute inset-0 bg-gradient-to-r ${skill.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
-                
-                {/* Floating particles inside card */}
-                <div className="absolute inset-0 overflow-hidden">
-                  {Array.from({ length: 3 }).map((_, i) => (
+                {/* Header */}
+                <div className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-7">
+                  <div className={`p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl bg-gradient-to-br ${category.color} shadow-lg ring-1 ring-white/20`}>
+                    <category.icon size={20} className="sm:w-[26px] sm:h-[26px] text-white" />
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold text-white">{category.title}</h3>
+                </div>
+
+                {/* Skill chips */}
+                <div className="flex flex-wrap gap-2 sm:gap-3">
+                  {category.skills.map((skill, sIdx) => (
                     <div
-                      key={i}
-                      className="absolute w-1 h-1 bg-blue-400/30 rounded-full animate-ping opacity-0 group-hover:opacity-100"
-                      style={{
-                        left: `${20 + i * 30}%`,
-                        top: `${20 + i * 20}%`,
-                        animationDelay: `${i * 0.5}s`,
-                        animationDuration: '2s'
-                      }}
-                    ></div>
+                      key={sIdx}
+                      className="flex items-center gap-2 px-3 py-2 bg-white/5 rounded-lg sm:rounded-xl border border-white/5 hover:bg-white/10 hover:border-white/20 transition-all"
+                    >
+                      <img
+                        src={skill.icon}
+                        alt={skill.name}
+                        className="w-5 h-5 object-contain"
+                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                      />
+                      <span className="text-gray-300 font-medium text-xs sm:text-sm">{skill.name}</span>
+                    </div>
                   ))}
                 </div>
 
-                {/* Enhanced Icon with Gradient Background */}
-                <div className={`w-16 h-16 rounded-lg bg-gradient-to-r ${skill.color} p-0.5 mb-4 mx-auto
-                              group-hover:scale-110 transition-transform duration-300 relative`}>
-                  <div className="w-full h-full bg-gray-800 rounded-lg flex items-center justify-center relative overflow-hidden">
-                    <skill.icon size={28} className="text-white relative z-10" />
-                    {/* Icon glow effect */}
-                    <div className={`absolute inset-0 bg-gradient-to-r ${skill.color} opacity-0 group-hover:opacity-20 blur-md transition-opacity duration-300`}></div>
-                  </div>
-                  {/* Outer glow */}
-                  <div className={`absolute inset-0 bg-gradient-to-r ${skill.color} opacity-0 group-hover:opacity-30 blur-lg transition-opacity duration-300`}></div>
-                </div>
-
-                {/* Enhanced Skill Name */}
-                <h3 className="text-xl font-semibold text-white text-center mb-3 group-hover:text-blue-400 transition-colors relative">
-                  <span className="relative z-10">{skill.name}</span>
-                  {/* Text glow effect */}
-                  <div className="absolute inset-0 text-blue-400 opacity-0 group-hover:opacity-20 blur-sm transition-opacity duration-300">
-                    {skill.name}
-                  </div>
-                </h3>
-
-                {/* Enhanced Description */}
-                <p className="text-gray-400 text-sm text-center group-hover:text-gray-300 transition-colors relative">
-                  <span className="relative z-10">{skill.description}</span>
-                </p>
-
-                {/* Animated border effect */}
-                <div className={`absolute inset-0 rounded-xl border border-transparent group-hover:border-blue-500/30 transition-colors duration-300`}></div>
-                
-                {/* Corner accents */}
-                <div className="absolute top-2 left-2 w-4 h-4 border-l-2 border-t-2 border-blue-400/0 group-hover:border-blue-400/50 transition-colors duration-300"></div>
-                <div className="absolute bottom-2 right-2 w-4 h-4 border-r-2 border-b-2 border-purple-400/0 group-hover:border-purple-400/50 transition-colors duration-300"></div>
+                {/* Hover glow */}
+                <div className={`absolute -right-4 -bottom-4 w-20 h-20 bg-gradient-to-br ${category.color} opacity-0 group-hover:opacity-[0.06] blur-2xl transition-opacity duration-500`} />
               </div>
             ))}
-          </div>
-
-          {/* Enhanced Additional Info */}
-          <div className="mt-16 text-center">
-            <div className="inline-flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-blue-600/20 to-purple-600/20 
-                          rounded-full border border-blue-500/30 relative overflow-hidden group hover:scale-105 transition-transform duration-300">
-              {/* Animated background */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              
-              <Brain size={20} className="text-blue-400 relative z-10 group-hover:animate-pulse" />
-              <span className="text-gray-300 relative z-10 group-hover:text-white transition-colors">
-                Always learning and exploring new technologies
-              </span>
-              
-              {/* Shimmer effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 animate-shimmer"></div>
-            </div>
           </div>
         </div>
       </div>

@@ -1,121 +1,118 @@
-import React from 'react';
-import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
-import { Github, Linkedin, Instagram, Twitter } from 'lucide-react';
-import NeuralNetwork from './NeuralNetwork';
-import RevolvingNeurons from './RevolvingNeurons';
+import { lazy, Suspense, Component } from 'react';
+import type { ReactNode } from 'react';
+import { Github, Linkedin, Instagram, Twitter, ChevronDown, Sparkles } from 'lucide-react';
+
+const ThreeCanvas = lazy(() =>
+  import('./HeroCanvas').catch(() => ({ default: () => null }))
+);
+
+class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
+  constructor(props: { children: ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() { return { hasError: true }; }
+  render() {
+    if (this.state.hasError) return null;
+    return this.props.children;
+  }
+}
 
 const Hero = () => {
   const socialLinks = [
-    { icon: Github, url: 'https://github.com/NithinS0', label: 'GitHub' },
-    { icon: Linkedin, url: 'https://linkedin.com/in/nithin01', label: 'LinkedIn' },
-    { icon: Instagram, url: 'https://www.instagram.com/nithinsivakumar', label: 'Instagram' },
-    { icon: Twitter, url: 'https://x.com/SNithin_/', label: 'Twitter' }
+    { icon: Github,    url: 'https://github.com/NithinS0',                   label: 'GitHub',    color: 'hover:text-[#2ea44f]' },
+    { icon: Linkedin,  url: 'https://linkedin.com/in/nithin01',              label: 'LinkedIn',  color: 'hover:text-[#0077b5]' },
+    { icon: Instagram, url: 'https://www.instagram.com/nithinsivakumar',     label: 'Instagram', color: 'hover:text-[#e4405f]' },
+    { icon: Twitter,   url: 'https://x.com/SNithin_/',                       label: 'Twitter',   color: 'hover:text-[#1da1f2]' },
   ];
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Simplified 3D Background with Neural Networks */}
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#050810]">
+      {/* 3D Background */}
       <div className="absolute inset-0 z-0">
-        <Canvas camera={{ position: [0, 0, 12], fov: 45 }}>
-          <ambientLight intensity={0.4} />
-          <pointLight position={[10, 10, 10]} intensity={1} />
-          <pointLight position={[-10, -10, -10]} intensity={0.5} color="#8B5CF6" />
-          
-          {/* AI Neural Network Elements */}
-          <NeuralNetwork />
-          <RevolvingNeurons />
-          <RevolvingNeurons />
-          
-          <OrbitControls 
-            enableZoom={false} 
-            enablePan={false} 
-            autoRotate={true}
-            autoRotateSpeed={0.5}
-            maxPolarAngle={Math.PI / 2}
-            minPolarAngle={Math.PI / 2}
-          />
-        </Canvas>
+        <ErrorBoundary>
+          <Suspense fallback={null}>
+            <ThreeCanvas />
+          </Suspense>
+        </ErrorBoundary>
       </div>
 
-      {/* Simplified Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-900/95 via-purple-900/30 to-blue-900/40 z-10"></div>
+      {/* Decorative overlays */}
+      <div className="absolute inset-0 z-10 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050810]/20 via-transparent to-[#050810]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(59,130,246,0.08)_0%,transparent_50%)]" />
+      </div>
 
       {/* Content */}
-      <div className="relative z-20 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        <div className="space-y-8">
-          <div className="space-y-4">
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold">
-              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                NITHIN S
-              </span>
-            </h1>
-            <p className="text-xl sm:text-2xl lg:text-3xl text-gray-300 font-light">
-              AI Enthusiast | ML Practitioner | Python Developer
-            </p>
+      <div className="relative z-20 w-full px-4 sm:px-6 text-center">
+        <div className="max-w-5xl mx-auto">
+
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6 sm:mb-8 backdrop-blur-md">
+            <Sparkles size={14} className="text-blue-400" />
+            <span className="text-blue-300 text-xs sm:text-sm font-semibold tracking-wide uppercase">
+              AI Architect &amp; ML Practitioner
+            </span>
           </div>
 
-          <div className="max-w-2xl mx-auto">
-            <p className="text-lg text-gray-400 leading-relaxed">
-              Passionate about building intelligent systems that solve real-world problems. 
-              Currently pursuing B.Tech in Artificial Intelligence at SRM University, 
-              focusing on machine learning, deep learning, and scalable AI solutions.
-            </p>
-          </div>
+          {/* Name */}
+          <h1 className="text-5xl sm:text-7xl md:text-8xl font-black mb-4 sm:mb-6 tracking-tighter leading-none">
+            <span className="block text-white opacity-90">NITHIN</span>
+            <span className="block bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent">
+              SIVAKUMAR
+            </span>
+          </h1>
 
-          {/* Social Links */}
-          <div className="flex justify-center space-x-6">
-            {socialLinks.map((social, index) => (
+          {/* Tagline */}
+          <p className="text-base sm:text-xl md:text-2xl text-gray-400 font-medium leading-relaxed max-w-xl sm:max-w-2xl mx-auto mb-8 sm:mb-10 px-2">
+            Building the next generation of{' '}
+            <span className="text-white">intelligent systems</span>{' '}
+            through Research &amp; Development in Artificial Intelligence.
+          </p>
+
+          {/* Socials */}
+          <div className="flex justify-center items-center gap-3 sm:gap-5 mb-8 sm:mb-12">
+            {socialLinks.map((s) => (
               <a
-                key={index}
-                href={social.url}
+                key={s.label}
+                href={s.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 bg-gray-800/50 backdrop-blur-sm rounded-full hover:bg-blue-600/20 
-                         hover:scale-110 transform transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25"
-                aria-label={social.label}
+                aria-label={s.label}
+                className={`group p-3 sm:p-4 bg-white/5 rounded-xl sm:rounded-2xl border border-white/10 transition-all duration-300 hover:-translate-y-1.5 hover:bg-white/10 text-gray-400 ${s.color}`}
               >
-                <social.icon size={24} className="text-gray-300 hover:text-blue-400 transition-colors" />
+                <s.icon size={18} className="sm:w-[22px] sm:h-[22px] transition-transform group-hover:scale-110" />
               </a>
             ))}
           </div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={() => scrollToSection('projects')}
-              className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white font-medium
-                       hover:from-blue-700 hover:to-purple-700 transform hover:scale-105 transition-all duration-300
-                       shadow-lg hover:shadow-xl"
+          {/* Actions — native anchor links, no DOM calls */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-5 px-4">
+            <a
+              href="#projects"
+              className="group relative w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 bg-blue-600 rounded-xl sm:rounded-2xl text-white font-bold transition-all duration-300 hover:bg-blue-500 hover:shadow-[0_0_30px_rgba(37,99,235,0.4)] overflow-hidden text-sm sm:text-base text-center"
             >
-              View My Work
-            </button>
-            <button
-              onClick={() => scrollToSection('contact')}
-              className="px-8 py-3 border-2 border-blue-400 rounded-full text-blue-400 font-medium
-                       hover:bg-blue-400 hover:text-white transform hover:scale-105 transition-all duration-300"
+              <span className="relative z-10">EXPLORE WORK</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+            </a>
+            <a
+              href="#contact"
+              className="w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 bg-white/5 hover:bg-white/10 rounded-xl sm:rounded-2xl text-white font-bold border border-white/10 transition-all duration-300 backdrop-blur-md text-sm sm:text-base text-center"
             >
-              Get In Touch
-            </button>
+              CONTACT ME
+            </a>
           </div>
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
-        <div className="animate-bounce">
-          <div className="w-6 h-10 border-2 border-gray-400 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-gray-400 rounded-full mt-2 animate-pulse"></div>
-          </div>
-        </div>
-      </div>
+      {/* Scroll indicator — anchor link */}
+      <a
+        href="#about"
+        aria-label="Scroll to About"
+        className="absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 z-20 text-gray-500 hover:text-white transition-colors animate-bounce p-2"
+      >
+        <ChevronDown size={28} className="sm:w-8 sm:h-8" />
+      </a>
     </section>
   );
 };

@@ -1,10 +1,10 @@
-import React from 'react';
 import Navigation from './components/Navigation';
 import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Experience from './components/Experience';
+import Certifications from './components/Certifications';
 import Resume from './components/Resume';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -14,7 +14,7 @@ import MouseInteractiveElements from './components/MouseInteractiveElements';
 
 function App() {
   return (
-    <div className="min-h-screen bg-gray-900 text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#050810] text-white overflow-x-hidden">
       <MouseFollower />
       <InteractiveBackground />
       <MouseInteractiveElements />
@@ -24,6 +24,7 @@ function App() {
       <Skills />
       <Projects />
       <Experience />
+      <Certifications />
       <Resume />
       <Contact />
       <Footer />

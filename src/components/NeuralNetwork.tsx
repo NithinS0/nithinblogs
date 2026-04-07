@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react';
+import { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -73,7 +73,7 @@ const NeuralNetwork = () => {
           <mesh 
             key={`connection-${index}`}
             position={start.clone().add(direction.clone().multiplyScalar(0.5))}
-            lookAt={end}
+            onUpdate={(self) => self.lookAt(end)}
           >
             <cylinderGeometry args={[0.002, 0.002, length, 4]} />
             <meshStandardMaterial 

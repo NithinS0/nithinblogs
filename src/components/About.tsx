@@ -1,186 +1,234 @@
-import React from 'react';
 import { useInView } from 'react-intersection-observer';
-import { Brain, Database } from 'lucide-react';
+import { ExternalLink, Mail, MapPin, Coffee, Code2, Cpu, Globe } from 'lucide-react';
 
 const About = () => {
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.2
-  });
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.05 });
 
-  const highlights = [
-    {
-      icon: Brain,
-      title: 'AI & Machine Learning',
-      description: 'Deep expertise in neural networks, computer vision, and intelligent systems'
-    },
-    {
-      icon: Database,
-      title: 'Data Science',
-      description: 'Advanced analytics, data processing, and insights extraction from complex datasets'
-    },
-    {
-      icon: Database,
-      title: 'Automation & Internship',
-      description: 'Completed internship at Renault Nissan Automotive working on RPA, Power BI, and Power Apps projects'
-    }
+  const stats = [
+    { value: '3+',   label: 'Industry Internships', icon: '🏭' },
+    { value: '6+',   label: 'AI Projects',          icon: '🤖' },
+    { value: '99%',  label: 'Model Accuracy',        icon: '🎯' },
+    { value: '2027', label: 'Graduating',            icon: '🎓' },
+  ];
+
+  const traits = [
+    { icon: Cpu,    label: 'Deep Learning',   desc: 'CNNs, RNNs, Transformers', color: 'text-blue-400',    bg: 'bg-blue-500/10'   },
+    { icon: Code2,  label: 'Full-Stack AI',   desc: 'FastAPI, React, Firebase',  color: 'text-purple-400',  bg: 'bg-purple-500/10' },
+    { icon: Globe,  label: 'Industrial AI',   desc: 'Real-world deployments',    color: 'text-emerald-400', bg: 'bg-emerald-500/10'},
+    { icon: Coffee, label: 'Always Learning', desc: 'Research & Open Source',    color: 'text-amber-400',   bg: 'bg-amber-500/10'  },
+  ];
+
+  const timeline = [
+    { year: '2023', event: 'Started B.Tech in Artificial Intelligence @ SRM University' },
+    { year: '2025', event: 'RPA & Data Intern @ Renault Nissan Automotive India' },
+    { year: '2026', event: 'AI Architect Intern @ Murugappa Group' },
+    { year: '2026', event: 'AI/ML Intern @ Tata Steel (Ongoing)' },
   ];
 
   return (
-    <section id="about" className="py-20 bg-gray-800/50 relative overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Neural Network Nodes */}
-        <div className="absolute top-16 left-16 w-4 h-4 bg-blue-400/40 rounded-full animate-pulse"></div>
-        <div className="absolute top-32 right-24 w-3 h-3 bg-purple-400/40 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute bottom-32 left-1/4 w-5 h-5 bg-pink-400/40 rounded-full animate-pulse" style={{ animationDelay: '2s' }}></div>
-        
-        {/* Neural Connections */}
-        <div className="absolute inset-0">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-1 h-1 bg-blue-400/30 rounded-full animate-ping"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${i * 0.8}s`,
-                animationDuration: `${3 + Math.random() * 2}s`
-              }}
-            ></div>
-          ))}
-        </div>
-
-        {/* Neural Pathways */}
-        <div className="absolute inset-0">
-          <div className="absolute top-1/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-400/20 to-transparent animate-pulse"></div>
-          <div className="absolute top-2/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-400/20 to-transparent animate-pulse" style={{ animationDelay: '2s' }}></div>
-        </div>
+    <section id="about" className="py-20 md:py-28 bg-[#050810] relative overflow-hidden">
+      {/* Ambient BG */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 right-0 w-72 h-72 md:w-[500px] md:h-[500px] bg-blue-600/5 rounded-full blur-[120px] -mr-40 -mt-20" />
+        <div className="absolute bottom-0 left-0 w-72 h-72 md:w-[400px] md:h-[400px] bg-purple-600/5 rounded-full blur-[120px] -ml-40 -mb-20" />
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div ref={ref} className={`transition-all duration-1000 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          
-          {/* Section Header with Enhanced Animation */}
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-4 relative">
-              <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-gradient-x bg-size-300 relative">
-                About Me
-              </span>
-              {/* Animated underline */}
-              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
-                <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full animate-pulse"></div>
-              </div>
-              {/* Glowing effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-purple-400/20 to-pink-400/20 blur-xl animate-pulse opacity-50"></div>
-            </h2>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div
+          ref={ref}
+          className={`transition-all duration-1000 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+        >
+          {/* Section label */}
+          <div className="flex items-center gap-3 mb-12 md:mb-16">
+            <div className="w-8 h-px bg-blue-500" />
+            <span className="text-blue-400 text-xs font-bold uppercase tracking-[0.2em]">About Me</span>
+            <div className="flex-1 h-px bg-white/5" />
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            
-            {/* Content with Enhanced Typography */}
-            <div className="space-y-6">
-              <div className="prose prose-lg text-gray-300">
-                <p className="text-xl leading-relaxed relative">
-                  <span className="relative z-10">
-                    Hi, I'm <span className="text-blue-400 font-semibold relative">
-                      Nithin S
-                      <span className="absolute -inset-1 bg-blue-400/20 blur-sm rounded animate-pulse"></span>
-                    </span> — a passionate AI and 
-                    Data Science enthusiast currently pursuing my B.Tech in Artificial Intelligence at
-                    <span className="text-purple-400 font-semibold relative ml-1">
-                      SRM University
-                      <span className="absolute -inset-1 bg-purple-400/20 blur-sm rounded animate-pulse"></span>
-                    </span>.
-                  </span>
-                </p>
-                
-                <p className="text-lg leading-relaxed text-gray-400 relative">
-                  <span className="relative z-10">
-                    I build intelligent systems using machine learning and deep learning. From secure password 
-                    managers to medical image classifiers, I aim to solve real-world problems with scalable 
-                    code and clean UI. My journey in AI is driven by curiosity and the desire to create 
-                    technology that makes a meaningful impact. I recently completed an internship at Renault Nissan 
-                    Automotive where I worked on automation projects using UiPath, Excel Macros, Power BI, and Power Apps.
-                  </span>
-                </p>
-              </div>
+          {/* Layout: stacked on mobile, 3-col on desktop */}
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 items-start">
 
-              {/* Enhanced Stats */}
-              <div className="grid grid-cols-2 gap-6 pt-6">
-                <div className="text-center p-4 bg-gray-900/50 rounded-lg backdrop-blur-sm relative overflow-hidden group hover:scale-105 transition-transform duration-300">
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="relative z-10">
-                    <div className="text-3xl font-bold text-blue-400 animate-pulse">5+</div>
-                    <div className="text-gray-400">Projects</div>
-                  </div>
-                  {/* Animated border */}
-                  <div className="absolute inset-0 rounded-lg border border-blue-500/20 animate-pulse"></div>
-                </div>
-                <div className="text-center p-4 bg-gray-900/50 rounded-lg backdrop-blur-sm relative overflow-hidden group hover:scale-105 transition-transform duration-300">
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-pink-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="relative z-10">
-                    <div className="text-3xl font-bold text-purple-400 animate-pulse" style={{ animationDelay: '0.5s' }}>2.5+</div>
-                    <div className="text-gray-400">Years Learning</div>
-                  </div>
-                  {/* Animated border */}
-                  <div className="absolute inset-0 rounded-lg border border-purple-500/20 animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+            {/* ═══ COL 1 — Profile photo (clear, no overlay text) ═══ */}
+            <div className="w-full sm:w-72 lg:w-64 xl:w-72 flex-shrink-0 mx-auto sm:mx-0">
+              {/* Glow ring */}
+              <div className="relative group">
+                <div className="absolute -inset-1.5 rounded-3xl bg-gradient-to-br from-blue-600/30 to-purple-600/20 blur-xl opacity-60 group-hover:opacity-100 transition-opacity duration-700" />
+
+                {/* Clean photo — NO text inside */}
+                <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-blue-900/20">
+                  <img
+                    src="/Photo.jpeg"
+                    alt="Nithin Sivakumar"
+                    className="w-full aspect-[3/4] object-cover object-top block group-hover:scale-[1.03] transition-transform duration-700"
+                  />
                 </div>
               </div>
-            </div>
 
-            {/* Enhanced Highlights Cards */}
-            <div className="space-y-6">
-              {highlights.map((item, index) => (
-                <div
-                  key={index}
-                  className={`p-6 bg-gradient-to-r from-gray-900/80 to-gray-800/80 backdrop-blur-sm rounded-xl
-                           hover:from-gray-800/80 hover:to-gray-700/80 transition-all duration-300
-                           transform hover:scale-105 hover:shadow-lg hover:shadow-blue-500/10
-                           ${inView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}
-                           border border-gray-700/50 hover:border-blue-500/30 relative overflow-hidden group`}
-                  style={{ transitionDelay: `${index * 200}ms` }}
+              {/* Name + title BELOW photo, outside the image */}
+              <div className="mt-5 text-center">
+                <h2 className="text-xl font-black text-white tracking-tight">Nithin Sivakumar</h2>
+                <p className="text-blue-400 text-xs font-bold uppercase tracking-widest mt-1">AI Engineer</p>
+                <div className="flex items-center justify-center gap-1.5 mt-2 text-gray-500">
+                  <MapPin size={12} />
+                  <span className="text-xs font-medium">Chennai, India</span>
+                </div>
+                {/* Availability */}
+                <div className="flex items-center justify-center gap-1.5 mt-2">
+                  <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
+                  <span className="text-emerald-400 text-xs font-semibold">Open to Opportunities</span>
+                </div>
+              </div>
+
+              {/* CTA buttons */}
+              <div className="flex gap-3 mt-5">
+                <a
+                  href="https://drive.google.com/file/d/1OIxHFcB3wsg_3qRoeoLsBWMmthQvXZVx/view?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold rounded-2xl shadow-lg shadow-blue-600/20 transition-all hover:-translate-y-0.5 text-sm"
                 >
-                  {/* Animated background gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 via-purple-600/5 to-pink-600/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  
-                  {/* Floating particles inside card */}
-                  <div className="absolute inset-0 overflow-hidden">
-                    {Array.from({ length: 3 }).map((_, i) => (
-                      <div
-                        key={i}
-                        className="absolute w-1 h-1 bg-blue-400/30 rounded-full animate-ping opacity-0 group-hover:opacity-100"
-                        style={{
-                          left: `${20 + i * 30}%`,
-                          top: `${20 + i * 20}%`,
-                          animationDelay: `${i * 0.5}s`,
-                          animationDuration: '2s'
-                        }}
-                      ></div>
-                    ))}
-                  </div>
-
-                  <div className="flex items-start space-x-4 relative z-10">
-                    <div className="p-3 bg-gradient-to-r from-blue-600/20 to-purple-600/20 rounded-lg relative overflow-hidden group-hover:scale-110 transition-transform duration-300">
-                      <item.icon size={24} className="text-blue-400 relative z-10" />
-                      {/* Icon glow effect */}
-                      <div className="absolute inset-0 bg-blue-400/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-blue-400 transition-colors duration-300">
-                        {item.title}
-                      </h3>
-                      <p className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Animated border effect */}
-                  <div className="absolute inset-0 rounded-xl border border-transparent group-hover:border-blue-500/30 transition-colors duration-300"></div>
-                </div>
-              ))}
+                  <ExternalLink size={14} />
+                  Resume
+                </a>
+                <a
+                  href="mailto:nithin200511@gmail.com"
+                  className="flex-1 flex items-center justify-center gap-2 py-3 bg-white/5 hover:bg-white/10 text-white font-bold rounded-2xl transition-all hover:-translate-y-0.5 text-sm"
+                >
+                  <Mail size={14} />
+                  Email
+                </a>
+              </div>
             </div>
+
+            {/* ═══ COL 2 — Bio + Stats ═══ */}
+            <div className="flex-1 min-w-0 space-y-5">
+              {/* Bio card */}
+              <div className="rounded-3xl bg-gradient-to-br from-[#0d1224] to-[#111827] p-6 sm:p-7 shadow-lg">
+                <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight mb-3 leading-tight">
+                  Decoding the{' '}
+                  <span className="bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                    Complex
+                  </span>
+                </h2>
+
+                <p className="text-gray-400 leading-relaxed text-sm sm:text-base mb-5">
+                  I'm a final-year{' '}
+                  <span className="text-white font-semibold">B.Tech AI student</span> at SRM University
+                  passionate about transforming data into production-grade intelligence. I've shipped AI
+                  solutions across{' '}
+                  <span className="text-blue-400 font-medium">inventory management</span>,{' '}
+                  <span className="text-blue-400 font-medium">medical imaging</span>, and{' '}
+                  <span className="text-blue-400 font-medium">industrial automation</span>.
+                </p>
+
+                {/* Skill chips */}
+                <div className="flex flex-wrap gap-2 mb-5">
+                  {['Python', 'TensorFlow', 'React', 'FastAPI', 'LangChain', 'Docker'].map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-3 py-1 rounded-full bg-white/[0.06] text-gray-300 text-xs font-semibold hover:bg-blue-500/15 hover:text-blue-300 transition-all"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Story */}
+                <div className="p-4 rounded-2xl bg-white/5 text-sm text-gray-400 leading-relaxed">
+                  <span className="text-white font-semibold">My Story: </span>
+                  From a{' '}
+                  <span className="text-white font-medium">QR-based Smart Inventory System</span> for
+                  Murugappa Group to a{' '}
+                  <span className="text-white font-medium">99%-accurate lung cancer detector</span>{' '}
+                  — I engineer AI that ships in the real world.
+                </div>
+              </div>
+
+              {/* Stats 2×2 */}
+              <div className="grid grid-cols-2 gap-3">
+                {stats.map((s, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-3 p-4 rounded-2xl bg-white/5 hover:bg-white/10 transition-all"
+                  >
+                    <span className="text-2xl">{s.icon}</span>
+                    <div>
+                      <p className="text-xl font-black text-white leading-none">{s.value}</p>
+                      <p className="text-gray-500 text-xs font-medium mt-0.5 leading-tight">{s.label}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* ═══ COL 3 — Traits + Timeline + Availability ═══ */}
+            <div className="flex-1 min-w-0 space-y-5">
+              {/* What I Do */}
+              <div>
+                <h3 className="text-white font-black text-base mb-4">What I Do</h3>
+                <div className="grid grid-cols-2 gap-3">
+                  {traits.map((t, i) => (
+                    <div
+                      key={i}
+                      className={`flex flex-col gap-2.5 p-4 rounded-2xl ${t.bg} transition-all hover:-translate-y-0.5 group`}
+                    >
+                      <t.icon size={20} className={`${t.color} group-hover:scale-110 transition-transform`} />
+                      <div>
+                        <p className={`font-bold text-sm ${t.color}`}>{t.label}</p>
+                        <p className="text-gray-500 text-xs mt-0.5">{t.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Journey */}
+              <div className="rounded-2xl bg-white/5 p-5">
+                <h3 className="text-white font-black text-base mb-5">Journey</h3>
+                <div className="relative space-y-0">
+                  <div className="absolute left-[18px] top-3 bottom-3 w-px bg-gradient-to-b from-blue-500/50 via-indigo-500/20 to-transparent" />
+                  {timeline.map((item, i) => (
+                    <div key={i} className="flex items-start gap-4 pb-5 last:pb-0 group">
+                      <div className="flex-shrink-0 w-[36px] flex justify-center mt-1">
+                        <div
+                          className={`w-2 h-2 rounded-full transition-all group-hover:scale-125 ${
+                            i === timeline.length - 1
+                              ? 'bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.7)]'
+                              : 'bg-white/20'
+                          }`}
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <span className="text-xs font-black text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded-md">
+                          {item.year}
+                        </span>
+                        <p className="text-gray-400 text-xs sm:text-sm mt-1 leading-relaxed group-hover:text-gray-200 transition-colors">
+                          {item.event}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Availability — anchor link, no DOM */}
+              <div className="flex items-center justify-between p-4 rounded-2xl bg-emerald-500/10">
+                <div className="flex items-center gap-3">
+                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.6)]" />
+                  <div>
+                    <p className="text-emerald-300 font-bold text-sm">Available Now</p>
+                    <p className="text-emerald-600 text-xs">Open to internships &amp; collaborations</p>
+                  </div>
+                </div>
+                <a
+                  href="#contact"
+                  className="text-emerald-400 text-xs font-bold hover:text-emerald-300 transition-colors underline underline-offset-4 whitespace-nowrap"
+                >
+                  Let's talk →
+                </a>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
