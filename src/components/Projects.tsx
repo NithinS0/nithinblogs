@@ -45,7 +45,7 @@ const Projects = () => {
       title: 'Password Manager',
       description: 'Secure Java-based password management solution with AES encryption and automated credential generation.',
       technologies: ['Java', 'Swing', 'MySQL', 'AES'],
-      githubUrl: 'https://github.com/NithinS0/Password-Generator-and-Manager',
+      githubUrl: 'https://github.com/NithinS0/Password-Manager-Generator-Using-Java-Swing-and-MySQL',
       icon: Lock,
       color: 'from-red-500 to-orange-600',
       image: '/password_manager.png',
