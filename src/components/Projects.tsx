@@ -18,7 +18,7 @@ const Projects = () => {
       title: 'Image Captioning System',
       description: 'Deep learning system combining CNNs and Transformers to automatically generate meaningful descriptions for visual input.',
       technologies: ['Python', 'TensorFlow', 'Keras', 'NLP', 'CNN'],
-      githubUrl: 'https://github.com/NithinS0/Image-Captioning-System',
+      githubUrl: 'https://github.com/NithinS0/Image-Captioning-using-ResNet50-and-Transformers',
       icon: ImageIcon,
       color: 'from-pink-500 to-rose-600',
       image: '/image_captioning.png',
