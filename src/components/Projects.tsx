@@ -54,7 +54,7 @@ const Projects = () => {
       title: 'Stock Price Prediction',
       description: 'LSTM-based time-series forecasting model for financial markets with interactive visualization dashboards.',
       technologies: ['LSTM', 'Pandas', 'Matplotlib'],
-      githubUrl: 'https://github.com/NithinS0/Stock-Price-Prediction',
+      githubUrl: 'https://github.com/NithinS0/STOCK-PREDICTION',
       icon: BarChart3,
       color: 'from-emerald-500 to-teal-600',
       image: '/stock_prediction.png',
