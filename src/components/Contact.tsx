@@ -35,15 +35,33 @@ const Contact = () => {
       return;
     }
     setStatus({ type: 'loading', message: '' });
-    await new Promise((r) => setTimeout(r, 800));
-    const body = `Name: ${form.name}\nEmail: ${form.email}\nSubject: ${form.subject || 'Portfolio Inquiry'}\n\n${form.message}`;
-    window.open(
-      `mailto:nithin200511@gmail.com?subject=${encodeURIComponent(form.subject || `Portfolio Inquiry from ${form.name}`)}&body=${encodeURIComponent(body)}`,
-      '_blank'
-    );
-    setStatus({ type: 'success', message: "Email client opened! If not, reach me at nithin200511@gmail.com" });
-    setForm({ name: '', email: '', subject: '', message: '' });
-    setTimeout(() => setStatus({ type: 'idle', message: '' }), 8000);
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/nithin200511@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          subject: form.subject || "Portfolio Inquiry",
+          message: form.message
+        })
+      });
+
+      if (response.ok) {
+        setStatus({ type: 'success', message: 'Message sent successfully!' });
+        setForm({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setStatus({ type: 'error', message: 'Failed to send message. Please try again.' });
+      }
+    } catch (error) {
+      setStatus({ type: 'error', message: 'An error occurred. Please try again.' });
+    } finally {
+      setTimeout(() => setStatus({ type: 'idle', message: '' }), 8000);
+    }
   };
 
   const inputCls = (name: string) =>
@@ -186,7 +204,7 @@ const Contact = () => {
                       )}
                     </button>
 
-                    <p className="text-center text-gray-600 text-xs">Opens your email client pre-filled.</p>
+                    <p className="text-center text-gray-600 text-xs">Your message will be sent directly to my inbox.</p>
                   </form>
                 </div>
               </div>
