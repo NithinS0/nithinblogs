@@ -1,5 +1,5 @@
 import { useInView } from 'react-intersection-observer';
-import { Briefcase, Calendar, MapPin, CheckCircle2, Building2 } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 const Experience = () => {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.05 });
@@ -7,116 +7,194 @@ const Experience = () => {
   const experiences = [
     {
       company: 'Tata Steel',
+      companyUrl: 'https://www.tatasteel.com/',
       position: 'AI/ML Intern',
-      location: 'Hybrid',
-      period: 'Mar 2026 – Present',
-      description: 'Applying machine learning to forecast steel demand and visualize operational insights.',
-      achievements: [
-        'Built a construction prediction model for steel demand forecasting using regression and time-series analysis.',
-        'Developing real-time dashboards for KPI monitoring and actionable insights.',
-        'Collaborating with cross-functional teams to integrate predictive models into production.',
-        'Optimizing data pipelines for real-time telemetry processing.',
+      location: 'Tata Steel · Hybrid',
+      locationUrl: 'https://www.google.com/maps/search/Tata+Steel',
+      period: '2026',
+      status: 'Live',
+      logo: '/assets/tata-logo.svg',
+      headerClass: 'bg-gradient-to-br from-[#081b29] via-[#003c71] to-[#005a9c]',
+      logoStyle: 'rounded-xl object-contain bg-white p-2.5 shadow-[0_4px_15px_rgba(0,0,0,0.3)]',
+      stats: [
+        { value: 'Mar 2026', label: 'Start' },
+        { value: 'Present', label: 'Status' },
+        { value: '4+', label: 'Months' },
       ],
+      description: 'Applying machine learning to forecast steel demand and visualize operational insights. Developed a regression-based construction prediction model and designed real-time dashboards for telemetry data.',
+      tags: ['AI/ML', 'Demand Forecasting', 'Python', 'Telemetry'],
+      tagHoverClass: 'hover:bg-blue-500/10 hover:text-blue-500 dark:hover:text-blue-400 hover:border-blue-500/30',
     },
     {
-      company: 'Murugappa Group',
-      subCompany: 'Tubes Products of India, Avadi',
+      company: 'Tube Products of India (Murugappa Group)',
+      companyUrl: 'https://tiindia.com/',
       position: 'AI Architect Intern',
-      location: 'On-site',
-      period: 'Feb 2026 – Present',
-      description: 'AI-driven process monitoring and full-stack system architecture for industrial applications.',
-      achievements: [
-        'Spearheaded the "Murugappa Smart Inventory System" — a full-stack QR-enabled platform.',
-        'Implemented role-based access control and GPS-based movement logging.',
-        'Integrated Firebase for authentication and Supabase for database management.',
-        'Developed AI solution for WET process monitoring using Raspberry Pi 4.',
+      location: 'Murugappa Group · Avadi',
+      locationUrl: 'https://maps.google.com/?q=Tube+Products+of+India+Avadi+Chennai',
+      period: '2026',
+      status: 'Done',
+      logo: '/assets/murugappa-logo.avif',
+      headerClass: 'bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f3460]',
+      logoStyle: 'rounded-xl object-cover shadow-[0_4px_15px_rgba(0,0,0,0.3)]',
+      stats: [
+        { value: 'Feb 2026', label: 'Start' },
+        { value: 'May 2026', label: 'End' },
+        { value: '4', label: 'Months' },
       ],
+      description: 'AI-driven process monitoring and full-stack system architecture for industrial systems. Spearheaded the QR-enabled smart inventory system and deployed computer vision WET monitoring on Raspberry Pi.',
+      tags: ['Full-Stack', 'QR Tracking', 'Firebase', 'Supabase', 'Raspberry Pi'],
+      tagHoverClass: 'hover:bg-[#10b981]/10 hover:text-[#10b981] dark:hover:text-[#6ee7b7] hover:border-[#10b981]/30',
     },
     {
       company: 'Renault Nissan Automotive',
-      subCompany: 'India Private Limited',
+      companyUrl: 'https://www.renaultgroup.com/en/group/locations/chennai-plant/',
       position: 'RPA & Data Intern',
-      location: 'On-site',
-      period: 'Mar 2025 – Apr 2025',
-      description: 'Designed RPA workflows and data visualization tools to automate business processes.',
-      achievements: [
-        'Developed and optimized Excel Macros to streamline reporting tasks.',
-        'Built interactive Power BI dashboards for key business metrics.',
-        'Created Power Apps to support data handling and process efficiency.',
-        'Minimized manual workflow through automation and data-driven solutions.',
+      location: 'RNAIPL · Chennai',
+      locationUrl: 'https://maps.google.com/?q=Renault+Nissan+Automotive+India+Private+Limited+Oragadam',
+      period: '2025',
+      status: 'Done',
+      logo: '/assets/renault-logo.png',
+      headerClass: 'bg-gradient-to-br from-[#c0392b] via-[#922b21] to-[#1a1a2e]',
+      logoStyle: 'object-contain',
+      stats: [
+        { value: 'Mar 2025', label: 'Start' },
+        { value: 'Apr 2025', label: 'End' },
+        { value: '2', label: 'Months' },
       ],
+      description: 'Designed RPA workflows and custom data visualization solutions to automate manufacturing business processes. Engineered Excel Macros, Power Apps pipelines, and interactive Power BI dashboards.',
+      tags: ['RPA', 'Excel Macros', 'Power BI', 'Power Apps', 'Automation'],
+      tagHoverClass: 'hover:bg-red-500/10 hover:text-red-500 dark:hover:text-red-400 hover:border-red-500/30',
     },
   ];
 
   return (
-    <section id="experience" className="py-20 md:py-28 bg-[#0a0f1e] relative overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="experience" className="py-20 md:py-28 bg-white dark:bg-[#050810] transition-colors duration-500 relative overflow-hidden">
+      {/* Background elements */}
+      <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.01] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none transition-colors duration-500" />
+      <div className="absolute top-1/4 left-1/3 w-[300px] h-[300px] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         <div
           ref={ref}
           className={`transition-all duration-1000 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
         >
           {/* Header */}
-          <div className="text-center mb-12 md:mb-20">
-            <h2 className="text-4xl sm:text-5xl font-extrabold text-white mb-4">
-              Career <span className="bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">Trajectory</span>
+          <div className="text-center mb-16">
+            <p className="text-xs sm:text-sm font-bold text-slate-400 dark:text-gray-500 uppercase tracking-widest mb-2 select-none">
+              My Journey
+            </p>
+            <h2 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white transition-colors duration-500 tracking-tight">
+              Experience
             </h2>
-            <div className="w-20 h-1.5 bg-blue-600 mx-auto rounded-full" />
           </div>
 
-          {/* Timeline */}
-          <div className="relative space-y-8 sm:space-y-12 before:absolute before:inset-0 before:ml-4 sm:before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-white/10 before:to-transparent">
-            {experiences.map((exp, idx) => (
-              <div
-                key={idx}
-                className={`relative flex items-start md:items-center justify-start md:justify-normal md:odd:flex-row-reverse group transform transition-all duration-500 ${inView ? 'opacity-100' : 'opacity-0 translate-y-8'}`}
-                style={{ transitionDelay: `${idx * 200}ms` }}
-              >
-                {/* Timeline dot */}
-                <div className="flex-shrink-0 flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-white/10 bg-[#0a0f1e] text-white shadow md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 relative z-20 transition-all duration-300 group-hover:scale-125 group-hover:bg-blue-600 group-hover:border-blue-500 mt-1 md:mt-0">
-                  <Briefcase size={14} className="sm:w-[18px] sm:h-[18px]" />
-                </div>
-
-                {/* Card */}
-                <div className="ml-5 sm:ml-8 md:ml-0 w-full md:w-[calc(50%-2.5rem)] p-5 sm:p-7 rounded-2xl sm:rounded-3xl bg-[#151b2d]/60 backdrop-blur-xl border border-white/5 hover:border-blue-500/30 transition-all duration-300 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]">
-                  {/* Card header */}
-                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-5">
-                    <div>
-                      <h3 className="text-lg sm:text-2xl font-black text-white group-hover:text-blue-400 transition-colors">{exp.position}</h3>
-                      <div className="flex items-center gap-2 text-blue-300 font-bold mt-1 text-sm sm:text-base">
-                        <Building2 size={15} />
-                        <span>{exp.company}</span>
-                      </div>
-                      {exp.subCompany && (
-                        <p className="text-gray-500 text-xs mt-0.5">{exp.subCompany}</p>
+          {/* Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 max-w-7xl mx-auto">
+            {experiences.map((exp, idx) => {
+              const isOngoing = exp.status === 'Live';
+              return (
+                <div
+                  key={idx}
+                  className="group relative bg-slate-50 dark:bg-[#0a0a0b] border border-slate-200/60 dark:border-white/[0.04] rounded-[1.75rem] overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_60px_rgba(0,0,0,0.05)] dark:hover:shadow-[0_20px_60px_rgba(0,0,0,0.4)] flex flex-col"
+                >
+                  {/* Card Header */}
+                  <div className={`p-7 pb-6 relative text-white ${exp.headerClass} flex flex-col`}>
+                    <div className="flex justify-between items-center mb-5 select-none">
+                      {isOngoing ? (
+                        <span className="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-[#10b981]/25 border border-[#10b981]/40 text-[#6ee7b7] animate-pulse">
+                          ● Live
+                        </span>
+                      ) : (
+                        <span className="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-blue-500/20 border border-blue-500/35 text-[#93c5fd]">
+                          ✓ Done
+                        </span>
                       )}
-                    </div>
-                    <div className="flex flex-wrap items-start gap-2">
-                      <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-gray-400 text-xs font-bold uppercase tracking-wide">
-                        <Calendar size={12} />
+                      <span className="text-[11px] font-semibold opacity-60 tracking-widest uppercase">
                         {exp.period}
                       </span>
-                      <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-bold uppercase tracking-wide">
-                        <MapPin size={12} />
-                        {exp.location}
-                      </span>
                     </div>
+
+                    <div className="w-[65px] h-[65px] flex items-center justify-center mb-5 select-none">
+                      <img
+                        src={exp.logo}
+                        alt={exp.company}
+                        className={`w-full h-full ${exp.logoStyle} transition-transform duration-300 group-hover:scale-110`}
+                      />
+                    </div>
+
+                    <h3 className="text-xl font-extrabold text-white mb-1.5 leading-tight min-h-[56px] flex items-end">
+                      {exp.position}
+                    </h3>
+                    <a
+                      href={exp.companyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-sm font-bold text-white/85 hover:text-white hover:underline hover:underline-offset-2 transition-colors mb-0.5 line-clamp-1"
+                    >
+                      {exp.company} ↗
+                    </a>
+                    <a
+                      href={exp.locationUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block text-xs text-white/60 hover:text-white/90 transition-colors"
+                    >
+                      {exp.location}
+                    </a>
                   </div>
 
-                  <p className="text-gray-400 mb-5 leading-relaxed text-sm sm:text-base italic border-l-4 border-white/10 pl-4">
-                    {exp.description}
-                  </p>
+                  {/* Card Body */}
+                  <div className="p-7 pt-6 pb-7 flex-1 flex flex-col">
+                    {/* Stats Row */}
+                    <div className="flex items-center bg-white dark:bg-[#121214] border border-slate-200 dark:border-white/[0.04] rounded-xl p-3.5 mb-5 select-none">
+                      {exp.stats.map((stat, sIdx) => (
+                        <div key={sIdx} className="flex-1 flex items-center">
+                          <div className="flex-1 flex flex-col items-center gap-0.5">
+                            <span className="text-[13px] font-bold text-slate-800 dark:text-white transition-colors duration-500">
+                              {stat.value}
+                            </span>
+                            <span className="text-[10px] text-slate-400 dark:text-gray-500 font-semibold uppercase tracking-wider">
+                              {stat.label}
+                            </span>
+                          </div>
+                          {sIdx < exp.stats.length - 1 && (
+                            <div className="w-px h-8 bg-slate-200 dark:bg-white/[0.04] shrink-0" />
+                          )}
+                        </div>
+                      ))}
+                    </div>
 
-                  <ul className="space-y-3">
-                    {exp.achievements.map((item, iIdx) => (
-                      <li key={iIdx} className="flex items-start gap-3 group/item">
-                        <CheckCircle2 size={16} className="mt-0.5 text-blue-500/50 group-hover/item:text-blue-500 transition-colors flex-shrink-0" />
-                        <span className="text-gray-400 group-hover/item:text-gray-200 transition-colors text-sm leading-relaxed">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
+                    {/* Description */}
+                    <p className="text-sm text-slate-600 dark:text-gray-400 transition-colors duration-500 leading-relaxed mb-6 flex-1">
+                      {exp.description}
+                    </p>
+
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2 mb-4 select-none">
+                      {exp.tags.map((tag, tIdx) => (
+                        <span
+                          key={tIdx}
+                          className={`px-3 py-1 bg-white dark:bg-[#121214] border border-slate-200 dark:border-white/[0.04] rounded-full text-[11px] font-semibold text-slate-500 dark:text-gray-400 transition-all duration-300 cursor-default ${exp.tagHoverClass}`}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
+          </div>
+
+          {/* Scroll Indicator */}
+          <div className="flex justify-center mt-16 select-none">
+            <a
+              href="#certifications"
+              className="animate-bounce flex items-center justify-center w-10 h-10 rounded-full border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-[#121214] text-slate-500 dark:text-gray-400 hover:text-slate-900 dark:hover:text-white hover:border-slate-400 dark:hover:border-white transition-colors duration-300"
+              aria-label="Scroll to Certifications"
+            >
+              <ChevronDown size={20} />
+            </a>
           </div>
         </div>
       </div>

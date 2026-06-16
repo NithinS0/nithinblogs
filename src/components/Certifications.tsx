@@ -11,19 +11,18 @@ const certifications = [
     badgeLabel: 'Official Credential Badge',
     badgeBg: 'from-[#00A1E0] via-[#0176D3] to-[#032D60]',
     skills: ['Agentforce', 'AI Agents', 'Salesforce Platform', 'LLM Integration', 'Automation'],
-    verifyUrl: 'https://trailhead.salesforce.com/en/credentials/verification/',
+    verifyUrl: 'https://drive.google.com/file/d/1yrxq6_mUKKt8tSEzbj5C4CP0hRchxpfo/view?usp=sharing',
     accent: 'blue',
     description: 'Demonstrates expertise in building and deploying autonomous AI agents on the Salesforce platform using Agentforce, integrating LLMs, and automating complex business workflows.',
   },
-  // Add more certifications here
 ];
 
 const accentMap: Record<string, { border: string; glow: string; tag: string; issuer: string; btn: string }> = {
   blue: {
     border: 'border-white/5 hover:border-white/10',
     glow: 'from-blue-600/15 to-indigo-600/10',
-    tag: 'bg-blue-500/10 text-blue-300',
-    issuer: 'text-blue-400',
+    tag: 'bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-300',
+    issuer: 'text-blue-500 dark:text-blue-400',
     btn: 'bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/25 hover:shadow-blue-500/35',
   },
 };
@@ -32,7 +31,7 @@ const Certifications = () => {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.05 });
 
   return (
-    <section id="certifications" className="py-20 md:py-28 bg-[#050810] relative overflow-hidden">
+    <section id="certifications" className="py-20 md:py-28 bg-[#fafafc] dark:bg-[#050810] transition-colors duration-500 relative overflow-hidden">
       {/* Background FX */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-blue-600/4 rounded-full blur-[130px]" />
@@ -46,16 +45,16 @@ const Certifications = () => {
           {/* Section label */}
           <div className="flex items-center gap-3 mb-12">
             <div className="w-8 h-px bg-blue-500" />
-            <span className="text-blue-400 text-xs font-bold uppercase tracking-[0.2em]">Credentials</span>
-            <div className="flex-1 h-px bg-white/5" />
+            <span className="text-blue-500 dark:text-blue-400 text-xs font-bold uppercase tracking-[0.2em]">Credentials</span>
+            <div className="flex-1 h-px bg-slate-200 dark:bg-white/5" />
           </div>
 
           {/* Heading */}
           <div className="mb-10 md:mb-14">
-            <h2 className="text-4xl sm:text-5xl font-black text-white tracking-tight">
-              Certifi<span className="bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">cations</span>
+            <h2 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white transition-colors duration-500 tracking-tight">
+              Certifi<span className="bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 bg-clip-text text-transparent">cations</span>
             </h2>
-            <p className="text-gray-400 text-base sm:text-lg mt-2 max-w-xl">
+            <p className="text-slate-600 dark:text-gray-400 transition-colors duration-500 text-base sm:text-lg mt-2 max-w-xl">
               Industry-recognized credentials validating my expertise in AI and emerging technologies.
             </p>
           </div>
@@ -67,10 +66,9 @@ const Certifications = () => {
               return (
                 <div
                   key={idx}
-                  className={`group relative flex flex-col bg-[#0c1020] rounded-3xl transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_24px_60px_-15px_rgba(0,0,0,0.8)] overflow-hidden`}
+                  className={`group relative flex flex-col bg-white dark:bg-[#0c1020] rounded-3xl border border-slate-200/60 dark:border-0 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_24px_60px_-15px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_24px_60px_-15px_rgba(0,0,0,0.8)] overflow-hidden`}
                 >
                   {/* ── Badge Hero Area ── */}
-                  {/* Gradient background for badge */}
                   <div className={`relative bg-gradient-to-br ${cert.badgeBg} p-8 flex flex-col items-center justify-center min-h-[220px] sm:min-h-[260px]`}>
                     {/* Decorative circles */}
                     <div className="absolute top-0 right-0 w-40 h-40 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2" />
@@ -100,27 +98,27 @@ const Certifications = () => {
                   {/* ── Card Body ── */}
                   <div className="p-5 sm:p-6 flex flex-col flex-1">
                     {/* Title */}
-                    <h3 className="text-white font-black text-lg sm:text-xl leading-tight mb-2 group-hover:text-blue-100 transition-colors">
+                    <h3 className="text-slate-900 dark:text-white font-black text-lg sm:text-xl leading-tight mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-100 transition-colors">
                       {cert.title}
                     </h3>
 
                     {/* Date */}
-                    <div className="flex items-center gap-1.5 text-gray-500 mb-4">
+                    <div className="flex items-center gap-1.5 text-slate-400 dark:text-gray-500 mb-4">
                       <CalendarCheck size={13} />
                       <span className="text-xs font-medium">Issued {cert.date}</span>
                     </div>
 
                     {/* Description */}
-                    <p className="text-gray-500 text-xs sm:text-sm leading-relaxed mb-4 flex-1">
+                    <p className="text-slate-600 dark:text-gray-500 transition-colors duration-500 text-xs sm:text-sm leading-relaxed mb-4 flex-1">
                       {cert.description}
                     </p>
 
                     {/* Credential ID chip */}
-                    <div className="mb-4 px-3 py-2.5 rounded-xl bg-white/5 flex items-center gap-2">
-                      <Award size={13} className="text-gray-500 flex-shrink-0" />
+                    <div className="mb-4 px-3 py-2.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200/60 dark:border-0 flex items-center gap-2">
+                      <Award size={13} className="text-slate-400 dark:text-gray-500 flex-shrink-0" />
                       <div className="min-w-0">
-                        <p className="text-gray-600 text-[10px] font-bold uppercase tracking-widest mb-0.5">Credential ID</p>
-                        <p className="text-gray-300 text-xs font-mono truncate">{cert.credentialId}</p>
+                        <p className="text-slate-400 dark:text-gray-600 text-[10px] font-bold uppercase tracking-widest mb-0.5">Credential ID</p>
+                        <p className="text-slate-700 dark:text-gray-300 text-xs font-mono truncate">{cert.credentialId}</p>
                       </div>
                     </div>
 
@@ -150,13 +148,13 @@ const Certifications = () => {
             })}
 
             {/* "More coming soon" placeholder */}
-            <div className="flex flex-col items-center justify-center gap-5 min-h-[440px] sm:min-h-[500px] rounded-3xl border border-dashed border-white/10 bg-white/2 p-8">
-              <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/8 flex items-center justify-center">
-                <Award size={28} className="text-gray-600" />
+            <div className="flex flex-col items-center justify-center gap-5 min-h-[440px] sm:min-h-[500px] rounded-3xl border border-dashed border-slate-300 dark:border-white/10 bg-slate-50/50 dark:bg-white/2 p-8">
+              <div className="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/8 flex items-center justify-center">
+                <Award size={28} className="text-slate-400 dark:text-gray-600" />
               </div>
               <div className="text-center space-y-1.5">
-                <p className="text-gray-400 font-bold text-base">More Coming Soon</p>
-                <p className="text-gray-600 text-sm">Actively pursuing new certifications</p>
+                <p className="text-slate-700 dark:text-gray-400 font-bold text-base">More Coming Soon</p>
+                <p className="text-slate-400 dark:text-gray-600 text-sm">Actively pursuing new certifications</p>
               </div>
             </div>
           </div>

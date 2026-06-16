@@ -15,7 +15,6 @@ const HeroCanvas = () => (
     </Float>
 
     <RevolvingNeurons />
-    <RevolvingNeurons />
 
     <OrbitControls
       enableZoom={false}

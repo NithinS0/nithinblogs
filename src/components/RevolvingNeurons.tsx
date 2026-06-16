@@ -28,12 +28,12 @@ const RevolvingNeurons = () => {
   });
 
   const neurons = [
-    { position: [4, 1.5, -8], size: 0.15, color: '#3B82F6' },
-    { position: [-4, -0.5, -9], size: 0.13, color: '#8B5CF6' },
-    { position: [3, -1.5, -7], size: 0.16, color: '#EC4899' },
-    { position: [-3, 1.8, -10], size: 0.14, color: '#10B981' },
-    { position: [5, 0.2, -8.5], size: 0.15, color: '#F59E0B' },
-    { position: [-5, -1.8, -7.5], size: 0.12, color: '#EF4444' },
+    { position: [4, 1.5, -8], size: 0.08, color: '#3B82F6' },
+    { position: [-4, -0.5, -9], size: 0.07, color: '#8B5CF6' },
+    { position: [3, -1.5, -7], size: 0.09, color: '#EC4899' },
+    { position: [-3, 1.8, -10], size: 0.08, color: '#10B981' },
+    { position: [5, 0.2, -8.5], size: 0.09, color: '#F59E0B' },
+    { position: [-5, -1.8, -7.5], size: 0.06, color: '#EF4444' },
   ];
 
   return (
@@ -56,9 +56,9 @@ const RevolvingNeurons = () => {
             <meshStandardMaterial
               color={neuron.color}
               transparent
-              opacity={0.25}
+              opacity={0.18}
               emissive={neuron.color}
-              emissiveIntensity={0.1}
+              emissiveIntensity={0.05}
               wireframe={false}
             />
             
@@ -68,9 +68,9 @@ const RevolvingNeurons = () => {
               <meshStandardMaterial
                 color={neuron.color}
                 transparent
-                opacity={0.4}
+                opacity={0.28}
                 emissive={neuron.color}
-                emissiveIntensity={0.15}
+                emissiveIntensity={0.08}
               />
             </mesh>
 
@@ -80,7 +80,7 @@ const RevolvingNeurons = () => {
               <meshBasicMaterial
                 color={neuron.color}
                 transparent
-                opacity={0.1}
+                opacity={0.08}
                 side={THREE.DoubleSide}
               />
             </mesh>
@@ -101,9 +101,9 @@ const RevolvingNeurons = () => {
                   <meshStandardMaterial
                     color={neuron.color}
                     transparent
-                    opacity={0.3}
+                    opacity={0.18}
                     emissive={neuron.color}
-                    emissiveIntensity={0.08}
+                    emissiveIntensity={0.04}
                   />
                 </mesh>
               );
@@ -133,9 +133,9 @@ const RevolvingNeurons = () => {
                 <meshStandardMaterial
                   color="#8B5CF6"
                   transparent
-                  opacity={0.15}
+                  opacity={0.12}
                   emissive="#8B5CF6"
-                  emissiveIntensity={0.03}
+                  emissiveIntensity={0.02}
                 />
               </mesh>
             );

@@ -42,22 +42,22 @@ const NeuralNetwork = () => {
   useFrame((state) => {
     if (groupRef.current) {
       groupRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.1) * 0.02;
-      groupRef.current.position.z = -2 + Math.sin(state.clock.elapsedTime * 0.1) * 0.2;
+      groupRef.current.position.z = -6.5 + Math.sin(state.clock.elapsedTime * 0.1) * 0.2;
     }
   });
 
   return (
-    <group ref={groupRef} position={[2, 0, -3]}>
+    <group ref={groupRef} position={[3.6, 0.2, -6.5]}>
       {/* Neural Network Nodes */}
       {networkData.nodes.map((node, index) => (
         <mesh key={`node-${index}`} position={node.position}>
-          <sphereGeometry args={[0.06, 8, 8]} />
+          <sphereGeometry args={[0.035, 8, 8]} />
           <meshStandardMaterial 
             color={node.layer === 0 ? '#10B981' : node.layer === networkData.nodes[networkData.nodes.length - 1].layer ? '#EF4444' : '#3B82F6'}
             emissive={node.layer === 0 ? '#10B981' : node.layer === networkData.nodes[networkData.nodes.length - 1].layer ? '#EF4444' : '#3B82F6'}
-            emissiveIntensity={0.2}
+            emissiveIntensity={0.15}
             transparent
-            opacity={0.8}
+            opacity={0.45}
           />
         </mesh>
       ))}
@@ -75,13 +75,13 @@ const NeuralNetwork = () => {
             position={start.clone().add(direction.clone().multiplyScalar(0.5))}
             onUpdate={(self) => self.lookAt(end)}
           >
-            <cylinderGeometry args={[0.002, 0.002, length, 4]} />
+            <cylinderGeometry args={[0.001, 0.001, length, 4]} />
             <meshStandardMaterial 
               color="#8B5CF6" 
               transparent 
-              opacity={0.3}
+              opacity={0.14}
               emissive="#8B5CF6"
-              emissiveIntensity={0.1}
+              emissiveIntensity={0.04}
             />
           </mesh>
         );

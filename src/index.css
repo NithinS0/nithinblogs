@@ -15,6 +15,15 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+/* ── View Transitions: disable default cross-fade so our clip-path circle
+   animation is the sole effect during theme switching ── */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+
 body {
   font-family: 'Inter', sans-serif;
   line-height: 1.6;

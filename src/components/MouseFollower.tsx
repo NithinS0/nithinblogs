@@ -1,119 +1,107 @@
-import { useEffect, useState } from 'react';
-
-interface MousePosition {
-  x: number;
-  y: number;
-}
+import { useEffect, useRef, useState } from 'react';
 
 const MouseFollower = () => {
-  const [mousePosition, setMousePosition] = useState<MousePosition>({ x: 0, y: 0 });
-  const [isMoving, setIsMoving] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  
+  // DOM Refs
+  const followerRef = useRef<HTMLDivElement>(null);
+  
+  // Physics / position tracking
+  const mouseCoords = useRef({ x: 0, y: 0 });
+  const followerCoords = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    let timeoutId: ReturnType<typeof setTimeout>;
-
+    // 1. Mouse move handler to capture target coordinates
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-      setIsMoving(true);
-
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => setIsMoving(false), 150);
+      mouseCoords.current.x = e.clientX;
+      mouseCoords.current.y = e.clientY;
+      if (!isVisible) setIsVisible(true);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    // 2. Window mouseleave to hide the cursor follower
+    const handleMouseLeave = () => {
+      setIsVisible(false);
+    };
+    
+    const handleMouseEnter = () => {
+      setIsVisible(true);
+    };
+
+    // 3. Hover detection for interactive elements
+    const handleMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target) return;
+      
+      const isInteractive = 
+        target.tagName === 'A' || 
+        target.tagName === 'BUTTON' || 
+        target.closest('a') || 
+        target.closest('button') || 
+        target.closest('[role="button"]') ||
+        target.classList.contains('cursor-pointer');
+        
+      setIsHovered(!!isInteractive);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    document.addEventListener('mouseleave', handleMouseLeave);
+    document.addEventListener('mouseenter', handleMouseEnter);
+    window.addEventListener('mouseover', handleMouseOver, { passive: true });
+
+    // 4. Animation loop using requestAnimationFrame
+    let animId: number;
+    const updatePosition = () => {
+      // Linear interpolation (lerp): current = current + (target - current) * factor
+      const ease = 0.15; // smooth lag speed
+      followerCoords.current.x += (mouseCoords.current.x - followerCoords.current.x) * ease;
+      followerCoords.current.y += (mouseCoords.current.y - followerCoords.current.y) * ease;
+
+      if (followerRef.current) {
+        // Position the center of the outer ring directly on the cursor
+        followerRef.current.style.transform = `translate3d(${followerCoords.current.x}px, ${followerCoords.current.y}px, 0)`;
+      }
+
+      animId = requestAnimationFrame(updatePosition);
+    };
+    
+    animId = requestAnimationFrame(updatePosition);
+
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      clearTimeout(timeoutId);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      document.removeEventListener('mouseenter', handleMouseEnter);
+      window.removeEventListener('mouseover', handleMouseOver);
+      cancelAnimationFrame(animId);
     };
-  }, []);
+  }, [isVisible]);
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-30 overflow-hidden">
-      {/* Main cursor follower */}
+    <div
+      ref={followerRef}
+      className="fixed top-0 left-0 pointer-events-none z-[9999] will-change-transform transition-opacity duration-300 hidden md:block"
+      style={{
+        opacity: isVisible ? 1 : 0,
+        // Start centered around the cursor
+        margin: '-16px 0 0 -16px',
+        width: '32px',
+        height: '32px',
+      }}
+    >
+      {/* Outer Halo */}
       <div
-        className="absolute w-6 h-6 rounded-full border-2 border-blue-400/50 transition-all duration-300 ease-out"
-        style={{
-          left: mousePosition.x - 12,
-          top: mousePosition.y - 12,
-          transform: isMoving ? 'scale(1.5)' : 'scale(1)',
-          boxShadow: isMoving ? '0 0 20px rgba(59, 130, 246, 0.5)' : '0 0 10px rgba(59, 130, 246, 0.3)'
-        }}
-      >
-        <div className="absolute inset-2 bg-blue-400/30 rounded-full animate-pulse"></div>
-      </div>
-
-      {/* Neural connection trails */}
-      {Array.from({ length: 3 }).map((_, i) => (
-        <div
-          key={`trail-${i}`}
-          className="absolute w-3 h-3 rounded-full bg-purple-400/40 transition-all duration-500 ease-out"
-          style={{
-            left: mousePosition.x - 6,
-            top: mousePosition.y - 6,
-            transform: `translate(${-i * 20}px, ${-i * 15}px) scale(${1 - i * 0.3})`,
-            opacity: isMoving ? 0.6 - i * 0.2 : 0.2 - i * 0.1,
-            transitionDelay: `${i * 50}ms`
-          }}
-        />
-      ))}
-
-      {/* Orbiting neural nodes */}
-      {Array.from({ length: 4 }).map((_, i) => {
-        const angle = (i * Math.PI) / 2;
-        const radius = 40;
-        const x = Math.cos(angle + Date.now() * 0.001) * radius;
-        const y = Math.sin(angle + Date.now() * 0.001) * radius;
-        
-        return (
-          <div
-            key={`orbit-${i}`}
-            className="absolute w-2 h-2 rounded-full bg-pink-400/60 transition-all duration-200"
-            style={{
-              left: mousePosition.x + x - 4,
-              top: mousePosition.y + y - 4,
-              opacity: isMoving ? 0.8 : 0.3,
-              transform: isMoving ? 'scale(1.2)' : 'scale(0.8)'
-            }}
-          />
-        );
-      })}
-
-      {/* Connection lines to nearby elements */}
-      <svg className="absolute inset-0 w-full h-full" aria-hidden="true">
-        {isMoving && (
-          <>
-            <line
-              x1={mousePosition.x}
-              y1={mousePosition.y}
-              x2={mousePosition.x + 100}
-              y2={mousePosition.y - 50}
-              stroke="rgba(59, 130, 246, 0.3)"
-              strokeWidth="1"
-              className="animate-pulse"
-            />
-            <line
-              x1={mousePosition.x}
-              y1={mousePosition.y}
-              x2={mousePosition.x - 80}
-              y2={mousePosition.y + 60}
-              stroke="rgba(139, 92, 246, 0.3)"
-              strokeWidth="1"
-              className="animate-pulse"
-              style={{ animationDelay: '0.2s' }}
-            />
-            <line
-              x1={mousePosition.x}
-              y1={mousePosition.y}
-              x2={mousePosition.x + 60}
-              y2={mousePosition.y + 80}
-              stroke="rgba(236, 72, 153, 0.3)"
-              strokeWidth="1"
-              className="animate-pulse"
-              style={{ animationDelay: '0.4s' }}
-            />
-          </>
-        )}
-      </svg>
+        className={`w-full h-full rounded-full border transition-all duration-300 ease-out ${
+          isHovered
+            ? 'scale-150 border-indigo-500/50 bg-indigo-500/[0.08] shadow-[0_0_12px_rgba(99,102,241,0.25)] border-2'
+            : 'scale-100 border-blue-500/35 bg-blue-500/[0.02] dark:border-blue-400/40 dark:bg-white/[0.01]'
+        }`}
+      />
+      {/* Inner Dot */}
+      <div
+        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/80 transition-all duration-200 ${
+          isHovered ? 'w-1 h-1 opacity-0' : 'w-1.5 h-1.5 opacity-100'
+        }`}
+      />
     </div>
   );
 };

@@ -1,9 +1,13 @@
 import { lazy, Suspense, Component } from 'react';
 import type { ReactNode } from 'react';
-import { Github, Linkedin, Instagram, Twitter, ChevronDown, Sparkles } from 'lucide-react';
+import {
+  Github, Linkedin, Instagram, Twitter,
+  ChevronDown, Sparkles, FileText, ArrowRight,
+  Cpu, BrainCircuit, Code2, MapPin,
+} from 'lucide-react';
 
 const ThreeCanvas = lazy(() =>
-  import('./HeroCanvas').catch(() => ({ default: () => null }))
+  import('./HeroCanvas').catch(() => ({ default: () => <></> }))
 );
 
 class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
@@ -20,14 +24,23 @@ class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boole
 
 const Hero = () => {
   const socialLinks = [
-    { icon: Github,    url: 'https://github.com/NithinS0',                   label: 'GitHub',    color: 'hover:text-[#2ea44f]' },
-    { icon: Linkedin,  url: 'https://linkedin.com/in/nithin01',              label: 'LinkedIn',  color: 'hover:text-[#0077b5]' },
-    { icon: Instagram, url: 'https://www.instagram.com/nithinsivakumar',     label: 'Instagram', color: 'hover:text-[#e4405f]' },
-    { icon: Twitter,   url: 'https://x.com/SNithin_/',                       label: 'Twitter',   color: 'hover:text-[#1da1f2]' },
+    { icon: Github,    url: 'https://github.com/NithinS0',                        label: 'GitHub',    color: 'hover:border-[#2ea44f]/50 hover:text-[#2ea44f]' },
+    { icon: Linkedin,  url: 'https://linkedin.com/in/nithin01',                   label: 'LinkedIn',  color: 'hover:border-[#0077b5]/50 hover:text-[#0077b5]' },
+    { icon: Instagram, url: 'https://www.instagram.com/nithinsivakumar',          label: 'Instagram', color: 'hover:border-[#e4405f]/50 hover:text-[#e4405f]' },
+    { icon: Twitter,   url: 'https://x.com/SNithin_/',                            label: 'Twitter',   color: 'hover:border-[#1da1f2]/50 hover:text-[#1da1f2]' },
+  ];
+
+  const stats = [
+    { icon: BrainCircuit, value: '10+', label: 'AI Projects' },
+    { icon: Code2,        value: '3+',  label: 'Internships' },
+    { icon: Cpu,          value: '2',   label: 'Research Papers' },
   ];
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#050810]">
+    <section
+      id="home"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#fafafc] dark:bg-[#050810] transition-colors duration-500"
+    >
       {/* 3D Background */}
       <div className="absolute inset-0 z-0">
         <ErrorBoundary>
@@ -37,82 +50,184 @@ const Hero = () => {
         </ErrorBoundary>
       </div>
 
-      {/* Decorative overlays */}
+      {/* Gradient overlays */}
       <div className="absolute inset-0 z-10 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050810]/20 via-transparent to-[#050810]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(59,130,246,0.08)_0%,transparent_50%)]" />
+        {/* Linear fog overlay to soften the 3D canvas */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#fafafc]/60 via-transparent to-[#fafafc] dark:from-[#050810]/70 dark:via-transparent dark:to-[#050810]" />
+        {/* Radial fog centered on text column (75% X, 50% Y) to ensure crisp legibility */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_50%,rgba(250,250,252,0.85)_0%,rgba(250,250,252,0)_65%)] dark:bg-[radial-gradient(circle_at_75%_50%,rgba(5,8,16,0.9)_0%,rgba(5,8,16,0)_65%)]" />
+        {/* Accent glow left */}
+        <div className="absolute top-1/4 left-0 w-96 h-96 bg-blue-500/8 dark:bg-blue-600/12 rounded-full blur-3xl -translate-x-1/2" />
+        {/* Accent glow right */}
+        <div className="absolute bottom-1/4 right-0 w-80 h-80 bg-purple-500/6 dark:bg-purple-600/10 rounded-full blur-3xl translate-x-1/2" />
       </div>
 
-      {/* Content */}
-      <div className="relative z-20 w-full px-4 sm:px-6 text-center">
-        <div className="max-w-5xl mx-auto">
+      {/* ──────────────── Content ──────────────── */}
+      <div className="relative z-20 w-full px-4 sm:px-6 py-28 lg:py-0">
+        <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-16">
 
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6 sm:mb-8 backdrop-blur-md">
-            <Sparkles size={14} className="text-blue-400" />
-            <span className="text-blue-300 text-xs sm:text-sm font-semibold tracking-wide uppercase">
-              AI Architect &amp; ML Practitioner
-            </span>
+          {/* ═══════════════════════════════════════
+              LEFT — Photo column (moved here)
+          ═══════════════════════════════════════ */}
+          <div className="w-full sm:w-[300px] lg:w-[340px] flex-shrink-0 flex flex-col items-center">
+
+            {/* Outer decorative ring */}
+            <div className="relative group w-full">
+
+              {/* Rotating gradient border */}
+              <div
+                className="absolute -inset-[3px] rounded-[2.2rem] opacity-60 dark:opacity-80 blur-sm group-hover:opacity-100 transition-opacity duration-700"
+                style={{
+                  background:
+                    'conic-gradient(from 0deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6)',
+                  animation: 'spin 6s linear infinite',
+                }}
+              />
+
+              {/* White/dark gap ring */}
+              <div className="absolute -inset-[2px] rounded-[2rem] bg-[#fafafc] dark:bg-[#050810]" />
+
+              {/* Photo card */}
+              <div className="relative rounded-[1.8rem] overflow-hidden shadow-2xl shadow-blue-900/10 dark:shadow-blue-900/25">
+                <img
+                  src="/Photo.jpeg"
+                  alt="Nithin Sivakumar"
+                  className="w-full aspect-[3/4] object-cover object-top group-hover:scale-[1.03] transition-transform duration-700"
+                />
+
+                {/* Gradient overlay at bottom of photo */}
+                <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+
+                {/* Location chip inside photo */}
+                <div className="absolute bottom-4 left-4 flex items-center gap-1.5 px-3 py-1.5 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-white text-xs font-semibold">
+                  <MapPin size={11} />
+                  Chennai, India
+                </div>
+
+                {/* Available badge inside photo */}
+                <div className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1.5 bg-green-500/20 backdrop-blur-md rounded-full border border-green-400/30 text-green-300 text-xs font-bold">
+                  <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
+                  Available
+                </div>
+              </div>
+            </div>
+
+            {/* Social links below photo */}
+            <div className="flex items-center justify-center gap-3 mt-6">
+              {socialLinks.map((s) => (
+                <a
+                  key={s.label}
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  className={`group p-2.5 bg-slate-100 dark:bg-white/5 rounded-xl border border-slate-200 dark:border-white/10 transition-all duration-300 hover:-translate-y-1 text-slate-500 dark:text-gray-400 ${s.color}`}
+                >
+                  <s.icon size={17} className="transition-transform group-hover:scale-110" />
+                </a>
+              ))}
+            </div>
           </div>
 
-          {/* Name */}
-          <h1 className="text-5xl sm:text-7xl md:text-8xl font-black mb-4 sm:mb-6 tracking-tighter leading-none">
-            <span className="block text-white opacity-90">NITHIN</span>
-            <span className="block bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent">
-              SIVAKUMAR
-            </span>
-          </h1>
+          {/* ═══════════════════════════════════════
+              RIGHT — Text & CTA
+          ═══════════════════════════════════════ */}
+          <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left">
 
-          {/* Tagline */}
-          <p className="text-base sm:text-xl md:text-2xl text-gray-400 font-medium leading-relaxed max-w-xl sm:max-w-2xl mx-auto mb-8 sm:mb-10 px-2">
-            Building the next generation of{' '}
-            <span className="text-white">intelligent systems</span>{' '}
-            through Research &amp; Development in Artificial Intelligence.
-          </p>
+            {/* Role badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 dark:border-blue-400/20 mb-6 backdrop-blur-md">
+              <Sparkles size={13} className="text-blue-600 dark:text-blue-400" />
+              <span className="text-blue-700 dark:text-blue-300 text-xs font-bold tracking-widest uppercase">
+                AI Engineer · SRM University
+              </span>
+            </div>
 
-          {/* Socials */}
-          <div className="flex justify-center items-center gap-3 sm:gap-5 mb-8 sm:mb-12">
-            {socialLinks.map((s) => (
+            {/* Name */}
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-5 tracking-tighter leading-[0.92]">
+              <span className="block text-slate-900 dark:text-white transition-colors duration-500">
+                NITHIN
+              </span>
+              <span className="block bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent">
+                SIVAKUMAR
+              </span>
+            </h1>
+
+            {/* Divider line */}
+            <div className="w-16 h-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mb-5 lg:ml-0 mx-auto" />
+
+            {/* Tagline */}
+            <p className="text-sm sm:text-base md:text-lg text-slate-700 dark:text-slate-300 font-medium leading-relaxed max-w-lg mb-8">
+              Teaching computers how to think so I don't have to. Turning neural networks
+              into production-grade AI systems — one inference at a time.
+            </p>
+
+            {/* Stats row */}
+            <div className="flex items-center justify-center lg:justify-start gap-4 sm:gap-6 mb-10 w-full">
+              {stats.map((stat, i) => (
+                <div
+                  key={i}
+                  className="flex flex-col items-center lg:items-start px-4 sm:px-5 py-3 bg-slate-100 dark:bg-white/5 rounded-2xl border border-slate-200 dark:border-white/8 min-w-[80px]"
+                >
+                  <stat.icon size={14} className="text-blue-500 dark:text-blue-400 mb-1" />
+                  <span className="text-xl font-black text-slate-900 dark:text-white leading-none">
+                    {stat.value}
+                  </span>
+                  <span className="text-[10px] text-slate-500 dark:text-gray-500 font-semibold mt-0.5 uppercase tracking-wide whitespace-nowrap">
+                    {stat.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 w-full sm:w-auto">
+
+              {/* Primary */}
               <a
-                key={s.label}
-                href={s.url}
+                href="#projects"
+                className="group relative w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl text-white font-bold text-sm tracking-wide transition-all duration-300 hover:shadow-[0_0_28px_rgba(99,102,241,0.45)] hover:-translate-y-0.5 overflow-hidden"
+              >
+                <span className="relative z-10">Explore Work</span>
+                <ArrowRight size={16} className="relative z-10 transition-transform group-hover:translate-x-1" />
+                <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </a>
+
+              {/* Resume */}
+              <a
+                href="https://drive.google.com/file/d/1OIxHFcB3wsg_3qRoeoLsBWMmthQvXZVx/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={s.label}
-                className={`group p-3 sm:p-4 bg-white/5 rounded-xl sm:rounded-2xl border border-white/10 transition-all duration-300 hover:-translate-y-1.5 hover:bg-white/10 text-gray-400 ${s.color}`}
+                className="group relative w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl text-white font-bold text-sm tracking-wide transition-all duration-300 hover:shadow-[0_0_28px_rgba(168,85,247,0.4)] hover:-translate-y-0.5 overflow-hidden"
               >
-                <s.icon size={18} className="sm:w-[22px] sm:h-[22px] transition-transform group-hover:scale-110" />
+                <FileText size={16} className="relative z-10" />
+                <span className="relative z-10">Resume</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </a>
-            ))}
+
+              {/* Ghost */}
+              <a
+                href="#contact"
+                className="w-full sm:w-auto flex items-center justify-center px-8 py-4 rounded-2xl text-slate-700 dark:text-gray-300 font-bold text-sm border border-slate-200 dark:border-white/12 hover:border-blue-400/50 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:-translate-y-0.5 backdrop-blur-sm"
+              >
+                Contact Me
+              </a>
+            </div>
           </div>
 
-          {/* Actions — native anchor links, no DOM calls */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-5 px-4">
-            <a
-              href="#projects"
-              className="group relative w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 bg-blue-600 rounded-xl sm:rounded-2xl text-white font-bold transition-all duration-300 hover:bg-blue-500 hover:shadow-[0_0_30px_rgba(37,99,235,0.4)] overflow-hidden text-sm sm:text-base text-center"
-            >
-              <span className="relative z-10">EXPLORE WORK</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-            </a>
-            <a
-              href="#contact"
-              className="w-full sm:w-auto px-8 sm:px-10 py-3.5 sm:py-4 bg-white/5 hover:bg-white/10 rounded-xl sm:rounded-2xl text-white font-bold border border-white/10 transition-all duration-300 backdrop-blur-md text-sm sm:text-base text-center"
-            >
-              CONTACT ME
-            </a>
-          </div>
         </div>
       </div>
 
-      {/* Scroll indicator — anchor link */}
+      {/* Scroll indicator */}
       <a
         href="#about"
         aria-label="Scroll to About"
-        className="absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 z-20 text-gray-500 hover:text-white transition-colors animate-bounce p-2"
+        className="absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2 z-20 text-slate-400 hover:text-blue-500 dark:text-gray-600 dark:hover:text-blue-400 transition-colors animate-bounce p-2"
       >
-        <ChevronDown size={28} className="sm:w-8 sm:h-8" />
+        <ChevronDown size={28} />
       </a>
+
+      {/* Conic spin keyframe */}
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
     </section>
   );
 };

@@ -18,15 +18,15 @@ const InteractiveBackground = () => {
 
   useEffect(() => {
     // Initialize particles
-    const initialParticles: Particle[] = Array.from({ length: 12 }, (_, i) => ({
+    const initialParticles: Particle[] = Array.from({ length: 8 }, (_, i) => ({
       id: i,
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
       targetX: Math.random() * window.innerWidth,
       targetY: Math.random() * window.innerHeight,
-      size: Math.random() * 4 + 2,
-      color: ['rgba(59, 130, 246, 0.4)', 'rgba(139, 92, 246, 0.4)', 'rgba(236, 72, 153, 0.4)'][i % 3],
-      speed: Math.random() * 0.02 + 0.01
+      size: Math.random() * 3 + 1.5,
+      color: ['rgba(59, 130, 246, 0.15)', 'rgba(139, 92, 246, 0.15)', 'rgba(236, 72, 153, 0.15)'][i % 3],
+      speed: Math.random() * 0.015 + 0.005
     }));
     setParticles(initialParticles);
 
@@ -51,10 +51,10 @@ const InteractiveBackground = () => {
           let newTargetY = particle.targetY;
           
           // If mouse is close, particles move away
-          if (distance < 150) {
+          if (distance < 100) {
             const angle = Math.atan2(dy, dx);
-            newTargetX = particle.x - Math.cos(angle) * 100;
-            newTargetY = particle.y - Math.sin(angle) * 100;
+            newTargetX = particle.x - Math.cos(angle) * 60;
+            newTargetY = particle.y - Math.sin(angle) * 60;
           } else {
             // Random movement when mouse is far
             if (Math.random() < 0.01) {
@@ -99,7 +99,7 @@ const InteractiveBackground = () => {
               Math.pow(particle.y - otherParticle.y, 2)
             );
             
-            if (distance < 200) {
+            if (distance < 140) {
               return (
                 <line
                   key={`${i}-${j}`}
@@ -107,9 +107,9 @@ const InteractiveBackground = () => {
                   y1={particle.y}
                   x2={otherParticle.x}
                   y2={otherParticle.y}
-                  stroke="rgba(59, 130, 246, 0.2)"
+                  stroke="rgba(59, 130, 246, 0.08)"
                   strokeWidth="1"
-                  opacity={1 - distance / 200}
+                  opacity={1 - distance / 140}
                 />
               );
             }
@@ -124,7 +124,7 @@ const InteractiveBackground = () => {
             Math.pow(particle.y - mousePosition.y, 2)
           );
           
-          if (distance < 150) {
+          if (distance < 90) {
             return (
               <line
                 key={`mouse-${i}`}
@@ -132,9 +132,9 @@ const InteractiveBackground = () => {
                 y1={particle.y}
                 x2={mousePosition.x}
                 y2={mousePosition.y}
-                stroke="rgba(139, 92, 246, 0.4)"
-                strokeWidth="2"
-                opacity={1 - distance / 150}
+                stroke="rgba(139, 92, 246, 0.12)"
+                strokeWidth="1"
+                opacity={1 - distance / 90}
                 className="animate-pulse"
               />
             );

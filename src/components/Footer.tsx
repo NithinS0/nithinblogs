@@ -1,13 +1,14 @@
-import { Github, Linkedin, Instagram, Twitter, Heart, Terminal } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Github, Linkedin, Instagram, Twitter, Heart, ChevronUp } from 'lucide-react';
 
 const navItems = [
   { label: 'Home', id: 'home' },
   { label: 'About', id: 'about' },
   { label: 'Skills', id: 'skills' },
   { label: 'Projects', id: 'projects' },
+  { label: 'GitHub', id: 'github' },
   { label: 'Experience', id: 'experience' },
   { label: 'Certifications', id: 'certifications' },
-  { label: 'Resume', id: 'resume' },
   { label: 'Contact', id: 'contact' },
 ];
 
@@ -18,84 +19,76 @@ const socialLinks = [
   { icon: Twitter, url: 'https://x.com/SNithin_/', label: 'Twitter' },
 ];
 
-const Footer = () => (
-  <footer className="bg-[#050810] border-t border-white/5 pt-12 md:pt-16 pb-8">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-12 md:mb-16">
+const Footer = () => {
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
-        {/* Brand */}
-        <div className="col-span-2 space-y-5">
-          <a href="#home" className="flex items-center gap-2.5 group w-fit">
-            <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
-              <Terminal size={18} />
-            </div>
-            <span className="text-xl font-black text-white tracking-tighter">
-              NITHIN <span className="text-blue-500">S</span>
-            </span>
-          </a>
-          <p className="text-gray-500 text-sm max-w-sm leading-relaxed">
-            Designing and developing industrial-grade AI architectures and full-stack intelligent systems.
-          </p>
-          <div className="flex gap-3">
-            {socialLinks.map((s) => (
-              <a
-                key={s.label}
-                href={s.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={s.label}
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-all"
-              >
-                <s.icon size={16} />
-              </a>
-            ))}
-          </div>
-        </div>
+  useEffect(() => {
+    const toggleVisibility = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+    window.addEventListener('scroll', toggleVisibility, { passive: true });
+    return () => window.removeEventListener('scroll', toggleVisibility);
+  }, []);
 
-        {/* Navigation */}
-        <div className="space-y-4">
-          <h4 className="text-white font-bold tracking-widest uppercase text-xs">Navigation</h4>
-          <nav className="grid grid-cols-1 gap-2.5">
-            {navItems.map((item) => (
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                className="text-gray-500 hover:text-blue-400 transition-colors text-sm font-medium"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-        </div>
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
-        {/* Contact */}
-        <div className="space-y-4">
-          <h4 className="text-white font-bold tracking-widest uppercase text-xs">Contact</h4>
-          <div className="space-y-3">
-            <p className="text-gray-500 text-sm leading-relaxed">
-              Chennai, Tamil Nadu<br />India
-            </p>
+  return (
+    <footer className="bg-white dark:bg-[#050810] border-t border-slate-200 dark:border-[#2a2a2e] transition-colors duration-500 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-8">
+
+        {/* Nav Links */}
+        <nav className="flex flex-wrap justify-center gap-x-8 gap-y-4">
+          {navItems.map((item) => (
             <a
-              href="mailto:nithin200511@gmail.com"
-              className="block text-white font-bold text-sm hover:text-blue-400 transition-colors break-all"
+              key={item.id}
+              href={`#${item.id}`}
+              className="text-sm font-semibold text-slate-500 dark:text-[#a0a0a8] hover:text-slate-900 dark:hover:text-white transition-colors duration-300"
             >
-              nithin200511@gmail.com
+              {item.label}
             </a>
-          </div>
-        </div>
-      </div>
+          ))}
+        </nav>
 
-      {/* Bottom bar */}
-      <div className="pt-6 sm:pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-3">
-        <p className="text-gray-600 text-xs font-medium tracking-widest uppercase text-center sm:text-left">
-          © 2026 Nithin Sivakumar. All Rights Reserved.
-        </p>
-        <div className="flex items-center gap-1.5 text-gray-600 text-xs font-bold tracking-widest uppercase">
-          MADE WITH <Heart size={12} className="text-red-500 animate-pulse mx-1" /> IN INDIA
+        {/* Social Icons */}
+        <div className="flex gap-4">
+          {socialLinks.map((s) => (
+            <a
+              key={s.label}
+              href={s.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={s.label}
+              className="w-10 h-10 rounded-full border border-slate-200 dark:border-[#2a2a2e] bg-slate-50 dark:bg-[#121214] flex items-center justify-center text-slate-500 dark:text-[#a0a0a8] hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-white/5 transition-all duration-300"
+            >
+              <s.icon size={16} />
+            </a>
+          ))}
         </div>
+
+        {/* Divider */}
+        <div className="w-full h-px bg-slate-200 dark:bg-white/5 transition-colors duration-500" />
+
+        {/* Bottom Row */}
+        <div className="w-full relative flex flex-col sm:flex-row justify-center items-center gap-4">
+          <p className="text-gray-500 text-xs font-semibold tracking-wider uppercase text-center">
+            © 2026 Nithin Sivakumar. All Rights Reserved.
+          </p>
+          {/* Back to Top */}
+          <button
+            onClick={scrollToTop}
+            className={`w-11 h-11 rounded-full border border-slate-200 dark:border-[#2a2a2e] bg-slate-50 dark:bg-[#121214] flex items-center justify-center text-slate-500 dark:text-[#a0a0a8] hover:bg-slate-950 dark:hover:bg-white hover:text-white dark:hover:text-black hover:border-slate-950 dark:hover:border-white transition-all duration-300 hover:-translate-y-1 shadow-md dark:shadow-lg shadow-black/5 dark:shadow-black/20 sm:absolute sm:right-0 ${showScrollTop ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none'
+              }`}
+            aria-label="Back to Top"
+          >
+            <ChevronUp size={20} />
+          </button>
+        </div>
+
       </div>
-    </div>
-  </footer>
-);
+    </footer>
+  );
+};
 
 export default Footer;
