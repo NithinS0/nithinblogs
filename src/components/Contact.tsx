@@ -79,7 +79,7 @@ const Contact = () => {
       } else {
         setStatus({ type: 'error', message: 'Failed to send message. Please try again.' });
       }
-    } catch (error) {
+    } catch {
       setStatus({ type: 'error', message: 'An error occurred. Please try again.' });
     } finally {
       setTimeout(() => setStatus({ type: 'idle', message: '' }), 8000);
@@ -101,7 +101,7 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-20 md:py-28 bg-white dark:bg-[#050810] transition-colors duration-500 relative overflow-hidden">
+    <section id="contact" className="py-20 md:py-28 bg-transparent transition-colors duration-500 relative overflow-hidden">
       {/* Decorative Orbs */}
       <div className="absolute bottom-0 right-1/4 w-[350px] h-[350px] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute top-1/3 left-1/4 w-[250px] h-[250px] bg-purple-600/5 rounded-full blur-[100px] pointer-events-none" />

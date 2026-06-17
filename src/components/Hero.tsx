@@ -1,26 +1,8 @@
-import { lazy, Suspense, Component } from 'react';
-import type { ReactNode } from 'react';
 import {
   Github, Linkedin, Instagram, Twitter,
   ChevronDown, Sparkles, FileText, ArrowRight,
-  Cpu, BrainCircuit, Code2, MapPin,
+  MapPin,
 } from 'lucide-react';
-
-const ThreeCanvas = lazy(() =>
-  import('./HeroCanvas').catch(() => ({ default: () => <></> }))
-);
-
-class ErrorBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
-  constructor(props: { children: ReactNode }) {
-    super(props);
-    this.state = { hasError: false };
-  }
-  static getDerivedStateFromError() { return { hasError: true }; }
-  render() {
-    if (this.state.hasError) return null;
-    return this.props.children;
-  }
-}
 
 const Hero = () => {
   const socialLinks = [
@@ -30,26 +12,11 @@ const Hero = () => {
     { icon: Twitter,   url: 'https://x.com/SNithin_/',                            label: 'Twitter',   color: 'hover:border-[#1da1f2]/50 hover:text-[#1da1f2]' },
   ];
 
-  const stats = [
-    { icon: BrainCircuit, value: '10+', label: 'AI Projects' },
-    { icon: Code2,        value: '3+',  label: 'Internships' },
-    { icon: Cpu,          value: '2',   label: 'Research Papers' },
-  ];
-
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#fafafc] dark:bg-[#050810] transition-colors duration-500"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-transparent transition-colors duration-500"
     >
-      {/* 3D Background */}
-      <div className="absolute inset-0 z-0">
-        <ErrorBoundary>
-          <Suspense fallback={null}>
-            <ThreeCanvas />
-          </Suspense>
-        </ErrorBoundary>
-      </div>
-
       {/* Gradient overlays */}
       <div className="absolute inset-0 z-10 pointer-events-none">
         {/* Linear fog overlay to soften the 3D canvas */}
@@ -64,7 +31,7 @@ const Hero = () => {
 
       {/* ──────────────── Content ──────────────── */}
       <div className="relative z-20 w-full px-4 sm:px-6 py-28 lg:py-0">
-        <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-16">
+        <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-16 lg:gap-24 lg:pl-10">
 
           {/* ═══════════════════════════════════════
               LEFT — Photo column (moved here)
@@ -104,11 +71,6 @@ const Hero = () => {
                   Chennai, India
                 </div>
 
-                {/* Available badge inside photo */}
-                <div className="absolute top-4 right-4 flex items-center gap-1.5 px-3 py-1.5 bg-green-500/20 backdrop-blur-md rounded-full border border-green-400/30 text-green-300 text-xs font-bold">
-                  <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
-                  Available
-                </div>
               </div>
             </div>
 
@@ -143,7 +105,10 @@ const Hero = () => {
             </div>
 
             {/* Name */}
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-5 tracking-tighter leading-[0.92]">
+            <h1 
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-5 tracking-tighter leading-[0.92]"
+              style={{ fontFamily: "'Orbitron', sans-serif" }}
+            >
               <span className="block text-slate-900 dark:text-white transition-colors duration-500">
                 NITHIN
               </span>
@@ -161,31 +126,13 @@ const Hero = () => {
               into production-grade AI systems — one inference at a time.
             </p>
 
-            {/* Stats row */}
-            <div className="flex items-center justify-center lg:justify-start gap-4 sm:gap-6 mb-10 w-full">
-              {stats.map((stat, i) => (
-                <div
-                  key={i}
-                  className="flex flex-col items-center lg:items-start px-4 sm:px-5 py-3 bg-slate-100 dark:bg-white/5 rounded-2xl border border-slate-200 dark:border-white/8 min-w-[80px]"
-                >
-                  <stat.icon size={14} className="text-blue-500 dark:text-blue-400 mb-1" />
-                  <span className="text-xl font-black text-slate-900 dark:text-white leading-none">
-                    {stat.value}
-                  </span>
-                  <span className="text-[10px] text-slate-500 dark:text-gray-500 font-semibold mt-0.5 uppercase tracking-wide whitespace-nowrap">
-                    {stat.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 w-full sm:w-auto">
 
               {/* Primary */}
               <a
                 href="#projects"
-                className="group relative w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl text-white font-bold text-sm tracking-wide transition-all duration-300 hover:shadow-[0_0_28px_rgba(99,102,241,0.45)] hover:-translate-y-0.5 overflow-hidden"
+                className="group relative w-full sm:w-[200px] flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl text-white font-bold text-sm tracking-wide transition-all duration-300 hover:shadow-[0_0_28px_rgba(99,102,241,0.45)] hover:-translate-y-0.5 overflow-hidden"
               >
                 <span className="relative z-10">Explore Work</span>
                 <ArrowRight size={16} className="relative z-10 transition-transform group-hover:translate-x-1" />
@@ -197,19 +144,11 @@ const Hero = () => {
                 href="https://drive.google.com/file/d/1OIxHFcB3wsg_3qRoeoLsBWMmthQvXZVx/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl text-white font-bold text-sm tracking-wide transition-all duration-300 hover:shadow-[0_0_28px_rgba(168,85,247,0.4)] hover:-translate-y-0.5 overflow-hidden"
+                className="group relative w-full sm:w-[200px] flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl text-white font-bold text-sm tracking-wide transition-all duration-300 hover:shadow-[0_0_28px_rgba(168,85,247,0.4)] hover:-translate-y-0.5 overflow-hidden"
               >
                 <FileText size={16} className="relative z-10" />
                 <span className="relative z-10">Resume</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </a>
-
-              {/* Ghost */}
-              <a
-                href="#contact"
-                className="w-full sm:w-auto flex items-center justify-center px-8 py-4 rounded-2xl text-slate-700 dark:text-gray-300 font-bold text-sm border border-slate-200 dark:border-white/12 hover:border-blue-400/50 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 hover:-translate-y-0.5 backdrop-blur-sm"
-              >
-                Contact Me
               </a>
             </div>
           </div>

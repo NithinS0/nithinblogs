@@ -12,7 +12,24 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: #fafafc;
+  overscroll-behavior-y: none;
   -webkit-text-size-adjust: 100%;
+  cursor: default;
+}
+
+/* Force default arrow cursor on all text elements instead of I-beam, 
+   except for inputs and textareas */
+p, h1, h2, h3, h4, h5, h6, span, div, li, td, th {
+  cursor: default;
+}
+
+input, textarea {
+  cursor: text;
+}
+
+html.dark {
+  background-color: #050810;
 }
 
 /* ── View Transitions: disable default cross-fade so our clip-path circle
@@ -27,8 +44,7 @@ html {
 body {
   font-family: 'Inter', sans-serif;
   line-height: 1.6;
-  color: #ffffff;
-  background-color: #050810;
+  @apply bg-[#fafafc] text-slate-900 dark:bg-[#050810] dark:text-white transition-colors duration-500;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -43,18 +59,13 @@ button, a {
   touch-action: manipulation;
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar - Hidden */
 ::-webkit-scrollbar {
-  width: 6px;
+  display: none;
 }
-
-::-webkit-scrollbar-track {
-  background: #0a0f1e;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #3b82f6, #6366f1);
-  border-radius: 10px;
+html {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 

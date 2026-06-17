@@ -56,7 +56,7 @@ const Projects = () => {
   ];
 
   return (
-    <section id="projects" className="py-20 md:py-28 bg-[#fafafc] dark:bg-[#050810] transition-colors duration-500 relative overflow-hidden">
+    <section id="projects" className="py-20 md:py-28 bg-transparent transition-colors duration-500 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div
           ref={ref}

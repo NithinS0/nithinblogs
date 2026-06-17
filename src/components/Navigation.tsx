@@ -110,10 +110,9 @@ const ThemeToggle = ({
 // ─────────────────────────────────────────────────────
 //  Navigation
 // ─────────────────────────────────────────────────────
-const Navigation = () => {
+const Navigation = ({ activeSection, setActiveSection }: { activeSection: string, setActiveSection: (s: string) => void }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActive] = useState('home');
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     if (typeof window !== 'undefined') {
       return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
@@ -131,14 +130,14 @@ const Navigation = () => {
       for (const id of [...ids].reverse()) {
         const el = document.getElementById(id);
         if (el && window.scrollY >= el.offsetTop - 120) {
-          setActive(id);
+          setActiveSection(id);
           break;
         }
       }
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [setActiveSection]);
 
   // ── Smooth circular-reveal theme toggle ──────────────
   const toggleTheme = () => {

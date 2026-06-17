@@ -3,7 +3,7 @@ import { OrbitControls, Float, PerspectiveCamera } from '@react-three/drei';
 import NeuralNetwork from './NeuralNetwork';
 import RevolvingNeurons from './RevolvingNeurons';
 
-const HeroCanvas = () => (
+const HeroCanvas = ({ activeSection }: { activeSection?: string }) => (
   <Canvas>
     <PerspectiveCamera makeDefault position={[0, 0, 12]} fov={50} />
     <ambientLight intensity={0.5} />
@@ -14,7 +14,7 @@ const HeroCanvas = () => (
       <NeuralNetwork />
     </Float>
 
-    <RevolvingNeurons />
+    <RevolvingNeurons activeSection={activeSection || 'home'} />
 
     <OrbitControls
       enableZoom={false}

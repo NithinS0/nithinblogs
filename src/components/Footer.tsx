@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Github, Linkedin, Instagram, Twitter, Heart, ChevronUp } from 'lucide-react';
+import { Github, Linkedin, Instagram, Twitter, ChevronUp } from 'lucide-react';
 
 const navItems = [
   { label: 'Home', id: 'home' },
@@ -35,7 +35,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-white dark:bg-[#050810] border-t border-slate-200 dark:border-[#2a2a2e] transition-colors duration-500 py-12">
+    <footer className="bg-transparent border-t border-slate-200 dark:border-[#2a2a2e] transition-colors duration-500 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-8">
 
         {/* Nav Links */}

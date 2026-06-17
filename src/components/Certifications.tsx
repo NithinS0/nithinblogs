@@ -31,7 +31,7 @@ const Certifications = () => {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.05 });
 
   return (
-    <section id="certifications" className="py-20 md:py-28 bg-[#fafafc] dark:bg-[#050810] transition-colors duration-500 relative overflow-hidden">
+    <section id="certifications" className="py-20 md:py-28 bg-transparent transition-colors duration-500 relative overflow-hidden">
       {/* Background FX */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-blue-600/4 rounded-full blur-[130px]" />

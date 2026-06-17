@@ -12,7 +12,7 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-20 md:py-28 bg-white dark:bg-[#050810] transition-colors duration-500 relative overflow-hidden">
+    <section id="about" className="py-20 md:py-28 bg-transparent transition-colors duration-500 relative overflow-hidden">
       {/* Ambient BG */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 right-0 w-72 h-72 md:w-[500px] md:h-[500px] bg-blue-600/5 rounded-full blur-[120px] -mr-40 -mt-20" />
