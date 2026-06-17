@@ -117,7 +117,7 @@ const Navigation = ({ activeSection, setActiveSection }: { activeSection: string
     if (typeof window !== 'undefined') {
       return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
     }
-    return 'dark';
+    return 'light';
   });
 
   // Ref for ripple origin
