@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { useInView } from 'react-intersection-observer';
-import { Plus, Github, FolderOpen, Terminal } from 'lucide-react';
+import { useState } from "react";
+import { useInView } from "react-intersection-observer";
+import { Plus, Github, FolderOpen, Terminal } from "lucide-react";
 
 const GithubRepos = () => {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.05 });
@@ -8,60 +8,66 @@ const GithubRepos = () => {
 
   const repos = [
     {
-      name: 'Smart-Inventory-System',
-      description: 'Full-stack, QR-enabled inventory management platform for asset tracking, spare management, and factory operations.',
-      url: 'https://github.com/NithinS0/Smart-Inventory-System',
-      tech: 'FastAPI, Supabase, React',
+      name: "Smart-Inventory-System",
+      description:
+        "Full-stack, QR-enabled inventory management platform for asset tracking, spare management, and factory operations.",
+      url: "https://github.com/NithinS0/Smart-Inventory-System",
+      tech: "FastAPI, Supabase, React",
     },
     {
-      name: 'Catalyst-CRM',
-      description: 'AI-native Customer Relationship Management platform featuring automated marketing campaign generation and audience segment discovery.',
-      url: 'https://github.com/NithinS0/Catalyst-CRM',
-      tech: 'FastAPI, Next.js, LangChain',
+      name: "Catalyst-CRM",
+      description:
+        "AI-native Customer Relationship Management platform featuring automated marketing campaign generation and audience segment discovery.",
+      url: "https://github.com/NithinS0/Catalyst-CRM",
+      tech: "FastAPI, Next.js, LangChain",
     },
     {
-      name: 'Image-Captioning-using-ResNet50-and-Transformers',
-      description: 'Deep learning vision-language model integrating a ResNet50 CNN encoder and a Transformer decoder for automated caption generation.',
-      url: 'https://github.com/NithinS0/Image-Captioning-using-ResNet50-and-Transformers',
-      tech: 'Python, TensorFlow, NLP',
+      name: "Image-Captioning-using-ResNet50-and-Transformers",
+      description:
+        "Deep learning vision-language model integrating a ResNet50 CNN encoder and a Transformer decoder for automated caption generation.",
+      url: "https://github.com/NithinS0/Image-Captioning-using-ResNet50-and-Transformers",
+      tech: "Python, TensorFlow, NLP",
     },
     {
-      name: 'Agentic-Company-Scout',
-      description: 'Multi-agent corporate research and intelligence gathering platform designed to scan public profiles, news, and financial files.',
-      url: 'https://github.com/NithinS0/Agentic-Company-Scout',
-      tech: 'Python, LangGraph, RAG',
+      name: "Agentic-Company-Scout",
+      description:
+        "Multi-agent corporate research and intelligence gathering platform designed to scan public profiles, news, and financial files.",
+      url: "https://github.com/NithinS0/Agentic-Company-Scout",
+      tech: "Python, LangGraph, RAG",
     },
     {
-      name: 'Lung-Cancer-Detection-Using-VGG16-DCNN',
-      description: 'VGG16-based deep convolutional neural network optimized for thoracic medical scan analysis and diagnosis detection.',
-      url: 'https://github.com/NithinS0/Lung-Cancer-Detection-Using-VGG16-DCNN',
-      tech: 'VGG16, TensorFlow, OpenCV',
+      name: "Lung-Cancer-Detection-Using-VGG16-DCNN",
+      description:
+        "VGG16-based deep convolutional neural network optimized for thoracic medical scan analysis and diagnosis detection.",
+      url: "https://github.com/NithinS0/Lung-Cancer-Detection-Using-VGG16-DCNN",
+      tech: "VGG16, TensorFlow, OpenCV",
     },
     {
-      name: 'Skill-Hive',
-      description: 'Decentralized local skills directory and booking marketplace connecting gig workers with localized neighborhood opportunities.',
-      url: 'https://github.com/NithinS0/Skill-Hive',
-      tech: 'MySQL, React, Tailwind',
+      name: "Skill-Hive",
+      description:
+        "Decentralized local skills directory and booking marketplace connecting gig workers with localized neighborhood opportunities.",
+      url: "https://github.com/NithinS0/Skill-Hive",
+      tech: "MySQL, React, Tailwind",
     },
   ];
 
   const borderColors = [
-    'border-l-[#c3a6ff]', // Purple
-    'border-l-[#89b4fa]', // Blue
-    'border-l-[#10b981]', // Green
-    'border-l-[#f9e2af]', // Yellow
+    "border-l-[#c3a6ff]", // Purple
+    "border-l-[#89b4fa]", // Blue
+    "border-l-[#10b981]", // Green
+    "border-l-[#f9e2af]", // Yellow
   ];
 
   const textColors = [
-    'text-[#c3a6ff]',
-    'text-[#89b4fa]',
-    'text-[#10b981]',
-    'text-[#f9e2af]',
+    "text-[#c3a6ff]",
+    "text-[#89b4fa]",
+    "text-[#10b981]",
+    "text-[#f9e2af]",
   ];
 
   const handleItemClick = (url: string, index: number) => {
     if (window.innerWidth > 768) {
-      window.open(url, '_blank', 'noopener,noreferrer');
+      window.open(url, "_blank", "noopener,noreferrer");
     } else {
       setExpandedIndex(expandedIndex === index ? -1 : index);
     }
@@ -80,7 +86,10 @@ const GithubRepos = () => {
   };
 
   return (
-    <section id="github" className="py-20 md:py-28 bg-transparent transition-colors duration-500 relative overflow-hidden">
+    <section
+      id="github"
+      className="py-20 md:py-28 bg-transparent transition-colors duration-500 relative overflow-hidden"
+    >
       {/* Background elements */}
       <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.01] bg-[linear-gradient(to_right,#808080_1px,transparent_1px),linear-gradient(to_bottom,#808080_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none transition-colors duration-500" />
       <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] bg-indigo-600/5 rounded-full blur-[100px] pointer-events-none" />
@@ -88,17 +97,21 @@ const GithubRepos = () => {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
         <div
           ref={ref}
-          className={`transition-all duration-1000 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+          className={`transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
         >
           {/* Header */}
           <div className="text-center mb-16">
             <h2 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white transition-colors duration-500 tracking-tight mb-4 flex items-center justify-center gap-3">
               <Github className="w-8 h-8 sm:w-10 sm:h-10 text-slate-900 dark:text-white transition-colors duration-500" />
-              Open Source <span className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-500 bg-clip-text text-transparent">Workspace</span>
+              Open Source{" "}
+              <span className="bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-500 bg-clip-text text-transparent">
+                Workspace
+              </span>
             </h2>
             <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto rounded-full mb-6" />
             <p className="text-slate-600 dark:text-gray-400 transition-colors duration-500 text-base max-w-xl mx-auto">
-              A browseable directory of my public codebases, styled as IDE text editor panels.
+              A browseable directory of my public codebases, styled as IDE text
+              editor panels.
             </p>
           </div>
 
@@ -117,8 +130,8 @@ const GithubRepos = () => {
                   onClick={() => handleItemClick(repo.url, index)}
                   className={`group relative bg-slate-50 dark:bg-[#0a0a0b] border border-slate-200/60 dark:border-white/[0.04] border-l-4 ${borderClass} rounded-2xl overflow-hidden transition-all duration-500 cursor-pointer ${
                     isExpanded
-                      ? 'md:translate-x-2.5 shadow-[0_10px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.4)]'
-                      : 'hover:bg-slate-100/50 dark:hover:bg-[#0c0c0e]'
+                      ? "md:translate-x-2.5 shadow-[0_10px_30px_rgba(0,0,0,0.04)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.4)]"
+                      : "hover:bg-slate-100/50 dark:hover:bg-[#0c0c0e]"
                   }`}
                 >
                   {/* Header Bar */}
@@ -127,17 +140,19 @@ const GithubRepos = () => {
                       <Terminal className={`w-4 h-4 ${textClass} opacity-80`} />
                       <span className="font-mono text-xs sm:text-sm text-slate-500 dark:text-gray-400 tracking-wider">
                         src/repos/
-                        <span className="text-slate-800 dark:text-white font-bold">{repo.name}</span>
+                        <span className="text-slate-800 dark:text-white font-bold">
+                          {repo.name}
+                        </span>
                       </span>
                     </div>
                     <button
                       className="p-1 rounded-lg text-slate-500 hover:text-slate-800 dark:text-gray-500 dark:group-hover:text-white transition-colors duration-300"
-                      aria-label={isExpanded ? 'Collapse' : 'Expand'}
+                      aria-label={isExpanded ? "Collapse" : "Expand"}
                     >
                       <Plus
                         size={18}
                         className={`transition-transform duration-500 transform ${
-                          isExpanded ? 'rotate-45 text-rose-500' : 'rotate-0'
+                          isExpanded ? "rotate-45 text-rose-500" : "rotate-0"
                         }`}
                       />
                     </button>
@@ -147,8 +162,8 @@ const GithubRepos = () => {
                   <div
                     className={`transition-all duration-500 ease-in-out ${
                       isExpanded
-                        ? 'max-h-[350px] border-t border-slate-200 dark:border-white/[0.04] opacity-100'
-                        : 'max-h-0 opacity-0 pointer-events-none'
+                        ? "max-h-[350px] border-t border-slate-200 dark:border-white/[0.04] opacity-100"
+                        : "max-h-0 opacity-0 pointer-events-none"
                     } overflow-hidden`}
                   >
                     <div className="bg-slate-100/50 dark:bg-[#121214] p-6 sm:p-8 flex gap-6 sm:gap-8">

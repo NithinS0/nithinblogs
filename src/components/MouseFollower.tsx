@@ -1,17 +1,28 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 const MouseFollower = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
   // DOM Refs
   const followerRef = useRef<HTMLDivElement>(null);
-  
+
   // Physics / position tracking
   const mouseCoords = useRef({ x: 0, y: 0 });
   const followerCoords = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+    const listener = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener('change', listener);
+    return () => mediaQuery.removeEventListener('change', listener);
+  }, []);
+
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+
     // 1. Mouse move handler to capture target coordinates
     const handleMouseMove = (e: MouseEvent) => {
       mouseCoords.current.x = e.clientX;
@@ -23,7 +34,7 @@ const MouseFollower = () => {
     const handleMouseLeave = () => {
       setIsVisible(false);
     };
-    
+
     const handleMouseEnter = () => {
       setIsVisible(true);
     };
@@ -32,30 +43,32 @@ const MouseFollower = () => {
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (!target) return;
-      
-      const isInteractive = 
-        target.tagName === 'A' || 
-        target.tagName === 'BUTTON' || 
-        target.closest('a') || 
-        target.closest('button') || 
+
+      const isInteractive =
+        target.tagName === "A" ||
+        target.tagName === "BUTTON" ||
+        target.closest("a") ||
+        target.closest("button") ||
         target.closest('[role="button"]') ||
-        target.classList.contains('cursor-pointer');
-        
+        target.classList.contains("cursor-pointer");
+
       setIsHovered(!!isInteractive);
     };
 
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    document.addEventListener('mouseleave', handleMouseLeave);
-    document.addEventListener('mouseenter', handleMouseEnter);
-    window.addEventListener('mouseover', handleMouseOver, { passive: true });
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    document.addEventListener("mouseleave", handleMouseLeave);
+    document.addEventListener("mouseenter", handleMouseEnter);
+    window.addEventListener("mouseover", handleMouseOver, { passive: true });
 
     // 4. Animation loop using requestAnimationFrame
     let animId: number;
     const updatePosition = () => {
       // Linear interpolation (lerp): current = current + (target - current) * factor
       const ease = 0.15; // smooth lag speed
-      followerCoords.current.x += (mouseCoords.current.x - followerCoords.current.x) * ease;
-      followerCoords.current.y += (mouseCoords.current.y - followerCoords.current.y) * ease;
+      followerCoords.current.x +=
+        (mouseCoords.current.x - followerCoords.current.x) * ease;
+      followerCoords.current.y +=
+        (mouseCoords.current.y - followerCoords.current.y) * ease;
 
       if (followerRef.current) {
         // Position the center of the outer ring directly on the cursor
@@ -64,17 +77,21 @@ const MouseFollower = () => {
 
       animId = requestAnimationFrame(updatePosition);
     };
-    
+
     animId = requestAnimationFrame(updatePosition);
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseleave', handleMouseLeave);
-      document.removeEventListener('mouseenter', handleMouseEnter);
-      window.removeEventListener('mouseover', handleMouseOver);
+      window.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseleave", handleMouseLeave);
+      document.removeEventListener("mouseenter", handleMouseEnter);
+      window.removeEventListener("mouseover", handleMouseOver);
       cancelAnimationFrame(animId);
     };
-  }, [isVisible]);
+  }, [isVisible, prefersReducedMotion]);
+
+  if (prefersReducedMotion) {
+    return null;
+  }
 
   return (
     <div
@@ -83,23 +100,23 @@ const MouseFollower = () => {
       style={{
         opacity: isVisible ? 1 : 0,
         // Start centered around the cursor
-        margin: '-16px 0 0 -16px',
-        width: '32px',
-        height: '32px',
+        margin: "-16px 0 0 -16px",
+        width: "32px",
+        height: "32px",
       }}
     >
       {/* Outer Halo */}
       <div
         className={`w-full h-full rounded-full border transition-all duration-300 ease-out ${
           isHovered
-            ? 'scale-150 border-indigo-500/50 bg-indigo-500/[0.08] shadow-[0_0_12px_rgba(99,102,241,0.25)] border-2'
-            : 'scale-100 border-blue-500/35 bg-blue-500/[0.02] dark:border-blue-400/40 dark:bg-white/[0.01]'
+            ? "scale-150 border-indigo-500/50 bg-indigo-500/[0.08] shadow-[0_0_12px_rgba(99,102,241,0.25)] border-2"
+            : "scale-100 border-blue-500/35 bg-blue-500/[0.02] dark:border-blue-400/40 dark:bg-white/[0.01]"
         }`}
       />
       {/* Inner Dot */}
       <div
         className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/80 transition-all duration-200 ${
-          isHovered ? 'w-1 h-1 opacity-0' : 'w-1.5 h-1.5 opacity-100'
+          isHovered ? "w-1 h-1 opacity-0" : "w-1.5 h-1.5 opacity-100"
         }`}
       />
     </div>
@@ -107,3 +124,4 @@ const MouseFollower = () => {
 };
 
 export default MouseFollower;
+

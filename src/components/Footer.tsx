@@ -1,22 +1,30 @@
-import { useState, useEffect } from 'react';
-import { Github, Linkedin, Instagram, Twitter, ChevronUp } from 'lucide-react';
+import { useState, useEffect } from "react";
+import { Github, Linkedin, Instagram, Twitter, ChevronUp } from "lucide-react";
 
 const navItems = [
-  { label: 'Home', id: 'home' },
-  { label: 'About', id: 'about' },
-  { label: 'Skills', id: 'skills' },
-  { label: 'Projects', id: 'projects' },
-  { label: 'GitHub', id: 'github' },
-  { label: 'Experience', id: 'experience' },
-  { label: 'Certifications', id: 'certifications' },
-  { label: 'Contact', id: 'contact' },
+  { label: "Home", id: "home" },
+  { label: "About", id: "about" },
+  { label: "Skills", id: "skills" },
+  { label: "Projects", id: "projects" },
+  { label: "GitHub", id: "github" },
+  { label: "Experience", id: "experience" },
+  { label: "Certifications", id: "certifications" },
+  { label: "Contact", id: "contact" },
 ];
 
 const socialLinks = [
-  { icon: Github, url: 'https://github.com/NithinS0', label: 'GitHub' },
-  { icon: Linkedin, url: 'https://linkedin.com/in/nithin01', label: 'LinkedIn' },
-  { icon: Instagram, url: 'https://www.instagram.com/nithinsivakumar', label: 'Instagram' },
-  { icon: Twitter, url: 'https://x.com/SNithin_/', label: 'Twitter' },
+  { icon: Github, url: "https://github.com/NithinS0", label: "GitHub" },
+  {
+    icon: Linkedin,
+    url: "https://linkedin.com/in/nithin01",
+    label: "LinkedIn",
+  },
+  {
+    icon: Instagram,
+    url: "https://www.instagram.com/nithinsivakumar",
+    label: "Instagram",
+  },
+  { icon: Twitter, url: "https://x.com/SNithin_/", label: "Twitter" },
 ];
 
 const Footer = () => {
@@ -26,18 +34,17 @@ const Footer = () => {
     const toggleVisibility = () => {
       setShowScrollTop(window.scrollY > 300);
     };
-    window.addEventListener('scroll', toggleVisibility, { passive: true });
-    return () => window.removeEventListener('scroll', toggleVisibility);
+    window.addEventListener("scroll", toggleVisibility, { passive: true });
+    return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
     <footer className="bg-transparent border-t border-slate-200 dark:border-[#2a2a2e] transition-colors duration-500 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center gap-8">
-
         {/* Nav Links */}
         <nav className="flex flex-wrap justify-center gap-x-8 gap-y-4">
           {navItems.map((item) => (
@@ -78,14 +85,16 @@ const Footer = () => {
           {/* Back to Top */}
           <button
             onClick={scrollToTop}
-            className={`w-11 h-11 rounded-full border border-slate-200 dark:border-[#2a2a2e] bg-slate-50 dark:bg-[#121214] flex items-center justify-center text-slate-500 dark:text-[#a0a0a8] hover:bg-slate-950 dark:hover:bg-white hover:text-white dark:hover:text-black hover:border-slate-950 dark:hover:border-white transition-all duration-300 hover:-translate-y-1 shadow-md dark:shadow-lg shadow-black/5 dark:shadow-black/20 sm:absolute sm:right-0 ${showScrollTop ? 'opacity-100 scale-100' : 'opacity-0 scale-75 pointer-events-none'
-              }`}
+            className={`w-11 h-11 rounded-full border border-slate-200 dark:border-[#2a2a2e] bg-slate-50 dark:bg-[#121214] flex items-center justify-center text-slate-500 dark:text-[#a0a0a8] hover:bg-slate-950 dark:hover:bg-white hover:text-white dark:hover:text-black hover:border-slate-950 dark:hover:border-white transition-all duration-300 hover:-translate-y-1 shadow-md dark:shadow-lg shadow-black/5 dark:shadow-black/20 sm:absolute sm:right-0 ${
+              showScrollTop
+                ? "opacity-100 scale-100"
+                : "opacity-0 scale-75 pointer-events-none"
+            }`}
             aria-label="Back to Top"
           >
             <ChevronUp size={20} />
           </button>
         </div>
-
       </div>
     </footer>
   );

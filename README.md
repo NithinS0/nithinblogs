@@ -22,11 +22,13 @@ A modern, interactive portfolio website showcasing my work as an AI enthusiast, 
 ## 📦 Installation
 
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/NithinS0/nithinblogs.git
    ```
 
 2. Navigate to the project directory:
+
    ```bash
    cd nithinblogs
    ```
@@ -39,17 +41,21 @@ A modern, interactive portfolio website showcasing my work as an AI enthusiast, 
 ## ▶️ Running the Project
 
 ### Development Mode
+
 ```bash
 npm run dev
 ```
+
 Open [http://localhost:5173](http://localhost:5173) in your browser.
 
 ### Production Build
+
 ```bash
 npm run build
 ```
 
 ### Preview Production Build
+
 ```bash
 npm run preview
 ```
@@ -91,16 +97,21 @@ src/
 ## 🎨 Key Components
 
 ### Hero Section
+
 Features an interactive 3D neural network background with revolving neurons and social media links.
 
 ### About Section
+
 Details my educational background, skills, and passion for AI and machine learning.
 
 ### Skills Section
+
 Visual representation of my technical skills with animated progress bars.
 
 ### Projects Section
+
 Showcases my key projects with descriptions, technologies used, and GitHub links:
+
 - Skill Hive: Village skill directory and service-booking system
 - Password Manager & Generator: Secure Java-based password management solution
 - Lung Cancer Detection: Transfer learning with VGG16 for medical imaging
@@ -108,12 +119,15 @@ Showcases my key projects with descriptions, technologies used, and GitHub links
 - Hand Gesture Recognition: CNN for computer vision applications
 
 ### Experience Section
+
 Highlights my internship experience and professional journey.
 
 ### Resume Section
+
 Provides a downloadable resume and additional contact information.
 
 ### Contact Section
+
 Interactive form for visitors to reach out, powered by EmailJS.
 
 ## 🛠️ Development Process
@@ -126,6 +140,7 @@ Interactive form for visitors to reach out, powered by EmailJS.
 ## 📤 Deployment
 
 This portfolio can be deployed to:
+
 - **Vercel**: Using the provided `vercel.json` configuration
 - **Netlify**: Using the provided `netlify.toml` configuration
 
@@ -134,6 +149,7 @@ Simply connect your GitHub repository to either platform for automatic deploymen
 ## 📞 Contact
 
 For any inquiries, please reach out through:
+
 - LinkedIn: [Nithin S](https://linkedin.com/in/nithin01)
 - GitHub: [NithinS0](https://github.com/NithinS0)
 - Email: Check the contact form on the portfolio

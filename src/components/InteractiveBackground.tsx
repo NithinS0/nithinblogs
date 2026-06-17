@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
 interface Particle {
   id: number;
@@ -12,148 +12,142 @@ interface Particle {
 }
 
 const InteractiveBackground = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [particles, setParticles] = useState<Particle[]>([]);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
+  const particlesRef = useRef<Particle[]>([]);
+  const mouseCoords = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     // Initialize particles
-    const initialParticles: Particle[] = Array.from({ length: 8 }, (_, i) => ({
+    particlesRef.current = Array.from({ length: 8 }, (_, i) => ({
       id: i,
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
       targetX: Math.random() * window.innerWidth,
       targetY: Math.random() * window.innerHeight,
       size: Math.random() * 3 + 1.5,
-      color: ['rgba(59, 130, 246, 0.15)', 'rgba(139, 92, 246, 0.15)', 'rgba(236, 72, 153, 0.15)'][i % 3],
-      speed: Math.random() * 0.015 + 0.005
+      color: [
+        "rgba(59, 130, 246, 0.15)",
+        "rgba(139, 92, 246, 0.15)",
+        "rgba(236, 72, 153, 0.15)",
+      ][i % 3],
+      speed: Math.random() * 0.015 + 0.005,
     }));
-    setParticles(initialParticles);
 
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      mouseCoords.current = { x: e.clientX, y: e.clientY };
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+    if (!prefersReducedMotion) {
+      window.addEventListener("mousemove", handleMouseMove);
+    }
 
-  useEffect(() => {
     const animate = () => {
-      setParticles(prevParticles => 
-        prevParticles.map(particle => {
-          // Calculate distance to mouse
-          const dx = mousePosition.x - particle.x;
-          const dy = mousePosition.y - particle.y;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const mousePos = mouseCoords.current;
+      const particles = particlesRef.current;
+
+      if (!prefersReducedMotion) {
+        particles.forEach((particle) => {
+          const dx = mousePos.x - particle.x;
+          const dy = mousePos.y - particle.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
-          
+
           let newTargetX = particle.targetX;
           let newTargetY = particle.targetY;
-          
-          // If mouse is close, particles move away
+
           if (distance < 100) {
             const angle = Math.atan2(dy, dx);
             newTargetX = particle.x - Math.cos(angle) * 60;
             newTargetY = particle.y - Math.sin(angle) * 60;
           } else {
-            // Random movement when mouse is far
             if (Math.random() < 0.01) {
               newTargetX = Math.random() * window.innerWidth;
               newTargetY = Math.random() * window.innerHeight;
             }
           }
-          
-          // Smooth movement towards target
-          const newX = particle.x + (newTargetX - particle.x) * particle.speed;
-          const newY = particle.y + (newTargetY - particle.y) * particle.speed;
-          
-          return {
-            ...particle,
-            x: newX,
-            y: newY,
-            targetX: newTargetX,
-            targetY: newTargetY
-          };
-        })
-      );
-      
-      animationRef.current = requestAnimationFrame(animate);
+
+          particle.targetX = newTargetX;
+          particle.targetY = newTargetY;
+          particle.x += (newTargetX - particle.x) * particle.speed;
+          particle.y += (newTargetY - particle.y) * particle.speed;
+        });
+      }
+
+      // Draw connections between particles
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const p1 = particles[i];
+          const p2 = particles[j];
+          const dist = Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
+
+          if (dist < 140) {
+            ctx.beginPath();
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(59, 130, 246, ${(1 - dist / 140) * 0.08})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
+
+        // Draw connections to mouse
+        if (!prefersReducedMotion) {
+          const distToMouse = Math.sqrt(Math.pow(particles[i].x - mousePos.x, 2) + Math.pow(particles[i].y - mousePos.y, 2));
+          if (distToMouse < 90) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(mousePos.x, mousePos.y);
+            ctx.strokeStyle = `rgba(139, 92, 246, ${(1 - distToMouse / 90) * 0.12})`;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Draw particles
+      particles.forEach((particle) => {
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.fillStyle = particle.color;
+        ctx.fill();
+      });
+
+      if (!prefersReducedMotion) {
+        animationRef.current = requestAnimationFrame(animate);
+      }
     };
 
     animate();
+
     return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("mousemove", handleMouseMove);
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, [mousePosition]);
+  }, []);
 
   return (
     <div className="fixed inset-0 pointer-events-none z-10 overflow-hidden">
-      <svg className="w-full h-full">
-        {/* Particle connections */}
-        {particles.map((particle, i) => 
-          particles.slice(i + 1).map((otherParticle, j) => {
-            const distance = Math.sqrt(
-              Math.pow(particle.x - otherParticle.x, 2) + 
-              Math.pow(particle.y - otherParticle.y, 2)
-            );
-            
-            if (distance < 140) {
-              return (
-                <line
-                  key={`${i}-${j}`}
-                  x1={particle.x}
-                  y1={particle.y}
-                  x2={otherParticle.x}
-                  y2={otherParticle.y}
-                  stroke="rgba(59, 130, 246, 0.08)"
-                  strokeWidth="1"
-                  opacity={1 - distance / 140}
-                />
-              );
-            }
-            return null;
-          })
-        )}
-        
-        {/* Mouse connections */}
-        {particles.map((particle, i) => {
-          const distance = Math.sqrt(
-            Math.pow(particle.x - mousePosition.x, 2) + 
-            Math.pow(particle.y - mousePosition.y, 2)
-          );
-          
-          if (distance < 90) {
-            return (
-              <line
-                key={`mouse-${i}`}
-                x1={particle.x}
-                y1={particle.y}
-                x2={mousePosition.x}
-                y2={mousePosition.y}
-                stroke="rgba(139, 92, 246, 0.12)"
-                strokeWidth="1"
-                opacity={1 - distance / 90}
-                className="animate-pulse"
-              />
-            );
-          }
-          return null;
-        })}
-        
-        {/* Particles */}
-        {particles.map(particle => (
-          <circle
-            key={particle.id}
-            cx={particle.x}
-            cy={particle.y}
-            r={particle.size}
-            fill={particle.color}
-            className="animate-pulse"
-          />
-        ))}
-      </svg>
+      <canvas ref={canvasRef} className="w-full h-full" />
     </div>
   );
 };

@@ -1,15 +1,41 @@
 import {
-  Github, Linkedin, Instagram, Twitter,
-  ChevronDown, Sparkles, FileText, ArrowRight,
+  Github,
+  Linkedin,
+  Instagram,
+  Twitter,
+  ChevronDown,
+  Sparkles,
+  FileText,
+  ArrowRight,
   MapPin,
-} from 'lucide-react';
+} from "lucide-react";
 
 const Hero = () => {
   const socialLinks = [
-    { icon: Github,    url: 'https://github.com/NithinS0',                        label: 'GitHub',    color: 'hover:border-[#2ea44f]/50 hover:text-[#2ea44f]' },
-    { icon: Linkedin,  url: 'https://linkedin.com/in/nithin01',                   label: 'LinkedIn',  color: 'hover:border-[#0077b5]/50 hover:text-[#0077b5]' },
-    { icon: Instagram, url: 'https://www.instagram.com/nithinsivakumar',          label: 'Instagram', color: 'hover:border-[#e4405f]/50 hover:text-[#e4405f]' },
-    { icon: Twitter,   url: 'https://x.com/SNithin_/',                            label: 'Twitter',   color: 'hover:border-[#1da1f2]/50 hover:text-[#1da1f2]' },
+    {
+      icon: Github,
+      url: "https://github.com/NithinS0",
+      label: "GitHub",
+      color: "hover:border-[#2ea44f]/50 hover:text-[#2ea44f]",
+    },
+    {
+      icon: Linkedin,
+      url: "https://linkedin.com/in/nithin01",
+      label: "LinkedIn",
+      color: "hover:border-[#0077b5]/50 hover:text-[#0077b5]",
+    },
+    {
+      icon: Instagram,
+      url: "https://www.instagram.com/nithinsivakumar",
+      label: "Instagram",
+      color: "hover:border-[#e4405f]/50 hover:text-[#e4405f]",
+    },
+    {
+      icon: Twitter,
+      url: "https://x.com/SNithin_/",
+      label: "Twitter",
+      color: "hover:border-[#1da1f2]/50 hover:text-[#1da1f2]",
+    },
   ];
 
   return (
@@ -32,22 +58,19 @@ const Hero = () => {
       {/* ──────────────── Content ──────────────── */}
       <div className="relative z-20 w-full px-4 sm:px-6 py-28 lg:py-0">
         <div className="max-w-6xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-16 lg:gap-24 lg:pl-10">
-
           {/* ═══════════════════════════════════════
               LEFT — Photo column (moved here)
           ═══════════════════════════════════════ */}
           <div className="w-full sm:w-[300px] lg:w-[340px] flex-shrink-0 flex flex-col items-center">
-
             {/* Outer decorative ring */}
             <div className="relative group w-full">
-
               {/* Rotating gradient border */}
               <div
                 className="absolute -inset-[3px] rounded-[2.2rem] opacity-60 dark:opacity-80 blur-sm group-hover:opacity-100 transition-opacity duration-700"
                 style={{
                   background:
-                    'conic-gradient(from 0deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6)',
-                  animation: 'spin 6s linear infinite',
+                    "conic-gradient(from 0deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6)",
+                  animation: "spin 6s linear infinite",
                 }}
               />
 
@@ -70,7 +93,6 @@ const Hero = () => {
                   <MapPin size={11} />
                   Chennai, India
                 </div>
-
               </div>
             </div>
 
@@ -85,7 +107,10 @@ const Hero = () => {
                   aria-label={s.label}
                   className={`group p-2.5 bg-slate-100 dark:bg-white/5 rounded-xl border border-slate-200 dark:border-white/10 transition-all duration-300 hover:-translate-y-1 text-slate-500 dark:text-gray-400 ${s.color}`}
                 >
-                  <s.icon size={17} className="transition-transform group-hover:scale-110" />
+                  <s.icon
+                    size={17}
+                    className="transition-transform group-hover:scale-110"
+                  />
                 </a>
               ))}
             </div>
@@ -95,17 +120,19 @@ const Hero = () => {
               RIGHT — Text & CTA
           ═══════════════════════════════════════ */}
           <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left">
-
             {/* Role badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 dark:border-blue-400/20 mb-6 backdrop-blur-md">
-              <Sparkles size={13} className="text-blue-600 dark:text-blue-400" />
+              <Sparkles
+                size={13}
+                className="text-blue-600 dark:text-blue-400"
+              />
               <span className="text-blue-700 dark:text-blue-300 text-xs font-bold tracking-widest uppercase">
                 AI Engineer · SRM University
               </span>
             </div>
 
             {/* Name */}
-            <h1 
+            <h1
               className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-5 tracking-tighter leading-[0.92]"
               style={{ fontFamily: "'Orbitron', sans-serif" }}
             >
@@ -122,20 +149,23 @@ const Hero = () => {
 
             {/* Tagline */}
             <p className="text-sm sm:text-base md:text-lg text-slate-700 dark:text-slate-300 font-medium leading-relaxed max-w-lg mb-8">
-              Teaching computers how to think so I don't have to. Turning neural networks
-              into production-grade AI systems — one inference at a time.
+              Teaching computers how to think so I don't have to. Turning neural
+              networks into production-grade AI systems — one inference at a
+              time.
             </p>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3 sm:gap-4 w-full sm:w-auto">
-
               {/* Primary */}
               <a
                 href="#projects"
                 className="group relative w-full sm:w-[200px] flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl text-white font-bold text-sm tracking-wide transition-all duration-300 hover:shadow-[0_0_28px_rgba(99,102,241,0.45)] hover:-translate-y-0.5 overflow-hidden"
               >
                 <span className="relative z-10">Explore Work</span>
-                <ArrowRight size={16} className="relative z-10 transition-transform group-hover:translate-x-1" />
+                <ArrowRight
+                  size={16}
+                  className="relative z-10 transition-transform group-hover:translate-x-1"
+                />
                 <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </a>
 
@@ -152,7 +182,6 @@ const Hero = () => {
               </a>
             </div>
           </div>
-
         </div>
       </div>
 

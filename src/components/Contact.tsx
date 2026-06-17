@@ -1,8 +1,6 @@
-import { useState } from 'react';
-import { useInView } from 'react-intersection-observer';
-import {
-  Send, CheckCircle2, AlertCircle, Clock, Loader2
-} from 'lucide-react';
+import { useState } from "react";
+import { useInView } from "react-intersection-observer";
+import { Send, CheckCircle2, AlertCircle, Clock, Loader2 } from "lucide-react";
 
 interface FormState {
   name: string;
@@ -10,7 +8,10 @@ interface FormState {
   message: string;
 }
 
-type SubmitStatus = { type: 'idle' | 'loading' | 'success' | 'error'; message: string };
+type SubmitStatus = {
+  type: "idle" | "loading" | "success" | "error";
+  message: string;
+};
 
 const MailIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="#EA4335" className={className}>
@@ -39,69 +40,115 @@ const WhatsAppIcon = ({ className }: { className?: string }) => (
 const Contact = () => {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.05 });
 
-  const [form, setForm] = useState<FormState>({ name: '', email: '', message: '' });
-  const [status, setStatus] = useState<SubmitStatus>({ type: 'idle', message: '' });
+  const [form, setForm] = useState<FormState>({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [status, setStatus] = useState<SubmitStatus>({
+    type: "idle",
+    message: "",
+  });
   const [focused, setFocused] = useState<string | null>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
-    setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) {
-      setStatus({ type: 'error', message: 'Please fill in all required fields.' });
+      setStatus({
+        type: "error",
+        message: "Please fill in all required fields.",
+      });
       return;
     }
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
-      setStatus({ type: 'error', message: 'Please enter a valid email address.' });
+      setStatus({
+        type: "error",
+        message: "Please enter a valid email address.",
+      });
       return;
     }
-    setStatus({ type: 'loading', message: '' });
+    setStatus({ type: "loading", message: "" });
 
     try {
-      const response = await fetch("https://formsubmit.co/ajax/nithin200511@gmail.com", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
+      const response = await fetch(
+        "https://formsubmit.co/ajax/nithin200511@gmail.com",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            subject: "Portfolio Inquiry",
+            message: form.message,
+          }),
         },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          subject: "Portfolio Inquiry",
-          message: form.message
-        })
-      });
+      );
 
       if (response.ok) {
-        setStatus({ type: 'success', message: 'Message sent successfully!' });
-        setForm({ name: '', email: '', message: '' });
+        setStatus({ type: "success", message: "Message sent successfully!" });
+        setForm({ name: "", email: "", message: "" });
       } else {
-        setStatus({ type: 'error', message: 'Failed to send message. Please try again.' });
+        setStatus({
+          type: "error",
+          message: "Failed to send message. Please try again.",
+        });
       }
     } catch {
-      setStatus({ type: 'error', message: 'An error occurred. Please try again.' });
+      setStatus({
+        type: "error",
+        message: "An error occurred. Please try again.",
+      });
     } finally {
-      setTimeout(() => setStatus({ type: 'idle', message: '' }), 8000);
+      setTimeout(() => setStatus({ type: "idle", message: "" }), 8000);
     }
   };
 
   const inputCls = (name: string) =>
     `w-full bg-slate-50/50 dark:bg-[#121214] border border-slate-200 dark:border-white/[0.06] hover:border-slate-300 dark:hover:border-white/15 rounded-xl sm:rounded-2xl px-5 py-4 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 transition-all duration-300 outline-none text-sm font-medium ${
       focused === name
-        ? 'bg-white dark:bg-[#18181c] border-slate-900/35 dark:border-white/30 ring-1 ring-slate-900/35 dark:ring-white/30 shadow-[0_0_15px_rgba(0,0,0,0.02)] dark:shadow-[0_0_15px_rgba(255,255,255,0.02)]'
-        : ''
+        ? "bg-white dark:bg-[#18181c] border-slate-900/35 dark:border-white/30 ring-1 ring-slate-900/35 dark:ring-white/30 shadow-[0_0_15px_rgba(0,0,0,0.02)] dark:shadow-[0_0_15px_rgba(255,255,255,0.02)]"
+        : ""
     }`;
 
   const channels = [
-    { icon: MailIcon, href: 'mailto:nithin200511@gmail.com', hoverBg: 'hover:bg-[#EA4335]/10', label: 'Email' },
-    { icon: PhoneIcon, href: 'tel:+919042645273', hoverBg: 'hover:bg-[#34A853]/10', label: 'Phone' },
-    { icon: LinkedinIcon, href: 'https://linkedin.com/in/nithin01', hoverBg: 'hover:bg-[#0A66C2]/10', label: 'LinkedIn' },
-    { icon: WhatsAppIcon, href: 'https://wa.me/919042645273', hoverBg: 'hover:bg-[#25D366]/10', label: 'WhatsApp' }
+    {
+      icon: MailIcon,
+      href: "mailto:nithin200511@gmail.com",
+      hoverBg: "hover:bg-[#EA4335]/10",
+      label: "Email",
+    },
+    {
+      icon: PhoneIcon,
+      href: "tel:+919042645273",
+      hoverBg: "hover:bg-[#34A853]/10",
+      label: "Phone",
+    },
+    {
+      icon: LinkedinIcon,
+      href: "https://linkedin.com/in/nithin01",
+      hoverBg: "hover:bg-[#0A66C2]/10",
+      label: "LinkedIn",
+    },
+    {
+      icon: WhatsAppIcon,
+      href: "https://wa.me/919042645273",
+      hoverBg: "hover:bg-[#25D366]/10",
+      label: "WhatsApp",
+    },
   ];
 
   return (
-    <section id="contact" className="py-20 md:py-28 bg-transparent transition-colors duration-500 relative overflow-hidden">
+    <section
+      id="contact"
+      className="py-20 md:py-28 bg-transparent transition-colors duration-500 relative overflow-hidden"
+    >
       {/* Decorative Orbs */}
       <div className="absolute bottom-0 right-1/4 w-[350px] h-[350px] bg-blue-600/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute top-1/3 left-1/4 w-[250px] h-[250px] bg-purple-600/5 rounded-full blur-[100px] pointer-events-none" />
@@ -109,7 +156,7 @@ const Contact = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div
           ref={ref}
-          className={`transition-all duration-1000 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+          className={`transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}
         >
           {/* Header */}
           <div className="text-center mb-12">
@@ -145,7 +192,10 @@ const Contact = () => {
             <div className="relative z-10">
               {/* Info Banner */}
               <div className="flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/[0.04] rounded-full text-xs font-semibold text-slate-500 dark:text-gray-400 mb-8 max-w-md mx-auto select-none transition-all duration-500">
-                <Clock size={13} className="text-slate-400 dark:text-gray-500 shrink-0" />
+                <Clock
+                  size={13}
+                  className="text-slate-400 dark:text-gray-500 shrink-0"
+                />
                 <span>Timezone: IST (UTC+5:30)</span>
                 <span className="opacity-25">•</span>
                 <span>Response within 24 hours</span>
@@ -155,7 +205,10 @@ const Contact = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-[1fr_1.4fr] gap-6">
                   <div>
-                    <label htmlFor="name" className="block text-[11px] text-slate-500 dark:text-gray-400 font-bold uppercase tracking-widest mb-2 select-none transition-colors duration-500">
+                    <label
+                      htmlFor="name"
+                      className="block text-[11px] text-slate-500 dark:text-gray-400 font-bold uppercase tracking-widest mb-2 select-none transition-colors duration-500"
+                    >
                       Name
                     </label>
                     <input
@@ -165,14 +218,17 @@ const Contact = () => {
                       placeholder="Your name"
                       value={form.name}
                       onChange={handleChange}
-                      onFocus={() => setFocused('name')}
+                      onFocus={() => setFocused("name")}
                       onBlur={() => setFocused(null)}
-                      className={inputCls('name')}
+                      className={inputCls("name")}
                       required
                     />
                   </div>
                   <div>
-                    <label htmlFor="email" className="block text-[11px] text-slate-500 dark:text-gray-400 font-bold uppercase tracking-widest mb-2 select-none transition-colors duration-500">
+                    <label
+                      htmlFor="email"
+                      className="block text-[11px] text-slate-500 dark:text-gray-400 font-bold uppercase tracking-widest mb-2 select-none transition-colors duration-500"
+                    >
                       Email
                     </label>
                     <input
@@ -182,16 +238,19 @@ const Contact = () => {
                       placeholder="your.email@example.com"
                       value={form.email}
                       onChange={handleChange}
-                      onFocus={() => setFocused('email')}
+                      onFocus={() => setFocused("email")}
                       onBlur={() => setFocused(null)}
-                      className={inputCls('email')}
+                      className={inputCls("email")}
                       required
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-[11px] text-slate-500 dark:text-gray-400 font-bold uppercase tracking-widest mb-2 select-none transition-colors duration-500">
+                  <label
+                    htmlFor="message"
+                    className="block text-[11px] text-slate-500 dark:text-gray-400 font-bold uppercase tracking-widest mb-2 select-none transition-colors duration-500"
+                  >
                     Message
                   </label>
                   <div className="relative">
@@ -201,10 +260,10 @@ const Contact = () => {
                       placeholder="Your message..."
                       value={form.message}
                       onChange={handleChange}
-                      onFocus={() => setFocused('message')}
+                      onFocus={() => setFocused("message")}
                       onBlur={() => setFocused(null)}
                       rows={5}
-                      className={`${inputCls('message')} resize-none`}
+                      className={`${inputCls("message")} resize-none`}
                       maxLength={500}
                       required
                     />
@@ -214,14 +273,19 @@ const Contact = () => {
                   </div>
                 </div>
 
-                {status.type !== 'idle' && status.type !== 'loading' && (
-                  <div className={`flex items-start gap-3 p-4 rounded-xl text-xs sm:text-sm font-medium transition-all ${
-                    status.type === 'success'
-                      ? 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-400'
-                      : 'bg-red-500/10 border border-red-500/20 text-red-400'
-                  }`}>
-                    {status.type === 'success' ? (
-                      <CheckCircle2 size={16} className="flex-shrink-0 mt-0.5" />
+                {status.type !== "idle" && status.type !== "loading" && (
+                  <div
+                    className={`flex items-start gap-3 p-4 rounded-xl text-xs sm:text-sm font-medium transition-all ${
+                      status.type === "success"
+                        ? "bg-emerald-500/10 border border-emerald-500/20 text-emerald-400"
+                        : "bg-red-500/10 border border-red-500/20 text-red-400"
+                    }`}
+                  >
+                    {status.type === "success" ? (
+                      <CheckCircle2
+                        size={16}
+                        className="flex-shrink-0 mt-0.5"
+                      />
                     ) : (
                       <AlertCircle size={16} className="flex-shrink-0 mt-0.5" />
                     )}
@@ -231,15 +295,15 @@ const Contact = () => {
 
                 <button
                   type="submit"
-                  disabled={status.type === 'loading'}
+                  disabled={status.type === "loading"}
                   className="group w-full flex items-center justify-center gap-2.5 py-4 bg-slate-950 text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-white/90 disabled:bg-slate-200 dark:disabled:bg-gray-800 disabled:text-slate-400 dark:disabled:text-gray-500 font-black rounded-full transition-all duration-300 shadow-lg hover:-translate-y-0.5 active:translate-y-0 disabled:cursor-not-allowed text-xs uppercase tracking-widest"
                 >
-                  {status.type === 'loading' ? (
+                  {status.type === "loading" ? (
                     <>
                       <Loader2 size={15} className="animate-spin" />
                       <span>Sending...</span>
                     </>
-                  ) : status.type === 'success' ? (
+                  ) : status.type === "success" ? (
                     <>
                       <CheckCircle2 size={15} />
                       <span>Sent Successfully!</span>
@@ -247,7 +311,10 @@ const Contact = () => {
                   ) : (
                     <>
                       <span>Send Message</span>
-                      <Send size={14} className="group-hover:translate-x-1.5 group-hover:-translate-y-1.5 group-hover:rotate-[-10deg] transition-all duration-300 shrink-0" />
+                      <Send
+                        size={14}
+                        className="group-hover:translate-x-1.5 group-hover:-translate-y-1.5 group-hover:rotate-[-10deg] transition-all duration-300 shrink-0"
+                      />
                     </>
                   )}
                 </button>
