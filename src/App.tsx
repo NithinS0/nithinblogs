@@ -10,7 +10,7 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import MouseFollower from "./components/MouseFollower";
 import InteractiveBackground from "./components/InteractiveBackground";
-import { lazy, Suspense, Component, ReactNode, useState } from "react";
+import { lazy, Suspense, Component, ReactNode, useState, useEffect } from "react";
 
 const GlobalCanvas = lazy(() =>
   import("./components/HeroCanvas").catch(() => ({ default: () => <></> })),
@@ -36,6 +36,13 @@ class ErrorBoundary extends Component<
 function App() {
   const [activeSection, setActiveSection] = useState("home");
 
+  // Prevent any element from receiving keyboard focus on initial load
+  useEffect(() => {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#fafafc] text-slate-900 dark:bg-[#050810] dark:text-white transition-colors duration-500 overflow-x-hidden relative">
       <MouseFollower />
@@ -45,7 +52,7 @@ function App() {
       <div className="fixed inset-0 z-0 pointer-events-none opacity-60 dark:opacity-40 transition-opacity duration-500">
         <ErrorBoundary>
           <Suspense fallback={null}>
-            <GlobalCanvas activeSection={activeSection} />
+            <GlobalCanvas />
           </Suspense>
         </ErrorBoundary>
       </div>

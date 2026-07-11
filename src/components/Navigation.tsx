@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Terminal, Sun, Moon } from "lucide-react";
+import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
+import { Menu, X, Terminal, Sun, Moon, Clock } from "lucide-react";
 
 const navItems = [
   { id: "home", label: "Home" },
@@ -109,6 +109,24 @@ const ThemeToggle = ({
   );
 };
 
+const RealTimeClock = () => {
+  const [time, setTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => setTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="font-mono text-[10px] sm:text-xs font-bold text-slate-500 dark:text-gray-400 select-none flex items-center gap-1.5 px-2 bg-slate-100/50 dark:bg-white/[0.03] py-1.5 rounded-lg border border-slate-200/50 dark:border-white/[0.05]">
+      <Clock size={12} className="text-blue-500/70 dark:text-blue-400/70" />
+      <span className="w-[52px] sm:w-[58px] text-center tracking-wider">
+        {time.toLocaleTimeString([], { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+      </span>
+    </div>
+  );
+};
+
 // ─────────────────────────────────────────────────────
 //  Navigation
 // ─────────────────────────────────────────────────────
@@ -128,6 +146,13 @@ const Navigation = ({
         : "light";
     }
     return "light";
+  });
+
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
   });
 
   // Ref for ripple origin
@@ -183,9 +208,6 @@ const Navigation = ({
     };
 
     // ① Use View Transitions API (Chrome 111+, Safari 18+)
-    //   — Browser snapshots old + new frames, then we drive the circular
-    //     clip-path reveal on ::view-transition-new(root). No overlay div
-    //     needed; it's entirely GPU-composited at 60-120 fps.
     if ("startViewTransition" in window.document) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const vt = (document as any).startViewTransition(applyTheme);
@@ -235,9 +257,7 @@ const Navigation = ({
       },
     );
 
-    // Apply theme at ~40 % so the switch is always behind the overlay
     const t1 = setTimeout(applyTheme, 168);
-    // Remove overlay shortly after expand completes
     const t2 = setTimeout(() => overlay.remove(), 460);
 
     return () => {
@@ -250,6 +270,10 @@ const Navigation = ({
 
   return (
     <>
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-1 z-[60] bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 origin-left"
+        style={{ scaleX }}
+      />
       <nav
         className={`fixed top-0 w-full z-50 transition-all duration-500 ${
           scrolled ? "py-2 sm:py-3" : "py-4 sm:py-5"
@@ -282,18 +306,30 @@ const Navigation = ({
                   href={`#${item.id}`}
                   className={`relative px-3 lg:px-4 py-2 text-xs font-bold tracking-widest uppercase transition-all duration-300 rounded-xl ${
                     activeSection === item.id
-                      ? "text-slate-900 bg-slate-100 dark:text-white dark:bg-white/[0.08]"
+                      ? "text-slate-900 dark:text-white"
                       : "text-slate-500 hover:text-slate-900 hover:bg-slate-100/50 dark:text-slate-300 dark:hover:text-white dark:hover:bg-white/5"
                   }`}
                 >
-                  {item.label}
                   {activeSection === item.id && (
-                    <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-blue-500 dark:bg-blue-400 rounded-full" />
+                    <motion.div
+                      layoutId="activeSection"
+                      className="absolute inset-0 bg-slate-100 dark:bg-white/[0.08] rounded-xl -z-10"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative z-10">{item.label}</span>
+                  {activeSection === item.id && (
+                    <motion.span 
+                      layoutId="activeUnderline"
+                      className="absolute bottom-1 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-blue-500 dark:bg-blue-400 rounded-full z-10" 
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
                   )}
                 </a>
               ))}
 
-              <div className="pl-3 border-l border-slate-200 dark:border-white/10 ml-2">
+              <div className="pl-3 border-l border-slate-200 dark:border-white/10 ml-2 flex items-center gap-3">
+                <RealTimeClock />
                 <ThemeToggle
                   theme={theme}
                   toggleTheme={toggleTheme}
@@ -304,6 +340,7 @@ const Navigation = ({
 
             {/* Mobile Controls */}
             <div className="flex md:hidden items-center gap-3">
+              <RealTimeClock />
               <ThemeToggle
                 theme={theme}
                 toggleTheme={toggleTheme}

@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Float, PerspectiveCamera } from "@react-three/drei";
-import NeuralNetwork from "./NeuralNetwork";
-import RevolvingNeurons from "./RevolvingNeurons";
+import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
+import ActivationBurst from "./ActivationBurst";
 
-const HeroCanvas = ({ activeSection }: { activeSection?: string }) => {
+const HeroCanvas = () => {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
@@ -22,15 +21,7 @@ const HeroCanvas = ({ activeSection }: { activeSection?: string }) => {
       <pointLight position={[10, 10, 10]} intensity={1.5} color="#3b82f6" />
       <pointLight position={[-10, -10, -10]} intensity={1} color="#8b5cf6" />
 
-      {prefersReducedMotion ? (
-        <NeuralNetwork />
-      ) : (
-        <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
-          <NeuralNetwork />
-        </Float>
-      )}
-
-      <RevolvingNeurons activeSection={activeSection || "home"} prefersReducedMotion={prefersReducedMotion} />
+      <ActivationBurst prefersReducedMotion={prefersReducedMotion} />
 
       <OrbitControls
         enableZoom={false}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useInView } from "react-intersection-observer";
+import { motion } from "framer-motion";
 import { Database, Brain, Layers, Wrench, Bot, Code2 } from "lucide-react";
 
 const SkillChip = ({
@@ -40,8 +40,6 @@ const SkillChip = ({
 };
 
 const Skills = () => {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.05 });
-
   const skillCategories = [
     {
       title: "Languages & Core",
@@ -254,6 +252,21 @@ const Skills = () => {
     },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+  };
+
   return (
     <section
       id="skills"
@@ -265,13 +278,15 @@ const Skills = () => {
       <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-purple-600/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div
-          ref={ref}
-          className={`transition-all duration-1000 ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
         >
           {/* Header */}
-          <div className="text-center mb-16 md:mb-24">
-            <h2 className="text-4xl sm:text-5xl font-black mb-4 tracking-tight text-slate-900 dark:text-white transition-colors duration-500 animate-fade-in">
+          <motion.div variants={itemVariants} className="text-center mb-16 md:mb-24">
+            <h2 className="text-4xl sm:text-5xl font-black mb-4 tracking-tight text-slate-900 dark:text-white transition-colors duration-500">
               Skills{" "}
               <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-500 bg-clip-text text-transparent">
                 (Things I Argue With Daily)
@@ -282,12 +297,13 @@ const Skills = () => {
               A comprehensive checklist of technologies I wrestle with, debug,
               and occasionally convince to work.
             </p>
-          </div>
+          </motion.div>
 
           {/* Grid — 1 col on mobile, 2 on tablet, 3 on desktop */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {skillCategories.map((category, idx) => (
-              <div
+              <motion.div
+                variants={itemVariants}
                 key={idx}
                 className={`group relative bg-white dark:bg-[#0d1224]/80 backdrop-blur-xl rounded-3xl p-6 sm:p-7 border border-slate-200/60 dark:border-white/[0.04] ${category.accentBorder} transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_50px_-20px_rgba(0,0,0,0.05)] dark:${category.shadowColor} overflow-hidden`}
               >
@@ -327,10 +343,10 @@ const Skills = () => {
                 <div
                   className={`absolute -right-10 -bottom-10 w-32 h-32 bg-gradient-to-br ${category.color} opacity-0 group-hover:opacity-[0.08] blur-3xl transition-opacity duration-500 pointer-events-none`}
                 />
-              </div>
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

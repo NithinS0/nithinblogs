@@ -6,30 +6,6 @@ const Experience = () => {
 
   const experiences = [
     {
-      company: "Tata Steel",
-      companyUrl: "https://www.tatasteel.com/",
-      position: "AI/ML Intern",
-      location: "Tata Steel · Hybrid",
-      locationUrl: "https://www.google.com/maps/search/Tata+Steel",
-      period: "2026",
-      status: "Live",
-      logo: "/assets/tata-logo.svg",
-      headerClass:
-        "bg-gradient-to-br from-[#081b29] via-[#003c71] to-[#005a9c]",
-      logoStyle:
-        "rounded-xl object-contain bg-white p-2.5 shadow-[0_4px_15px_rgba(0,0,0,0.3)]",
-      stats: [
-        { value: "Mar 2026", label: "Start" },
-        { value: "Present", label: "Status" },
-        { value: "4+", label: "Months" },
-      ],
-      description:
-        "Applying machine learning to forecast steel demand and visualize operational insights. Developed a regression-based construction prediction model and designed real-time dashboards for telemetry data.",
-      tags: ["AI/ML", "Demand Forecasting", "Python", "Telemetry"],
-      tagHoverClass:
-        "hover:bg-blue-500/10 hover:text-blue-500 dark:hover:text-blue-400 hover:border-blue-500/30",
-    },
-    {
       company: "Tube Products of India (Murugappa Group)",
       companyUrl: "https://tiindia.com/",
       position: "AI Architect Intern",
