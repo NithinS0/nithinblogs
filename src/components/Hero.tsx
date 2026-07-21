@@ -141,7 +141,7 @@ const Hero = () => {
 
               {/* Resume */}
               <a
-                href="https://drive.google.com/file/d/1OIxHFcB3wsg_3qRoeoLsBWMmthQvXZVx/view?usp=sharing"
+                href="https://drive.google.com/file/d/1eQUT4rEShGlGsjYGucJkstRswpdIz8LU/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative w-full sm:w-[200px] flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl text-white font-bold text-sm tracking-wide transition-all duration-300 hover:shadow-[0_0_28px_rgba(168,85,247,0.4)] hover:-translate-y-0.5 overflow-hidden"
