@@ -7,11 +7,11 @@ const Experience = () => {
   const experiences = [
     {
       company: "Tube Products of India (Murugappa Group)",
-      companyUrl: "https://tiindia.com/",
+      companyUrl: "https://tiindia.com/tube-products-of-india/",
       position: "AI Architect Intern",
       location: "Murugappa Group · Avadi",
       locationUrl:
-        "https://maps.google.com/?q=Tube+Products+of+India+Avadi+Chennai",
+        "https://www.google.com/maps/dir//Tube+Products+of+India,+44F7%2B996,+Chennai+-+Thiruttani+-+Renigunta+Hwy,+Avadi,+Kondithope,+Tamil+Nadu+600054/@12.8581001,80.0646674,4797m/data=!3m1!1e3!4m8!4m7!1m0!1m5!1m1!1s0x3a526289b8fb76f3:0x1d80cc53e35c6f1!2m2!1d80.1133983!2d13.1234027?entry=ttu&g_ep=EgoyMDI2MDkxNC4wIKXMDSoASAFQAw%3D%3D",
       period: "2026",
       status: "Done",
       logo: "/assets/murugappa-logo.avif",
@@ -36,13 +36,42 @@ const Experience = () => {
         "hover:bg-[#10b981]/10 hover:text-[#10b981] dark:hover:text-[#6ee7b7] hover:border-[#10b981]/30",
     },
     {
-      company: "Renault Nissan Automotive",
+      company: "Double Devs",
+      companyUrl: "https://doubledevs.com/",
+      position: "Software Dev & AI Intern",
+      location: "Double Devs · Remote",
+      locationUrl: "https://www.google.com/maps/dir//Double+Devs,+Eswaran+Kovil+Road,+North+Sevur,+Sevur,+Tamil+Nadu+641655/@12.8581001,80.0646674,4797m/data=!3m1!1e3!4m8!4m7!1m0!1m5!1m1!1s0x3ba91d12aa87fedf:0x97f1fcbae7bc5d0d!2m2!1d77.2383797!2d11.2485471?entry=ttu&g_ep=EgoyMDI2MDkxNC4wIKXMDSoASAFQAw%3D%3D",
+      period: "2025 - 2026",
+      status: "Done",
+      logo: "/assets/doubledevs-logo.png",
+      headerClass:
+        "bg-gradient-to-br from-[#0b132b] via-[#1c2541] to-[#0284c7]",
+      logoStyle: "bg-white p-1.5 rounded-xl object-contain shadow-[0_4px_15px_rgba(0,0,0,0.3)]",
+      stats: [
+        { value: "Nov 2025", label: "Start" },
+        { value: "Feb 2026", label: "End" },
+        { value: "3", label: "Months" },
+      ],
+      description:
+        "Contributed to software application development and AI/ML model integration. Managed web hosting strategies, cloud computing infrastructure, and version control collaboration workflows.",
+      tags: [
+        "Software Dev",
+        "AI & ML",
+        "Cloud Infrastructure",
+        "Web Hosting",
+        "DevOps",
+      ],
+      tagHoverClass:
+        "hover:bg-cyan-500/10 hover:text-cyan-500 dark:hover:text-cyan-400 hover:border-cyan-500/30",
+    },
+    {
+      company: "Renault Nissan Automotive India Private Limited",
       companyUrl:
         "https://www.renaultgroup.com/en/group/locations/chennai-plant/",
       position: "RPA & Data Intern",
       location: "RNAIPL · Chennai",
       locationUrl:
-        "https://maps.google.com/?q=Renault+Nissan+Automotive+India+Private+Limited+Oragadam",
+        "https://www.google.com/maps?gs_lcrp=EgZjaHJvbWUqCggAEAAYgAQYtAcyCggAEAAYgAQYtAcyBwgBEAAYgAQyCggCEAAYgAQYtAcyBwgDEAAYgAQyCggEEAAYgAQYtAcyCggFEAAYgAQYtAcyEAgGEC4YrwEYxwEYgAQYtAcyCggHEAAYgAQYtAcyBwgIEAAYgAQyCggJEAAYgAQYtAfSAQg1NzA0ajBqN6gCALACAA&um=1&ie=UTF-8&fb=1&gl=in&sa=X&geocode=KXGRQEfK8VI6MaG0JKFPSyV8&daddr=SIPCOT+Industrial+Park,+Plot+No.1,+Oragadam+(Post,+Sriperumbudur,+Chennai,+Tamil+Nadu+602118",
       period: "2025",
       status: "Done",
       logo: "/assets/renault-logo.png",
