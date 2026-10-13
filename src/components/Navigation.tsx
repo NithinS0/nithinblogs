@@ -194,13 +194,13 @@ const Navigation = ({
       setTheme(nextTheme);
       if (nextTheme === "light") {
         document.documentElement.classList.remove("dark");
-        localStorage.setItem("theme", "light");
+        localStorage.setItem("portfolio_theme", "light");
         document
           .querySelector('meta[name="theme-color"]')
           ?.setAttribute("content", "#fafafc");
       } else {
         document.documentElement.classList.add("dark");
-        localStorage.setItem("theme", "dark");
+        localStorage.setItem("portfolio_theme", "dark");
         document
           .querySelector('meta[name="theme-color"]')
           ?.setAttribute("content", "#050810");

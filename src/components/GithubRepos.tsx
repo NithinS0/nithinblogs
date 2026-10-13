@@ -8,6 +8,20 @@ const GithubRepos = () => {
 
   const repos = [
     {
+      name: "FleetSentinel-AI",
+      description:
+        "AI-powered connected vehicle telemetry and predictive maintenance platform with intelligent alerts and AI Fleet Copilot.",
+      url: "https://github.com/NithinS0/FleetSentinel-AI",
+      tech: "Next.js, Python, Supabase",
+    },
+    {
+      name: "ReachInbox",
+      description:
+        "Full-stack email scheduling platform with BullMQ, Redis distributed rate limiting, and fault-tolerant background queues.",
+      url: "https://github.com/NithinS0/ReachInbox",
+      tech: "TypeScript, BullMQ, Redis",
+    },
+    {
       name: "Smart-Inventory-System",
       description:
         "Full-stack, QR-enabled inventory management platform for asset tracking, spare management, and factory operations.",

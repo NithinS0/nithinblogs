@@ -7,7 +7,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
-    <meta name="theme-color" content="#050810" />
+    <meta name="theme-color" content="#fafafc" />
     <title>Nithin S — AI Engineer | Portfolio</title>
     <meta
       name="description"
@@ -21,10 +21,18 @@
     />
     <script>
       (function () {
-        const theme = localStorage.getItem("theme");
-        if (theme === "dark") {
-          document.documentElement.classList.add("dark");
-        } else {
+        try {
+          // Clear any legacy dark theme preference
+          if (localStorage.getItem("theme")) {
+            localStorage.removeItem("theme");
+          }
+          const theme = localStorage.getItem("portfolio_theme");
+          if (theme === "dark") {
+            document.documentElement.classList.add("dark");
+          } else {
+            document.documentElement.classList.remove("dark");
+          }
+        } catch (e) {
           document.documentElement.classList.remove("dark");
         }
       })();

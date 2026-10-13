@@ -9,10 +9,30 @@ import {
 
 const certifications = [
   {
+    title: "Tamizh-A-Thon' 1.0 — Winner",
+    issuer: "SRMIST · Tamil Computing Centre",
+    date: "2025",
+    credentialId: "National Hackathon Winner",
+    badge: "/tamizhathon.jpg",
+    badgeLabel: "Tamizh-A-Thon 1.0 Winner Award",
+    badgeBg: "from-[#451a03] via-[#78350f] to-[#b45309]",
+    skills: [
+      "Tamil Computing",
+      "NLP",
+      "AI / Machine Learning",
+      "Language Tech",
+      "Rapid Prototyping",
+    ],
+    verifyUrl: "/tamizhathon.jpg",
+    accent: "amber",
+    description:
+      "Winner of Tamizh-A-Thon' 1.0, a premier national-level hackathon focused on innovating Tamil computing, natural language processing, and digital language tools.",
+  },
+  {
     title: "Certified Agentforce Specialist",
     issuer: "Salesforce",
     date: "2026",
-    credentialId: "Salesforce Certified",
+    credentialId: "7259546",
     badge: "/Salesforce.jpg",
     badgeLabel: "Official Credential Badge",
     badgeBg: "from-[#00A1E0] via-[#0176D3] to-[#032D60]",
@@ -41,6 +61,13 @@ const accentMap: Record<
     tag: "bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-blue-300",
     issuer: "text-blue-500 dark:text-blue-400",
     btn: "bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/25 hover:shadow-blue-500/35",
+  },
+  amber: {
+    border: "border-white/5 hover:border-white/10",
+    glow: "from-amber-600/15 to-orange-600/10",
+    tag: "bg-amber-50 text-amber-700 dark:bg-amber-500/10 dark:text-amber-300",
+    issuer: "text-amber-600 dark:text-amber-400",
+    btn: "bg-amber-600 hover:bg-amber-500 text-white shadow-lg shadow-amber-600/25 hover:shadow-amber-500/35",
   },
 };
 
